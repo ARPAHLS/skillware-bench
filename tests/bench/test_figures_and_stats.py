@@ -124,3 +124,37 @@ def test_visual_generator_delta_lift_chart(tmp_path: Path):
     assert "-64%" in svg_content
     assert "-62%" in svg_content
     assert out_svg.exists()
+
+
+def test_dashboard_generator(tmp_path: Path):
+    from skillware_bench.dashboard import DashboardGenerator
+
+    dummy_report = CrucibleRunReport(
+        scenario_id="office_gmail_01",
+        model="golden-target",
+        configuration="dummy",
+        latency_seconds=1.0,
+        total_tokens=100,
+        word_count=20,
+        score=CrucibleScore(),
+    )
+    deltas = [
+        ComparativeDeltaReport(
+            scenario_id="office_gmail_01",
+            model="golden-target",
+            baseline=dummy_report,
+            with_skillware=dummy_report,
+            latency_reduction_pct=62.5,
+            token_reduction_pct=64.2,
+            composite_score_lift=27.0,
+        )
+    ]
+
+    out_html = tmp_path / "dashboard.html"
+    html_content = DashboardGenerator.generate_html(deltas, output_path=out_html)
+
+    assert "<!DOCTYPE html>" in html_content
+    assert "Empirical Audit Dashboard" in html_content
+    assert "office_gmail_01" in html_content
+    assert out_html.exists()
+

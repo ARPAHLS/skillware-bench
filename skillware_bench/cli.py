@@ -196,11 +196,26 @@ def cmd_export_compliance(args, console: Console):
             table.add_row(std_name.replace("_", " "), status_style, std_data["evidence"])
 
         console.print(table)
-        if output_file:
-            console.print(f"\n[green]Saved full regulatory report to: {output_file}[/green]")
     except Exception as e:
         console.print(f"[bold red]Error generating compliance export: {str(e)}[/bold red]")
         sys.exit(1)
+
+
+def cmd_dashboard(args, console: Console):
+    """Generate self-contained interactive HTML dashboard from benchmark runs."""
+    from pathlib import Path
+    import webbrowser
+    from skillware_bench.dashboard import DashboardGenerator
+
+    runner = HarnessRunner(console=console)
+    is_mock = not args.live
+    console.print("[bold]Generating interactive Skillware-Bench dashboard...[/bold]\n")
+    deltas = runner.run_suite(suite_name=args.suite, model_name=args.model, mock=is_mock)
+    output_html = args.output or "./runs/dashboard.html"
+    DashboardGenerator.generate_html(deltas, output_path=output_html)
+    console.print(f"[bold green]Dashboard generated successfully:[/bold green] {output_html}")
+    if getattr(args, "open_browser", False):
+        webbrowser.open(str(Path(output_html).resolve().as_uri()))
 
 
 def main():
@@ -289,6 +304,36 @@ def main():
     p_comp.add_argument("trace", help="Path to .aura.jsonl audit trace file")
     p_comp.add_argument("--output", default=None, help="Optional output JSON filepath for report")
     p_comp.set_defaults(func=cmd_export_compliance)
+
+    # dashboard
+    p_dash = subparsers.add_parser(
+        "dashboard", help="Generate self-contained interactive HTML dashboard"
+    )
+    p_dash.add_argument(
+        "--suite",
+        choices=list(ALL_CRUCIBLES.keys()),
+        default=None,
+        help="Specific crucible suite to benchmark",
+    )
+    p_dash.add_argument("--model", default="golden-target", help="Model name identifier")
+    p_dash.add_argument(
+        "--live",
+        action="store_true",
+        default=False,
+        help="Run live model execution",
+    )
+    p_dash.add_argument(
+        "--output",
+        default="./runs/dashboard.html",
+        help="Output HTML filepath for dashboard",
+    )
+    p_dash.add_argument(
+        "--open-browser",
+        action="store_true",
+        default=False,
+        help="Open generated dashboard in default browser",
+    )
+    p_dash.set_defaults(func=cmd_dashboard)
 
     args = parser.parse_args()
     console = Console()

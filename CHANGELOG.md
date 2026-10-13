@@ -10,7 +10,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ### Added
 
+- **Interactive Dashboard & Developer UX (Phase 5)**:
+  - `DashboardGenerator`: Zero-dependency, single-file HTML interactive visualizer embedding 10-pillar spider charts, delta optimization plots, and crucible execution matrices.
+  - CLI `dashboard` Command: Added `skillware-bench dashboard [--suite <name>] [--output <path>] [--open-browser]` for one-command visual inspection.
+  - BYOM Example Script: Added `examples/eval_custom_model.py` demonstrating Bring-Your-Own-Model integration in 20 lines of code.
+  - Hermetic Docker Environment: Added production-grade `Dockerfile` with non-root security boundaries for reproducible containerized evaluation runs.
+
 - **Anti-Contamination, Statistics & SVG Visualization Engine (Phase 4)**:
+
   - `PerturbationEngine`: Procedural anti-contamination generator varying entity names, corporate targets, and syntactic prompt templates while preserving invariant constitutional rules.
   - `StatisticalEvaluator` & Pass@k Estimator: Unbiased Pass@k calculation, 95% confidence intervals, and metric distributions across repeated runs.
   - `VisualGenerator`: Zero-dependency standalone SVG figure generator producing 10-Pillar Radar Plots (`radar_profile.svg`) and Empirical Delta Optimization charts (`empirical_lift_delta.svg`).
