@@ -34,6 +34,9 @@ dependencies = [
     "python-dotenv>=1.0.0",
     "requests>=2.28.0",
     "tabulate>=0.9.0",
+    "skillware>=0.5.5",
+    "aura-harness>=0.3.5",
+    "mnemolink>=0.2.3",
 ]
 requires-python = ">=3.10"
 
@@ -116,3 +119,4 @@ extend-exclude = '''
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
+pythonpath = ["."]

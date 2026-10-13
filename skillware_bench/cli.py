@@ -4,13 +4,19 @@
 """Command Line Interface for Skillware-Bench."""
 
 import argparse
+import os
 import sys
+from dotenv import load_dotenv
 from rich.console import Console
 from rich.panel import Panel
+from rich.table import Table
 
 from skillware_bench import __version__
 from skillware_bench.core.runner import HarnessRunner
 from skillware_bench.suites import ALL_CRUCIBLES
+
+# Load local .env credentials automatically
+load_dotenv()
 
 
 def cmd_list(args, console: Console):
@@ -30,14 +36,50 @@ def cmd_list(args, console: Console):
         console.print(f"  Prompt: [dim]{scenario.prompt}[/dim]\n")
 
 
+def cmd_check_env(args, console: Console):
+    """Inspect environment variables and API keys for live provider testing."""
+    table = Table(title="Skillware-Bench Environment & Provider Key Verification")
+    table.add_column("Provider / Secret", style="cyan")
+    table.add_column("Env Var Name", style="magenta")
+    table.add_column("Status", justify="center")
+    table.add_column("Details", style="dim")
+
+    keys_to_check = [
+        ("OpenAI API", "OPENAI_API_KEY", "Required for GPT-4o, o3-mini, o1"),
+        ("Anthropic API", "ANTHROPIC_API_KEY", "Required for Claude 3.7 Sonnet, Haiku"),
+        ("Google Gemini API", "GEMINI_API_KEY", "Required for Gemini 2.5 Pro/Flash"),
+        ("Google GenAI Alt", "GOOGLE_API_KEY", "Alternative key for Gemini SDK"),
+        ("Mistral AI API", "MISTRAL_API_KEY", "Required for Mistral Large, Codestral"),
+        ("Ollama Host", "OLLAMA_HOST", "Default: http://localhost:11434"),
+        ("UK Companies House", "COMPANIES_HOUSE_API_KEY", "Required for live Companies House"),
+        ("Etherscan API", "ETHERSCAN_API_KEY", "Required for live wallet screening"),
+    ]
+
+    for label, env_var, note in keys_to_check:
+        val = os.environ.get(env_var)
+        if val:
+            masked = f"{val[:4]}...{val[-3:]}" if len(val) > 8 else "***"
+            status = "[green]CONFIGURED[/green]"
+            details = f"Value: {masked} ({note})"
+        else:
+            status = "[yellow]UNSET[/yellow]"
+            details = note
+        table.add_row(label, env_var, status, details)
+
+    console.print(table)
+
+
 def cmd_run(args, console: Console):
     """Run benchmark crucibles and print evaluation matrix."""
     runner = HarnessRunner(console=console)
     suite_label = args.suite or "all"
+    is_mock = not args.live if args.live else args.mock
+
+    mode_label = "MOCK (deterministic offline)" if is_mock else "LIVE (real API execution)"
     console.print(
-        f"[bold]Running Skillware-Bench suite='{suite_label}' model='{args.model}' (mock={args.mock})...[/bold]\n"
+        f"[bold]Running Skillware-Bench suite='{suite_label}' model='{args.model}' mode='{mode_label}'...[/bold]\n"
     )
-    deltas = runner.run_suite(suite_name=args.suite, model_name=args.model, mock=args.mock)
+    deltas = runner.run_suite(suite_name=args.suite, model_name=args.model, mock=is_mock)
     runner.render_summary_table(deltas)
 
     if args.export:
@@ -99,6 +141,12 @@ def main():
     p_list = subparsers.add_parser("list", help="List available simulation crucibles and tiers")
     p_list.set_defaults(func=cmd_list)
 
+    # check-env
+    p_check = subparsers.add_parser(
+        "check-env", help="Check configured environment variables and provider keys"
+    )
+    p_check.set_defaults(func=cmd_check_env)
+
     # run
     p_run = subparsers.add_parser("run", help="Run benchmark suite")
     p_run.add_argument(
@@ -110,6 +158,12 @@ def main():
     p_run.add_argument("--model", default="golden-target", help="Model name identifier")
     p_run.add_argument(
         "--mock", action="store_true", default=True, help="Run offline mock crucibles"
+    )
+    p_run.add_argument(
+        "--live",
+        action="store_true",
+        default=False,
+        help="Run live model execution against crucibles",
     )
     p_run.add_argument(
         "--export", action="store_true", default=False, help="Export benchmark reports to JSON"
