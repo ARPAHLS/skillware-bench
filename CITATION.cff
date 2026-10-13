@@ -1,0 +1,44 @@
+# Citation metadata for ARPAHLS/skillware-bench
+# Validate: pip install cffconvert && cffconvert -i CITATION.cff -f apalike
+cff-version: 1.2.0
+message: >-
+  If you use this benchmark harness, datasets, or evaluation rubrics in research
+  or products, please cite it using the metadata below.
+type: software
+title: "Skillware-Bench: The Empirical Benchmark & Evaluation Harness for Governed Agent Skills"
+abstract: >-
+  Skillware-Bench is a transparent, open-source benchmark suite and evaluation
+  harness designed to measure how frontier LLMs and agent runtimes utilize
+  governed registry skills. Unlike generic function-calling benchmarks,
+  Skillware-Bench measures multi-action procedural compliance, constitutional
+  safety gates (preview-before-send, dry-runs, ambiguous consent), comparative
+  with-vs-without skill efficiency (token bloat, latency, cost), and end-to-end
+  real-world simulation crucibles.
+version: "0.1.0"
+date-released: "2026-10-13"
+license: MIT
+repository-code: "https://github.com/arpahls/skillware-bench"
+url: "https://skillware.site"
+authors:
+  - family-names: Peilivanidis
+    given-names: Vladimiros
+    alias: Ross Peili
+    email: vpeilivanidis@gmail.com
+    affiliation: "ARPA Hellenic Logical Systems"
+    website: "https://github.com/rosspeili"
+  - name: "ARPA Hellenic Logical Systems"
+    email: skillware-os@arpacorp.net
+    website: "https://arpacorp.net"
+keywords:
+  - skillware
+  - benchmark
+  - agent-skills
+  - evaluation-harness
+  - ai-agents
+  - llm-evaluation
+  - function-calling
+  - agent-constitution
+  - tool-use
+  - autonomous-agents
+  - empirical-evaluation
+  - open-source

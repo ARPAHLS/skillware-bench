@@ -1,0 +1,48 @@
+# Reference Repositories (internal reference checkouts)
+skillware/
+aura/
+mnemolink/
+
+# Environment Variables & Secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+env/
+venv/
+.venv/
+build/
+dist/
+*.egg-info/
+*.log
+
+# Testing & QA
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+coverage.xml
+.ruff_cache/
+.mypy_cache/
+
+# IDEs & Editors
+.vscode/
+.idea/
+.cursor/
+*.swp
+*.swo
+
+# Operating System
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Benchmark Local Runs & Ephemeral Artifacts
+runs/
+*.whl
+scratch/

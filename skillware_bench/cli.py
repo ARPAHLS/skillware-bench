@@ -1,0 +1,104 @@
+"""Command Line Interface for Skillware-Bench."""
+
+import argparse
+import sys
+from rich.console import Console
+from rich.panel import Panel
+
+from skillware_bench import __version__
+from skillware_bench.core.runner import HarnessRunner
+from skillware_bench.suites import ALL_CRUCIBLES
+
+
+def cmd_list(args, console: Console):
+    """List all available crucibles and evaluation suites."""
+    console.print(Panel(f"[bold cyan]Skillware-Bench[/bold cyan] v{__version__} - Crucible Catalog", expand=False))
+    for key, crucible_cls in ALL_CRUCIBLES.items():
+        scenario = crucible_cls.get_scenario()
+        console.print(f"* [bold green]{key}[/bold green] ([dim]{scenario.id}[/dim])")
+        console.print(f"  Title: {scenario.title}")
+        console.print(f"  Tier:  {scenario.tier.value} | Category: {scenario.category}")
+        console.print(f"  Skills: {', '.join(scenario.skills)}")
+        console.print(f"  Prompt: [dim]{scenario.prompt}[/dim]\n")
+
+
+def cmd_run(args, console: Console):
+    """Run benchmark crucibles and print evaluation matrix."""
+    runner = HarnessRunner(console=console)
+    console.print(f"[bold]Running Skillware-Bench suite='{args.suite or 'all'}' model='{args.model}' (mock={args.mock})...[/bold]\n")
+    deltas = runner.run_suite(suite_name=args.suite, model_name=args.model, mock=args.mock)
+    runner.render_summary_table(deltas)
+
+    if args.export:
+        runner.export_reports(deltas, output_dir=args.output_dir)
+
+
+def cmd_compare(args, console: Console):
+    """Print detailed turn-by-turn comparison for a specific crucible."""
+    if args.suite not in ALL_CRUCIBLES:
+        console.print(f"[red]Error: Unknown suite '{args.suite}'. Use 'skillware-bench list' to see available suites.[/red]")
+        sys.exit(1)
+
+    runner = HarnessRunner(console=console)
+    deltas = runner.run_suite(suite_name=args.suite, model_name=args.model, mock=True)
+    d = deltas[0]
+
+    console.print(Panel(f"[bold cyan]Crucible Deep Dive: {d.scenario_id}[/bold cyan] ({d.model})", expand=False))
+    console.print(f"[bold yellow]1. Generic Baseline (Without Skillware):[/bold yellow]")
+    console.print(f"   Latency: {d.baseline.latency_seconds:.1f}s | Tokens: {d.baseline.total_tokens} | Score: {d.baseline.score.composite_score}/100")
+    if d.baseline.score.violations:
+        console.print(f"   Violations:")
+        for v in d.baseline.score.violations:
+            console.print(f"     [red][X] {v}[/red]")
+    console.print(f"   Sample Output: [dim]{d.baseline.trajectory[-1].raw_response}[/dim]\n")
+
+    console.print(f"[bold green]2. Skillware Equipped:[/bold green]")
+    console.print(f"   Latency: {d.with_skillware.latency_seconds:.1f}s | Tokens: {d.with_skillware.total_tokens} | Score: {d.with_skillware.score.composite_score}/100")
+    console.print(f"   Tool Actions Executed: {[tc.action for step in d.with_skillware.trajectory for tc in step.tool_calls]}")
+    console.print(f"   Sample Output: [dim]{d.with_skillware.trajectory[-1].raw_response}[/dim]\n")
+
+    console.print(f"[bold cyan]3. Empirical Lift (Delta Matrix):[/bold cyan]")
+    console.print(f"   * Latency Reduction: [yellow]-{d.latency_reduction_pct:.1f}%[/yellow]")
+    console.print(f"   * Token Bloat Reduction: [cyan]-{d.token_reduction_pct:.1f}%[/cyan]")
+    console.print(f"   * Composite Score Lift: [green]+{d.composite_score_lift:.1f} pts[/green]")
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        prog="skillware-bench",
+        description="The transparent, empirical benchmark suite and evaluation harness for Skillware.",
+    )
+    parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
+    subparsers = parser.add_subparsers(dest="command", help="Command to run")
+
+    # list
+    p_list = subparsers.add_parser("list", help="List available simulation crucibles and tiers")
+    p_list.set_defaults(func=cmd_list)
+
+    # run
+    p_run = subparsers.add_parser("run", help="Run benchmark suite")
+    p_run.add_argument("--suite", choices=list(ALL_CRUCIBLES.keys()), default=None, help="Specific crucible suite to run")
+    p_run.add_argument("--model", default="golden-target", help="Model name identifier")
+    p_run.add_argument("--mock", action="store_true", default=True, help="Run offline mock crucibles")
+    p_run.add_argument("--export", action="store_true", default=False, help="Export benchmark reports to JSON")
+    p_run.add_argument("--output-dir", default="./runs/reports", help="Output directory for reports")
+    p_run.set_defaults(func=cmd_run)
+
+    # compare
+    p_cmp = subparsers.add_parser("compare", help="Compare with-skillware vs without-skillware in depth")
+    p_cmp.add_argument("--suite", required=True, choices=list(ALL_CRUCIBLES.keys()), help="Crucible to inspect")
+    p_cmp.add_argument("--model", default="golden-target", help="Model name identifier")
+    p_cmp.set_defaults(func=cmd_compare)
+
+    args = parser.parse_args()
+    console = Console()
+
+    if not args.command:
+        parser.print_help()
+        sys.exit(0)
+
+    args.func(args, console)
+
+
+if __name__ == "__main__":
+    main()
