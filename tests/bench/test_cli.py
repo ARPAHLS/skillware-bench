@@ -33,7 +33,7 @@ def test_cli_run():
 
     output = console.export_text()
     assert "Skillware-Bench Empirical Progression" in output
-    assert "office_gmail_01" in output
+    assert "office_gmail" in output
 
 
 def test_cli_compare():
@@ -86,4 +86,46 @@ class CustomTestAdapter(BaseModelAdapter):
 
     output = console.export_text()
     assert "LIVE (real API execution)" in output
-    assert "office_gmail_01" in output
+    assert "office_gmail" in output
+
+
+def test_cli_perturb():
+    from skillware_bench.cli import cmd_perturb
+
+    console = Console(record=True, width=120)
+    args = MagicMock()
+    args.suite = "gmail"
+    args.count = 2
+    args.seed = 42
+    cmd_perturb(args, console)
+    output = console.export_text()
+    assert "Anti-Contamination" in output
+    assert "gmail" in output
+
+
+def test_cli_new_model(tmp_path):
+    from skillware_bench.cli import cmd_new_model
+
+    console = Console(record=True, width=120)
+    out_file = tmp_path / "my_custom_adapter.py"
+    args = MagicMock()
+    args.name = "enterprise_test"
+    args.output = str(out_file)
+    cmd_new_model(args, console)
+    output = console.export_text()
+    assert "Scaffolded Successfully" in output
+    assert out_file.exists()
+    content = out_file.read_text(encoding="utf-8")
+    assert "EnterpriseTestAdapter" in content
+
+
+def test_cli_menu():
+    from skillware_bench.cli import cmd_menu
+
+    console = Console(record=True, width=120)
+    args = MagicMock()
+    cmd_menu(args, console)
+    output = console.export_text()
+    assert "Skillware-Bench" in output
+    assert "run" in output
+    assert "dashboard" in output

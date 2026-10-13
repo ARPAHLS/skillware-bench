@@ -84,24 +84,28 @@ class HarnessRunner:
 
     def render_summary_table(self, deltas: List[ComparativeDeltaReport]):
         table = Table(
-            title="Skillware-Bench Empirical Progression & Delta Matrix", show_header=True
+            title="Skillware-Bench Empirical Progression & Delta Matrix",
+            show_header=True,
+            header_style="bold cyan",
         )
-        table.add_column("Crucible / Suite", style="cyan", no_wrap=True)
+        table.add_column("Crucible", style="cyan", no_wrap=False)
         table.add_column("Model", style="magenta")
-        table.add_column("Base Score", justify="right")
-        table.add_column("Skillware Score", justify="right", style="green bold")
-        table.add_column("Score Lift", justify="right", style="bold")
-        table.add_column("Latency Drop", justify="right", style="yellow")
-        table.add_column("Token Drop", justify="right", style="cyan")
-        table.add_column("Pass", justify="center")
+        table.add_column("Base", justify="right")
+        table.add_column("Skillware", justify="right", style="green bold")
+        table.add_column("Lift", justify="right", style="bold")
+        table.add_column("Latency %", justify="right", style="yellow")
+        table.add_column("Tokens %", justify="right", style="cyan")
+        table.add_column("Status", justify="center")
 
         for d in deltas:
             pass_status = (
                 "[green]PASS[/green]" if d.with_skillware.score.passed else "[red]FAIL[/red]"
             )
             lift_style = "[green]+" if d.composite_score_lift > 0 else "[red]"
+            # Format clean crucible identifier
+            clean_name = d.scenario_id.replace("_01", "")
             table.add_row(
-                d.scenario_id,
+                clean_name,
                 d.model,
                 f"{d.baseline.score.composite_score:.1f}",
                 f"{d.with_skillware.score.composite_score:.1f}",

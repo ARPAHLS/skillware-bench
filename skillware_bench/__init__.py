@@ -22,7 +22,41 @@ def _sanitize_import_paths() -> None:
 
 _sanitize_import_paths()
 
+from skillware_bench.core.adapters import (  # noqa: E402
+    AdapterRegistry,
+    BaseModelAdapter,
+    ModelResponse,
+    TokenUsage,
+    get_adapter,
+)
+from skillware_bench.core.agent_loop import AgentLoop  # noqa: E402
+from skillware_bench.core.evaluators import CrucibleEvaluator  # noqa: E402
+from skillware_bench.core.perturbations import PerturbationEngine  # noqa: E402
+from skillware_bench.core.provenance import ProvenanceEngine  # noqa: E402
+from skillware_bench.core.runner import HarnessRunner  # noqa: E402
+from skillware_bench.core.statistics import StatisticalEvaluator  # noqa: E402
+from skillware_bench.dashboard import DashboardGenerator  # noqa: E402
+from skillware_bench.suites import ALL_CRUCIBLES  # noqa: E402
+from skillware_bench.viz import VisualGenerator  # noqa: E402
+
 __version__ = "0.1.0"
 __author__ = "ARPA Hellenic Logical Systems"
 
-__all__ = ["__version__", "__author__"]
+__all__ = [
+    "__version__",
+    "__author__",
+    "HarnessRunner",
+    "AgentLoop",
+    "CrucibleEvaluator",
+    "ProvenanceEngine",
+    "PerturbationEngine",
+    "StatisticalEvaluator",
+    "DashboardGenerator",
+    "VisualGenerator",
+    "AdapterRegistry",
+    "BaseModelAdapter",
+    "ModelResponse",
+    "TokenUsage",
+    "get_adapter",
+    "ALL_CRUCIBLES",
+]

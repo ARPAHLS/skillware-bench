@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" style="background-color: #0f172a; font-family: sans-serif;">
+<text x="400.0" y="40" font-size="20" font-weight="bold" fill="#f8fafc" text-anchor="middle">Empirical Delta (Δ) Optimization Across Crucibles</text>
+<line x1="80" y1="360" x2="740" y2="360" stroke="#475569" stroke-width="2"/>
+<rect x="92.14285714285714" y="195.94" width="33.0" height="164.06" fill="#38bdf8" rx="4"/>
+<text x="108.64285714285714" y="187.94" font-size="11" fill="#7dd3fc" text-anchor="middle">-63%</text>
+<rect x="129.14285714285714" y="179.55999999999997" width="33.0" height="180.44000000000003" fill="#4ade80" rx="4"/>
+<text x="145.64285714285714" y="171.55999999999997" font-size="11" fill="#86efac" text-anchor="middle">-69%</text>
+<text x="127.14285714285714" y="385" font-size="11" fill="#94a3b8" text-anchor="middle">gmail</text>
+<rect x="186.42857142857142" y="222.45999999999998" width="33.0" height="137.54000000000002" fill="#38bdf8" rx="4"/>
+<text x="202.92857142857142" y="214.45999999999998" font-size="11" fill="#7dd3fc" text-anchor="middle">-53%</text>
+<rect x="223.42857142857142" y="195.16" width="33.0" height="164.84" fill="#4ade80" rx="4"/>
+<text x="239.92857142857142" y="187.16" font-size="11" fill="#86efac" text-anchor="middle">-63%</text>
+<text x="221.42857142857142" y="385" font-size="11" fill="#94a3b8" text-anchor="middle">companies_house</text>
+<rect x="280.7142857142857" y="195.16" width="33.0" height="164.84" fill="#38bdf8" rx="4"/>
+<text x="297.2142857142857" y="187.16" font-size="11" fill="#7dd3fc" text-anchor="middle">-63%</text>
+<rect x="317.7142857142857" y="161.62" width="33.0" height="198.38" fill="#4ade80" rx="4"/>
+<text x="334.2142857142857" y="153.62" font-size="11" fill="#86efac" text-anchor="middle">-76%</text>
+<text x="315.7142857142857" y="385" font-size="11" fill="#94a3b8" text-anchor="middle">wallet_screening</text>
+<rect x="375.00000000000006" y="220.12000000000003" width="33.0" height="139.87999999999997" fill="#38bdf8" rx="4"/>
+<text x="391.50000000000006" y="212.12000000000003" font-size="11" fill="#7dd3fc" text-anchor="middle">-54%</text>
+<rect x="412.00000000000006" y="207.12" width="33.0" height="152.88" fill="#4ade80" rx="4"/>
+<text x="428.50000000000006" y="199.12" font-size="11" fill="#86efac" text-anchor="middle">-59%</text>
+<text x="410.00000000000006" y="385" font-size="11" fill="#94a3b8" text-anchor="middle">constitution_ambiguous_consent</text>
+<rect x="469.28571428571433" y="213.36" width="33.0" height="146.64" fill="#38bdf8" rx="4"/>
+<text x="485.78571428571433" y="205.36" font-size="11" fill="#7dd3fc" text-anchor="middle">-56%</text>
+<rect x="506.28571428571433" y="185.54000000000002" width="33.0" height="174.45999999999998" fill="#4ade80" rx="4"/>
+<text x="522.7857142857143" y="177.54000000000002" font-size="11" fill="#86efac" text-anchor="middle">-67%</text>
+<text x="504.28571428571433" y="385" font-size="11" fill="#94a3b8" text-anchor="middle">chained_compliance_pipeline</text>
+<rect x="563.5714285714286" y="207.12" width="33.0" height="152.88" fill="#38bdf8" rx="4"/>
+<text x="580.0714285714286" y="199.12" font-size="11" fill="#7dd3fc" text-anchor="middle">-59%</text>
+<rect x="600.5714285714286" y="213.88" width="33.0" height="146.12" fill="#4ade80" rx="4"/>
+<text x="617.0714285714286" y="205.88" font-size="11" fill="#86efac" text-anchor="middle">-56%</text>
+<text x="598.5714285714286" y="385" font-size="11" fill="#94a3b8" text-anchor="middle">security_prompt_injection</text>
+<rect x="657.8571428571429" y="191.78" width="33.0" height="168.22" fill="#38bdf8" rx="4"/>
+<text x="674.3571428571429" y="183.78" font-size="11" fill="#7dd3fc" text-anchor="middle">-65%</text>
+<rect x="694.8571428571429" y="262.5" width="33.0" height="97.5" fill="#4ade80" rx="4"/>
+<text x="711.3571428571429" y="254.5" font-size="11" fill="#86efac" text-anchor="middle">-38%</text>
+<text x="692.8571428571429" y="385" font-size="11" fill="#94a3b8" text-anchor="middle">context_drift_retention</text>
+<rect x="260" y="415" width="14" height="14" fill="#38bdf8" rx="2"/><text x="282" y="427" font-size="12" fill="#cbd5e1">Token Compression %</text><rect x="440" y="415" width="14" height="14" fill="#4ade80" rx="2"/><text x="462" y="427" font-size="12" fill="#cbd5e1">Latency Reduction %</text>
+</svg>

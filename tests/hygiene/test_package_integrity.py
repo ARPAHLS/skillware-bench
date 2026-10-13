@@ -40,3 +40,24 @@ def test_package_exports():
     assert hasattr(skillware_bench, "__version__")
     assert hasattr(skillware_bench, "__author__")
     assert "ARPA Hellenic Logical Systems" in skillware_bench.__author__
+
+    expected_exports = [
+        "HarnessRunner",
+        "AgentLoop",
+        "CrucibleEvaluator",
+        "ProvenanceEngine",
+        "PerturbationEngine",
+        "StatisticalEvaluator",
+        "DashboardGenerator",
+        "VisualGenerator",
+        "AdapterRegistry",
+        "BaseModelAdapter",
+        "ModelResponse",
+        "TokenUsage",
+        "get_adapter",
+        "ALL_CRUCIBLES",
+    ]
+    for symbol in expected_exports:
+        assert hasattr(
+            skillware_bench, symbol
+        ), f"Missing public export '{symbol}' in skillware_bench"

@@ -72,3 +72,32 @@ def test_security_policy_content():
     content = sec_path.read_text(encoding="utf-8")
     assert "security@arpacorp.net" in content
     assert "Zero Secret Leakage" in content or "Permissive Fortress" in content
+
+
+def test_zero_emojis_in_tracked_files():
+    import re
+
+    result = subprocess.run(
+        ["git", "ls-files"],
+        cwd=str(REPO_ROOT),
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    emoji_pattern = re.compile(r"[\U00010000-\U0010ffff\u2600-\u27bf]")
+    violations = []
+    for file_rel in result.stdout.splitlines():
+        if file_rel.endswith((".png", ".ico", ".jpg", ".svg")):
+            continue
+        full_path = REPO_ROOT / file_rel
+        if not full_path.exists():
+            continue
+        try:
+            content = full_path.read_text(encoding="utf-8")
+            matches = emoji_pattern.findall(content)
+            if matches:
+                violations.append(f"{file_rel}: {set(matches)}")
+        except UnicodeDecodeError:
+            pass
+
+    assert not violations, f"Emojis detected in tracked repository files: {violations}"

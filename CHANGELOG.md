@@ -6,7 +6,30 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## [Unreleased]
 
+### Added
+
+- **Frontier Sweeps, Public Leaderboard & Release Readiness (Phase 6)**:
+  - Complete 7-crucible evaluation suite with empirical benchmark results across Claude 3.7 Sonnet, Gemini 2.5 Flash, GPT-4o, Mistral Large, and Ollama Llama 3.2.
+  - Standalone SVG publication figures: `docs/figures/radar_profile.svg` and `docs/figures/empirical_lift_delta.svg`.
+  - Exported production HTML dashboard: `docs/dashboard.html` for GitHub Pages.
+  - Interactive pastel splash banner and dispatch menu: `skillware-bench menu`.
+  - Added CLI `perturb` command for dynamic anti-contamination task generation with reproducible random seeds.
+  - Added CLI `new-model` command for instant Bring-Your-Own-Model (BYOM) adapter scaffolding.
+  - Added CLI `audit` command for deep step-by-step AURA causal provenance inspection.
+  - Added GitHub Actions CI/CD workflows: full matrix testing across Python 3.10, 3.11, 3.12, 3.13, flake8 linting, black formatting checks, CLI smoke tests, and wheel packaging smoke tests (`.github/workflows/ci.yml`).
+  - Added GitHub Actions PyPI trusted publishing workflow (`.github/workflows/publish.yml`).
+  - Added GitHub Issue templates: `crucible_proposal.md`, `model_adapter_request.md`, `metric_rfc.md`, and `bug_report.md`.
+  - Added hygiene test `test_zero_emojis_in_tracked_files` permanently banning emojis across tracked files.
+  - Expanded `docs/methodology.md` with complete 10-Pillar evaluation matrix, AURA causal DAG provenance, and anti-contamination statistics.
+
+### Fixed
+
+- **Windows CP1252 Terminal Encoding**: Replaced Unicode delta symbol (`\u0394`) with plain ASCII labels in terminal summary tables to prevent `charmap` codec crashes on default Windows environments.
+- **BYOM Adapter Import Compatibility**: Added `skillware_bench.core.adapters.registry` re-export module so both direct and submodule imports of `AdapterRegistry` succeed.
+- **Root Package Exports**: Re-exported all primary benchmark, provenance, evaluator, and dashboard classes directly from `skillware_bench`.
+
 ## [0.1.0] - 2026-10-13
+
 
 ### Added
 

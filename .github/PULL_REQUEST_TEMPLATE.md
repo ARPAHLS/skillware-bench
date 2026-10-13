@@ -13,9 +13,12 @@
 ## Verification
 
 - [ ] `pytest tests/` passes offline
+- [ ] `flake8` and `black --check .` pass with zero errors
 - [ ] `python -m skillware_bench.cli run --mock` completes successfully
+- [ ] Zero emojis anywhere in code, commits, or documentation
 - [ ] If adding a constitutional crucible: includes negative control to verify sensitivity
 - [ ] No API keys, tokens, or private secrets included in test outputs or commits
+
 
 ## Inbound License & Original Work
 

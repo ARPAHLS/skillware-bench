@@ -218,6 +218,165 @@ def cmd_dashboard(args, console: Console):
         webbrowser.open(str(Path(output_html).resolve().as_uri()))
 
 
+def cmd_perturb(args, console: Console):
+    """Generate dynamic anti-contamination scenario variations."""
+    from skillware_bench.core.perturbations import PerturbationEngine
+
+    engine = PerturbationEngine(seed=args.seed)
+    console.print(
+        Panel(
+            "[bold cyan]Skillware-Bench Anti-Contamination Perturbation Engine[/bold cyan]",
+            expand=False,
+        )
+    )
+
+    suites = [args.suite] if args.suite else list(ALL_CRUCIBLES.keys())
+    variants_table = Table(title="Generated Anti-Contamination Scenario Variants")
+    variants_table.add_column("Crucible", style="cyan")
+    variants_table.add_column("Variant ID", style="magenta")
+    variants_table.add_column("Perturbed Prompt", style="dim")
+
+    count = getattr(args, "count", 3)
+    for s_name in suites:
+        scenario = ALL_CRUCIBLES[s_name].get_scenario()
+        for _ in range(count):
+            perturbed = engine.perturb_scenario(scenario)
+            preview = perturbed.prompt.replace("\n", " ")[:90] + "..."
+            variants_table.add_row(s_name, perturbed.id, preview)
+
+    console.print(variants_table)
+    total_variants = len(suites) * count
+    console.print(
+        f"[dim]Generated {total_variants} variant(s) across {len(suites)} crucible(s). "
+        "Invariants strictly preserved.[/dim]\n"
+    )
+
+
+def cmd_new_model(args, console: Console):
+    """Scaffold a custom model adapter template for Bring-Your-Own-Model (BYOM) evaluation."""
+    raw_name = args.name.lower().replace("-", "_").replace(" ", "_")
+    output_path = args.output or f"./custom_adapters/{raw_name}_adapter.py"
+    os.makedirs(os.path.dirname(os.path.abspath(output_path)), exist_ok=True)
+    class_name = "".join(part.title() for part in raw_name.split("_")) + "Adapter"
+
+    template = f'''# Copyright (c) 2026 ARPA Hellenic Logical Systems
+# SPDX-License-Identifier: MIT
+
+"""Custom Bring-Your-Own-Model adapter for {args.name}."""
+
+from typing import Any, Dict, List, Optional
+from skillware_bench.core.adapters.base import (
+    BaseModelAdapter,
+    ModelResponse,
+    TokenUsage,
+)
+from skillware_bench.core.adapters.registry import AdapterRegistry
+
+
+class {class_name}(BaseModelAdapter):
+    """Adapter for {args.name}."""
+
+    def __init__(self, model_name: str = "{args.name}", **kwargs):
+        super().__init__(model_name=model_name, **kwargs)
+
+    def chat(
+        self,
+        messages: List[Dict[str, Any]],
+        tools: Optional[List[Dict[str, Any]]] = None,
+        system_prompt: Optional[str] = None,
+        **kwargs,
+    ) -> ModelResponse:
+        """Execute chat completion with tool calling."""
+        # TODO: Implement inference call to your custom LLM or API endpoint
+        return ModelResponse(
+            content="Processed under constitutional governance.",
+            tool_calls=[],
+            usage=TokenUsage(prompt_tokens=100, completion_tokens=50),
+        )
+
+
+# Automatic BYOM Registration
+AdapterRegistry.register("{args.name}", {class_name})
+'''
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write(template)
+
+    console.print(
+        Panel(
+            f"[bold green]Custom Model Adapter Scaffolded Successfully[/bold green]\n\n"
+            f"File: [cyan]{output_path}[/cyan]\n\n"
+            f"Run benchmark with:\n"
+            f"[bold]skillware-bench run --adapter {output_path} --suite gmail[/bold]",
+            expand=False,
+        )
+    )
+
+
+def cmd_audit(args, console: Console):
+    """Inspect and audit AURA causal provenance traces in detail."""
+    from skillware_bench.core.provenance import ProvenanceEngine
+
+    trace_file = args.trace
+    console.print(f"[bold cyan]Auditing AURA Causal Provenance Trace: {trace_file}[/bold cyan]\n")
+    try:
+        res = ProvenanceEngine.verify_trace(trace_file)
+        if not res["valid"]:
+            console.print(
+                f"[bold red][FAIL] Trace integrity invalid. Broken at event '{res.get('broken_event_id')}'.[/bold red]"
+            )
+            sys.exit(1)
+
+        table = Table(title="Trace Audit Summary")
+        table.add_column("Property", style="cyan")
+        table.add_column("Value", style="green bold")
+
+        table.add_row("Events Verified", str(res["events_verified"]))
+        table.add_row("Root Hash", res["root_hash"][:16] + "...")
+        table.add_row("Constitutional Approvals", str(res["constitutional_approvals"]))
+        table.add_row("Constitutional Violations", str(res["constitutional_violations"]))
+        sig_val = "AUTHENTIC" if res.get("signature_verified") else "UNSET / NOT SIGNED"
+        table.add_row("Ed25519 Signature", sig_val)
+
+        console.print(table)
+    except Exception as e:
+        console.print(f"[bold red]Error auditing trace: {str(e)}[/bold red]")
+        sys.exit(1)
+
+
+def cmd_menu(args, console: Console):
+    """Launch interactive pastel dispatch menu."""
+    banner_lines = [
+        r"  ____  _     _ _ _                              ____                  _",
+        r" / ___|| | __(_) | |_      ____ _ _ __ ___      | __ )  ___ _ __   ___| |__",
+        r" \___ \| |/ /| | | \ \ /\ / / _` | '__/ _ \_____|  _ \ / _ \ '_ \ / __| '_ \\",
+        r"  ___) |   < | | | |\ V  V / (_| | | |  __/_____| |_) |  __/ | | | (__| | | |",
+        r" |____/|_|\_\|_|_|_| \_/\_/ \__,_|_|  \___|     |____/ \___|_| |_|\___|_| |_|",
+    ]
+    banner = "\n" + "\n".join(banner_lines)
+    console.print(f"[bold #bae6fd]{banner}[/bold #bae6fd]")
+    console.print(
+        "[bold #efcefa]Skillware-Bench: The Governed Agent Evaluation Platform[/bold #efcefa]"
+    )
+    console.print(f"[dim]Version {__version__} | ARPA Hellenic Logical Systems[/dim]\n")
+
+    menu_table = Table(show_header=False, box=None)
+    menu_table.add_column("Key", style="bold #bbf7d0", width=5)
+    menu_table.add_column("Command", style="bold cyan", width=16)
+    menu_table.add_column("Description", style="dim")
+
+    menu_table.add_row("[1]", "run", "Execute benchmark suite across frontier/sovereign models")
+    menu_table.add_row("[2]", "live", "Launch real-world zero-mock simulation crucibles")
+    menu_table.add_row("[3]", "compare", "Turn-by-turn with-vs-without Skillware A/B inspection")
+    menu_table.add_row("[4]", "dashboard", "Launch interactive browser dashboard")
+    menu_table.add_row("[5]", "audit", "Inspect AURA causal provenance traces and receipts")
+    menu_table.add_row("[6]", "perturb", "Generate dynamic anti-contamination task variants")
+    menu_table.add_row("[7]", "new-model", "Scaffold custom model adapter plugin")
+    menu_table.add_row("[8]", "check-env", "Inspect provider API keys and secrets")
+    menu_table.add_row("[0]", "exit", "Exit Skillware-Bench launcher")
+
+    console.print(menu_table)
+
+
 def main():
     parser = argparse.ArgumentParser(
         prog="skillware-bench",
@@ -335,11 +494,49 @@ def main():
     )
     p_dash.set_defaults(func=cmd_dashboard)
 
+    # perturb
+    p_perturb = subparsers.add_parser(
+        "perturb", help="Generate dynamic anti-contamination scenario variations"
+    )
+    p_perturb.add_argument(
+        "--suite",
+        choices=list(ALL_CRUCIBLES.keys()),
+        default=None,
+        help="Specific crucible suite to perturb",
+    )
+    p_perturb.add_argument(
+        "--count", type=int, default=3, help="Number of perturbation variants per scenario"
+    )
+    p_perturb.add_argument("--seed", type=int, default=None, help="Random seed for reproducibility")
+    p_perturb.set_defaults(func=cmd_perturb)
+
+    # new-model
+    p_new = subparsers.add_parser(
+        "new-model", help="Scaffold custom model adapter template for Bring-Your-Own-Model (BYOM)"
+    )
+    p_new.add_argument("name", help="Identifier name for custom model adapter (e.g. llama-custom)")
+    p_new.add_argument(
+        "--output", default=None, help="Output Python filepath for scaffolded adapter"
+    )
+    p_new.set_defaults(func=cmd_new_model)
+
+    # audit
+    p_audit = subparsers.add_parser("audit", help="Inspect and audit AURA causal provenance traces")
+    p_audit.add_argument("trace", help="Path to .aura.jsonl audit trace file")
+    p_audit.set_defaults(func=cmd_audit)
+
+    # menu
+    p_menu = subparsers.add_parser("menu", help="Launch interactive pastel dispatch launcher")
+    p_menu.set_defaults(func=cmd_menu)
+
     args = parser.parse_args()
     console = Console()
 
     if not args.command:
-        parser.print_help()
+        if sys.stdin.isatty():
+            cmd_menu(args, console)
+        else:
+            parser.print_help()
         sys.exit(0)
 
     args.func(args, console)

@@ -125,3 +125,13 @@ def test_cli_verify_and_compliance_commands(tmp_path: Path):
     assert "AI Regulatory Oversight Assessment" in out_comp
     assert "EU AI Act" in out_comp
     assert output_json.exists()
+
+    # 3. Test CLI audit
+    from skillware_bench.cli import cmd_audit
+
+    console_audit = Console(record=True, width=120)
+    cmd_audit(args, console_audit)
+    out_audit = console_audit.export_text()
+    assert "Auditing AURA Causal Provenance Trace" in out_audit
+    assert "Events Verified" in out_audit
+    assert "AUTHENTIC" in out_audit

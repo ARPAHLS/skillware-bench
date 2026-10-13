@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 600" width="700" height="600" style="background-color: #0f172a; font-family: sans-serif;">
+<text x="350.0" y="45" font-size="20" font-weight="bold" fill="#f8fafc" text-anchor="middle">Skillware-Bench 10-Pillar Evaluation Profile</text>
+<circle cx="350.0" cy="320.0" r="42.0" fill="none" stroke="#334155" stroke-dasharray="3,3" stroke-width="1"/>
+<text x="355.0" y="290.0" font-size="10" fill="#64748b">20%</text>
+<circle cx="350.0" cy="320.0" r="84.0" fill="none" stroke="#334155" stroke-dasharray="3,3" stroke-width="1"/>
+<text x="355.0" y="248.0" font-size="10" fill="#64748b">40%</text>
+<circle cx="350.0" cy="320.0" r="126.0" fill="none" stroke="#334155" stroke-dasharray="3,3" stroke-width="1"/>
+<text x="355.0" y="206.0" font-size="10" fill="#64748b">60%</text>
+<circle cx="350.0" cy="320.0" r="168.0" fill="none" stroke="#334155" stroke-dasharray="3,3" stroke-width="1"/>
+<text x="355.0" y="164.0" font-size="10" fill="#64748b">80%</text>
+<circle cx="350.0" cy="320.0" r="210.0" fill="none" stroke="#334155" stroke-dasharray="3,3" stroke-width="1"/>
+<text x="355.0" y="122.0" font-size="10" fill="#64748b">100%</text>
+<line x1="350.0" y1="320.0" x2="350.0" y2="110.0" stroke="#475569" stroke-width="1.2"/>
+<text x="350.0" y="82.0" font-size="11" font-weight="500" fill="#cbd5e1" text-anchor="middle" dominant-baseline="central">Constitutional Pass</text>
+<line x1="350.0" y1="320.0" x2="473.4349029814193" y2="150.10643118126103" stroke="#475569" stroke-width="1.2"/>
+<text x="489.8928900456086" y="127.45395533876251" font-size="11" font-weight="500" fill="#cbd5e1" text-anchor="start" dominant-baseline="central">Sequence Compliance</text>
+<line x1="350.0" y1="320.0" x2="549.7218684219822" y2="255.10643118126103" stroke="#475569" stroke-width="1.2"/>
+<text x="576.3514508782465" y="246.4539553387625" font-size="11" font-weight="500" fill="#cbd5e1" text-anchor="start" dominant-baseline="central">Schema Accuracy</text>
+<line x1="350.0" y1="320.0" x2="549.7218684219822" y2="384.89356881873897" stroke="#475569" stroke-width="1.2"/>
+<text x="576.3514508782465" y="393.5460446612375" font-size="11" font-weight="500" fill="#cbd5e1" text-anchor="start" dominant-baseline="central">Disclaimer Freedom</text>
+<line x1="350.0" y1="320.0" x2="473.4349029814193" y2="489.89356881873897" stroke="#475569" stroke-width="1.2"/>
+<text x="489.8928900456086" y="512.5460446612375" font-size="11" font-weight="500" fill="#cbd5e1" text-anchor="start" dominant-baseline="central">Actionability</text>
+<line x1="350.0" y1="320.0" x2="350.0" y2="530.0" stroke="#475569" stroke-width="1.2"/>
+<text x="350.0" y="558.0" font-size="11" font-weight="500" fill="#cbd5e1" text-anchor="middle" dominant-baseline="central">Token Compression</text>
+<line x1="350.0" y1="320.0" x2="226.56509701858067" y2="489.89356881873897" stroke="#475569" stroke-width="1.2"/>
+<text x="210.10710995439143" y="512.5460446612375" font-size="11" font-weight="500" fill="#cbd5e1" text-anchor="end" dominant-baseline="central">Latency Compression</text>
+<line x1="350.0" y1="320.0" x2="150.27813157801776" y2="384.89356881873897" stroke="#475569" stroke-width="1.2"/>
+<text x="123.64854912175346" y="393.5460446612375" font-size="11" font-weight="500" fill="#cbd5e1" text-anchor="end" dominant-baseline="central">Error Recovery</text>
+<line x1="350.0" y1="320.0" x2="150.27813157801774" y2="255.1064311812611" stroke="#475569" stroke-width="1.2"/>
+<text x="123.64854912175343" y="246.45395533876254" font-size="11" font-weight="500" fill="#cbd5e1" text-anchor="end" dominant-baseline="central">Ambiguous Consent</text>
+<line x1="350.0" y1="320.0" x2="226.56509701858062" y2="150.10643118126106" stroke="#475569" stroke-width="1.2"/>
+<text x="210.10710995439138" y="127.45395533876254" font-size="11" font-weight="500" fill="#cbd5e1" text-anchor="end" dominant-baseline="central">Adversarial Security</text>
+<polygon points="350.0,110.0 473.4,150.1 549.7,255.1 549.7,384.9 473.4,489.9 350.0,443.9 274.4,424.0 160.3,381.6 150.3,255.1 226.6,150.1" fill="rgba(56, 189, 248, 0.35)" stroke="#38bdf8" stroke-width="2.5"/>
+<circle cx="350.0" cy="110.0" r="4" fill="#38bdf8" stroke="#0f172a" stroke-width="1.5"/>
+<circle cx="473.4" cy="150.1" r="4" fill="#38bdf8" stroke="#0f172a" stroke-width="1.5"/>
+<circle cx="549.7" cy="255.1" r="4" fill="#38bdf8" stroke="#0f172a" stroke-width="1.5"/>
+<circle cx="549.7" cy="384.9" r="4" fill="#38bdf8" stroke="#0f172a" stroke-width="1.5"/>
+<circle cx="473.4" cy="489.9" r="4" fill="#38bdf8" stroke="#0f172a" stroke-width="1.5"/>
+<circle cx="350.0" cy="443.9" r="4" fill="#38bdf8" stroke="#0f172a" stroke-width="1.5"/>
+<circle cx="274.4" cy="424.0" r="4" fill="#38bdf8" stroke="#0f172a" stroke-width="1.5"/>
+<circle cx="160.3" cy="381.6" r="4" fill="#38bdf8" stroke="#0f172a" stroke-width="1.5"/>
+<circle cx="150.3" cy="255.1" r="4" fill="#38bdf8" stroke="#0f172a" stroke-width="1.5"/>
+<circle cx="226.6" cy="150.1" r="4" fill="#38bdf8" stroke="#0f172a" stroke-width="1.5"/>
+</svg>

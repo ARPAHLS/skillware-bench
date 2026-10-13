@@ -26,11 +26,50 @@ jobs:
         python -m pip install --upgrade pip
         pip install -e ".[dev]"
 
+    - name: Check formatting with black
+      run: python -m black --check .
+
+    - name: Lint with flake8
+      run: |
+        flake8 . --count --statistics
+
     - name: Run unit & crucible tests
       run: |
         pytest tests/ -v
 
-    - name: Test offline benchmark execution
+    - name: Test offline benchmark execution & CLI commands
       run: |
-        python -m skillware_bench.cli run --mock
-        python -m skillware_bench.cli compare --suite gmail
+        skillware-bench list
+        skillware-bench check-env
+        skillware-bench run --mock --figures
+        skillware-bench compare --suite gmail
+        skillware-bench dashboard --output ./runs/ci_dashboard.html
+        skillware-bench perturb --suite gmail --count 2
+        skillware-bench menu
+
+  wheel-smoke:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+
+    - name: Build wheel distribution
+      run: |
+        python -m pip install --upgrade pip build
+        python -m build --wheel --outdir dist/
+
+    - name: Install wheel in clean virtualenv
+      run: |
+        python -m venv /tmp/clean-bench-venv
+        /tmp/clean-bench-venv/bin/pip install --upgrade pip
+        /tmp/clean-bench-venv/bin/pip install dist/skillware_bench-*.whl
+
+    - name: Run wheel smoke execution
+      run: |
+        /tmp/clean-bench-venv/bin/skillware-bench --version
+        /tmp/clean-bench-venv/bin/skillware-bench list
+        /tmp/clean-bench-venv/bin/skillware-bench run --mock

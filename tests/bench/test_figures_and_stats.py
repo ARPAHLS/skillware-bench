@@ -157,4 +157,3 @@ def test_dashboard_generator(tmp_path: Path):
     assert "Empirical Audit Dashboard" in html_content
     assert "office_gmail_01" in html_content
     assert out_html.exists()
-
