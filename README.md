@@ -91,26 +91,27 @@ We put models through 5 end-to-end operational simulations, comparing an uncondi
 ## Eval Tiers
 
 ```mermaid
-flowchart LR
-    Tier1["<b>Tier 1: Deterministic Bench</b><br/>Offline Mocked Execution<br/><i>Golden fixtures · 0 LLM variance</i>"] --> Tier2["<b>Tier 2: Tool Selection</b><br/>Schema & Arguments<br/><i>Native provider tool adapters</i>"]
-    Tier2 --> Tier3["<b>Tier 3: Constitutional Gates</b><br/>Safety Gates & Consent<br/><i>Preview before send · Boundaries</i>"]
-    Tier3 --> Tier4["<b>Tier 4: Pipeline Chaining</b><br/>Multi-Skill Middleware<br/><i>Context passing · Token budgets</i>"]
-    Tier4 --> Tier5["<b>Tier 5: Model Economics</b><br/>Cost, Latency & Bloat<br/><i>Real dollars · Clock time · Tokens</i>"]
+flowchart TD
+    Tier1["Tier&nbsp;1:&nbsp;Deterministic&nbsp;Skill&nbsp;Bench&nbsp;(Offline&nbsp;Mocked)"]
+    Tier2["Tier&nbsp;2:&nbsp;Tool&nbsp;Selection&nbsp;&amp;&nbsp;Schema&nbsp;Validity"]
+    Tier3["Tier&nbsp;3:&nbsp;Constitutional&nbsp;Gates&nbsp;&amp;&nbsp;Ambiguous&nbsp;Consent"]
+    Tier4["Tier&nbsp;4:&nbsp;Multi-Skill&nbsp;Chains&nbsp;&amp;&nbsp;Middleware"]
+    Tier5["Tier&nbsp;5:&nbsp;Model&nbsp;Economics&nbsp;(Cost,&nbsp;Latency,&nbsp;Token&nbsp;Bloat)"]
 
-    style Tier1 fill:#efcefa,stroke:#c084fc,stroke-width:2px,color:#1e1b4b
-    style Tier2 fill:#bae6fd,stroke:#38bdf8,stroke-width:2px,color:#0c4a6e
-    style Tier3 fill:#bbf7d0,stroke:#4ade80,stroke-width:2px,color:#064e3b
-    style Tier4 fill:#ffdac1,stroke:#fb923c,stroke-width:2px,color:#7c2d12
-    style Tier5 fill:#c7d2fe,stroke:#818cf8,stroke-width:2px,color:#1e1b4b
+    Tier1 --> Tier2
+    Tier2 --> Tier3
+    Tier3 --> Tier4
+    Tier4 --> Tier5
 ```
 
-| Tier | Level | Target Scope | Execution Paradigm | Assurance & Scoring Criteria |
-| :---: | :--- | :--- | :---: | :--- |
-| **Tier 1** | **Deterministic Bench** | Golden mock inputs & expected outputs | Offline (No LLM) | 100% output schema, type validity, sub-second execution |
-| **Tier 2** | **Tool Selection** | Intent classification & argument generation | Single-Turn LLM | AST schema accuracy, parameter validity, abstention |
-| **Tier 3** | **Constitutional Gates** | Procedural safety, ambiguous consent, boundaries | Multi-Turn LLM | `preview_send` before `send`, negative control sensitivity |
-| **Tier 4** | **Pipeline Chaining** | Multi-skill compositions & context handoffs | Multi-Skill Loop | State preservation across tools (`SkillContext`), budget gates |
-| **Tier 5** | **Model Economics** | Speed, cost ($) per completed task, token bloat | Provider Sweeps | Latency drops ($\Delta$), token bloat reduction ($\Delta$), dollar ROI |
+* **Tier 1 — Deterministic Skill Bench (Offline)**: Validates that skills execute golden inputs against mocked transports with zero LLM variance. Runs in CI under 5 seconds.
+* **Tier 2 — Tool-Selection Bench**: Evaluates whether models pick the correct skill and populate valid arguments across Gemini, Claude, OpenAI, and Ollama tool adapters.
+* **Tier 3 — Constitutional & Procedure Bench**: Tests compliance with manifest constitutions:
+  - **Trigger**: Does the agent invoke the skill from description alone?
+  - **Compliance**: Does it follow the mandatory sequence (e.g. `preview_send` before `send`)?
+  - **Boundary**: Does it refuse forbidden actions (`confirmed: true` without explicit consent)?
+* **Tier 4 — Chain & Middleware Bench**: Tests multi-skill compositions and context passing across pipelines.
+* **Tier 5 — Economics Bench**: Measures real dollars, tokens, and clock time across production providers.
 
 ---
 
