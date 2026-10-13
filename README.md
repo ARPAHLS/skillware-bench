@@ -1,5 +1,5 @@
 <div align="center">
-  <h2>⚡ Skillware-Bench</h2>
+  <h2>Skillware-Bench</h2>
   <p><strong>The Transparent, Empirical Benchmark & Evaluation Harness for Governed Agent Skills</strong></p>
   <p>Quantifying how frontier and open-weight models execute real-world tasks, enforce constitutional safety gates, and eliminate token bloat.</p>
 </div>
@@ -224,21 +224,14 @@ We welcome community crucibles, model adapters, and evaluation datasets! Please 
 
 ## Citing
 
-If you utilize Skillware-Bench in your research or product evaluations, please cite:
-
-```bibtex
-@software{skillware_bench_2026,
-  author = {Peilivanidis, Vladimiros and {ARPA Hellenic Logical Systems}},
-  title = {Skillware-Bench: The Empirical Benchmark & Evaluation Harness for Governed Agent Skills},
-  url = {https://github.com/arpahls/skillware-bench},
-  year = {2026}
-}
-```
+If you use Skillware-Bench in research or products, please cite it using [CITATION.cff](CITATION.cff) (GitHub **Cite this repository**). For reproducibility, also record the **Skillware-Bench version** you used (PyPI or Git tag, for example `0.1.0`).
 
 ---
 
 <div align="center">
+  <img src="https://raw.githubusercontent.com/ARPAHLS/.github/main/Group%202058%20(1).png" height="50" alt="ARPA Logo" />
+  <br/>
   Built & Maintained by <strong>ARPA Hellenic Logical Systems</strong> & the Community
   <br/><br/>
-  <a href="mailto:skillware-os@arpacorp.net">skillware-os@arpacorp.net</a> • <a href="https://arpacorp.net">arpacorp.net</a>
+  <a href="mailto:skillware-os@arpacorp.net">skillware-os@arpacorp.net</a> &bull; <a href="https://arpacorp.net">arpacorp.net</a>
 </div>
