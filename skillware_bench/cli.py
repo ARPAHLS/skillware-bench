@@ -137,6 +137,69 @@ def cmd_compare(args, console: Console):
     console.print(f"   * Composite Score Lift: [green]+{d.composite_score_lift:.1f} pts[/green]")
 
 
+def cmd_verify(args, console: Console):
+    """Verify cryptographic hash chain and Ed25519 signature of an AURA audit trace."""
+    from skillware_bench.core.provenance import ProvenanceEngine
+
+    trace_file = args.trace
+    console.print(f"[bold]Verifying AURA audit trace: {trace_file}...[/bold]\n")
+    try:
+        res = ProvenanceEngine.verify_trace(trace_file)
+        if res["valid"]:
+            console.print(
+                "[bold green][PASS] Cryptographic Trace Verification Succeeded[/bold green]"
+            )
+            console.print(f"  * Events Verified: {res['events_verified']}")
+            console.print(f"  * Root Hash: [cyan]{res['root_hash']}[/cyan]")
+            if res.get("signature_verified") is True:
+                console.print("  * Ed25519 Signature: [green]AUTHENTIC[/green]")
+            elif res.get("signature_verified") is False:
+                console.print("  * Ed25519 Signature: [red]INVALID / TAMPERED[/red]")
+            else:
+                console.print(
+                    "  * Ed25519 Signature: [yellow]UNSET (No .sig receipt found)[/yellow]"
+                )
+            console.print(f"  * Constitutional Approvals: {res['constitutional_approvals']}")
+            console.print(f"  * Constitutional Violations: {res['constitutional_violations']}")
+        else:
+            console.print("[bold red][FAIL] Trace Verification Failed[/bold red]")
+            console.print(f"  * Reason: Hash chain broken at event '{res.get('broken_event_id')}'")
+            sys.exit(1)
+    except Exception as e:
+        console.print(f"[bold red]Error verifying trace: {str(e)}[/bold red]")
+        sys.exit(1)
+
+
+def cmd_export_compliance(args, console: Console):
+    """Export ISO/IEC 42001 and EU AI Act Article 14 regulatory oversight assessment."""
+    from skillware_bench.core.provenance import ProvenanceEngine
+
+    trace_file = args.trace
+    output_file = args.output
+    console.print(f"[bold]Generating Regulatory Compliance Package for {trace_file}...[/bold]\n")
+    try:
+        report = ProvenanceEngine.export_compliance_report(trace_file, output_path=output_file)
+        table = Table(title="AI Regulatory Oversight Assessment (EU AI Act & ISO 42001)")
+        table.add_column("Regulatory Standard", style="cyan")
+        table.add_column("Compliance Status", justify="center")
+        table.add_column("Audit Evidence / Proof", style="dim")
+
+        for std_name, std_data in report["standards"].items():
+            status_style = (
+                "[green]COMPLIANT[/green]"
+                if std_data["status"] == "COMPLIANT"
+                else f"[yellow]{std_data['status']}[/yellow]"
+            )
+            table.add_row(std_name.replace("_", " "), status_style, std_data["evidence"])
+
+        console.print(table)
+        if output_file:
+            console.print(f"\n[green]Saved full regulatory report to: {output_file}[/green]")
+    except Exception as e:
+        console.print(f"[bold red]Error generating compliance export: {str(e)}[/bold red]")
+        sys.exit(1)
+
+
 def main():
     parser = argparse.ArgumentParser(
         prog="skillware-bench",
@@ -196,6 +259,22 @@ def main():
     )
     p_cmp.add_argument("--model", default="golden-target", help="Model name identifier")
     p_cmp.set_defaults(func=cmd_compare)
+
+    # verify
+    p_verify = subparsers.add_parser(
+        "verify", help="Cryptographically verify AURA causal audit traces and signatures"
+    )
+    p_verify.add_argument("trace", help="Path to .aura.jsonl audit trace file")
+    p_verify.set_defaults(func=cmd_verify)
+
+    # export-compliance
+    p_comp = subparsers.add_parser(
+        "export-compliance",
+        help="Generate ISO 42001 and EU AI Act Article 14 compliance report",
+    )
+    p_comp.add_argument("trace", help="Path to .aura.jsonl audit trace file")
+    p_comp.add_argument("--output", default=None, help="Optional output JSON filepath for report")
+    p_comp.set_defaults(func=cmd_export_compliance)
 
     args = parser.parse_args()
     console = Console()

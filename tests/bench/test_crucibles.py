@@ -9,12 +9,14 @@ from skillware_bench.core.evaluators import CrucibleEvaluator
 
 
 def test_all_crucibles_registered():
-    assert len(ALL_CRUCIBLES) >= 5
+    assert len(ALL_CRUCIBLES) >= 7
     assert "gmail" in ALL_CRUCIBLES
     assert "companies_house" in ALL_CRUCIBLES
     assert "wallet_screening" in ALL_CRUCIBLES
     assert "constitution" in ALL_CRUCIBLES
     assert "chained_pipeline" in ALL_CRUCIBLES
+    assert "prompt_injection" in ALL_CRUCIBLES
+    assert "context_drift" in ALL_CRUCIBLES
 
 
 @pytest.mark.parametrize("name,crucible_cls", ALL_CRUCIBLES.items())

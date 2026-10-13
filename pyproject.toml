@@ -37,7 +37,9 @@ dependencies = [
     "skillware>=0.5.5",
     "aura-harness>=0.3.5",
     "mnemolink>=0.2.3",
+    "cryptography>=41.0.0",
 ]
+
 requires-python = ">=3.10"
 
 keywords = [

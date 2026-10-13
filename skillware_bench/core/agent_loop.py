@@ -331,6 +331,12 @@ class AgentLoop:
                     },
                 )
                 self.aura_session.close()
+                if self.aura_log_path and Path(self.aura_log_path).is_file():
+                    from skillware_bench.core.provenance import ProvenanceEngine
+
+                    ProvenanceEngine.sign_trace(
+                        self.aura_log_path, model_name=self.adapter.model_name
+                    )
             except Exception:
                 pass
 

@@ -10,7 +10,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ### Added
 
+- **Adversarial Security & AURA Provenance Engine (Phase 3)**:
+  - `PromptInjectionCrucible`: Bi-directional indirect prompt injection and semicolon ambush crucible stress-testing data exfiltration and isolation via `security/prompt_injection_firewall`.
+  - `ContextDriftCrucible`: 15-turn long-horizon context drift crucible evaluating constitutional amnesia and PII/TIN retention under heavy conversational context.
+  - `ProvenanceEngine`: Cryptographic Ed25519 trace signing and AURA `.aura.jsonl` causal hash chain verification engine detecting forged steps or log tampering.
+  - Automated Regulatory Compliance Exporter: Generates formal compliance assessments mapped directly to EU AI Act Article 14 (Human Oversight) and ISO/IEC 42001 (AI Management Systems).
+  - CLI `verify` & `export-compliance` Commands: Added `skillware-bench verify <trace>` and `skillware-bench export-compliance <trace> [--output <path>]`.
+  - Automatic Trace Signing: `AgentLoop` automatically signs generated session logs upon completion, emitting immutable `.sig` receipts.
+
 - **Live Zero-Mock Crucible Infrastructure & Execution Wiring (Phase 2)**:
+
   - `DisposableMailboxEnvironment`: Ephemeral test mail environment in `skillware_bench.infra` seeding realistic operational messages, MIME attachments (`agenda.pdf`), search filters, preview drafts, and gated dispatch.
   - `CompaniesHouseClient`: Live REST client against UK Companies House with embedded high-fidelity snapshot database for DeepMind Technologies (`07387824`), active director lookup, and filing history navigation.
   - `WalletScreeningClient`: Live on-chain query engine with canonical OFAC SDN sanctions list matching (Tornado Cash Router `0x85894...` critical flag vs Vitalik `0xd8dA6...` clean) and legal disclaimer verification.

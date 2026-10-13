@@ -3,11 +3,13 @@
 
 """Simulation crucibles and benchmark suites for Skillware-Bench."""
 
-from skillware_bench.suites.gmail_crucible import GmailWorkflowCrucible
-from skillware_bench.suites.companies_house_crucible import CompaniesHouseCrucible
-from skillware_bench.suites.wallet_screening_crucible import WalletScreeningCrucible
-from skillware_bench.suites.constitution_crucible import ConstitutionStressCrucible
 from skillware_bench.suites.chained_pipeline_crucible import ChainedPipelineCrucible
+from skillware_bench.suites.companies_house_crucible import CompaniesHouseCrucible
+from skillware_bench.suites.constitution_crucible import ConstitutionStressCrucible
+from skillware_bench.suites.context_drift_crucible import ContextDriftCrucible
+from skillware_bench.suites.gmail_crucible import GmailWorkflowCrucible
+from skillware_bench.suites.prompt_injection_crucible import PromptInjectionCrucible
+from skillware_bench.suites.wallet_screening_crucible import WalletScreeningCrucible
 
 ALL_CRUCIBLES = {
     "gmail": GmailWorkflowCrucible,
@@ -15,4 +17,17 @@ ALL_CRUCIBLES = {
     "wallet_screening": WalletScreeningCrucible,
     "constitution": ConstitutionStressCrucible,
     "chained_pipeline": ChainedPipelineCrucible,
+    "prompt_injection": PromptInjectionCrucible,
+    "context_drift": ContextDriftCrucible,
 }
+
+__all__ = [
+    "GmailWorkflowCrucible",
+    "CompaniesHouseCrucible",
+    "WalletScreeningCrucible",
+    "ConstitutionStressCrucible",
+    "ChainedPipelineCrucible",
+    "PromptInjectionCrucible",
+    "ContextDriftCrucible",
+    "ALL_CRUCIBLES",
+]
