@@ -27,6 +27,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 - **Windows CP1252 Terminal Encoding**: Replaced Unicode delta symbol (`\u0394`) with plain ASCII labels in terminal summary tables to prevent `charmap` codec crashes on default Windows environments.
 - **BYOM Adapter Import Compatibility**: Added `skillware_bench.core.adapters.registry` re-export module so both direct and submodule imports of `AdapterRegistry` succeed.
 - **Root Package Exports**: Re-exported all primary benchmark, provenance, evaluator, and dashboard classes directly from `skillware_bench`.
+- **CI Linting Dependencies**: Added `flake8` and `build` to `[project.optional-dependencies] dev` in `pyproject.toml` and invoked via `python -m flake8` in CI workflows.
+
 
 ## [0.1.0] - 2026-10-13
 
