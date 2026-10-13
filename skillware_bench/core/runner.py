@@ -27,6 +27,7 @@ class HarnessRunner:
         suite_name: Optional[str] = None,
         model_name: str = "golden-target",
         mock: bool = True,
+        adapter_path: Optional[str] = None,
     ) -> List[ComparativeDeltaReport]:
         reports: List[ComparativeDeltaReport] = []
 
@@ -36,40 +37,45 @@ class HarnessRunner:
             else list(ALL_CRUCIBLES.keys())
         )
 
-        adapter = get_adapter(model_name=model_name, mock=mock)
+        adapter = get_adapter(model_name=model_name, mock=mock, adapter_path=adapter_path)
 
         for key in crucible_keys:
             crucible_cls = ALL_CRUCIBLES[key]
             if mock:
                 baseline, skillware = crucible_cls.run_mock(model_name=model_name)
             else:
-                scenario = crucible_cls.get_scenario()
-                # 1. Baseline Run: model without Skillware tools
-                baseline_loop = AgentLoop(
-                    adapter=adapter,
-                    skill_names=[],
-                    system_prompt="You are a helpful assistant.",
-                    mock=mock,
-                )
-                baseline = baseline_loop.run(
-                    prompt=scenario.prompt,
-                    scenario=scenario,
-                    expectations=scenario.expectations,
-                )
-                baseline.configuration = "generic_baseline"
+                if hasattr(crucible_cls, "run_live"):
+                    baseline, skillware = crucible_cls.run_live(
+                        model_name=model_name, adapter=adapter
+                    )
+                else:
+                    scenario = crucible_cls.get_scenario()
+                    # 1. Baseline Run: model without Skillware tools
+                    baseline_loop = AgentLoop(
+                        adapter=adapter,
+                        skill_names=[],
+                        system_prompt="You are a helpful assistant.",
+                        mock=mock,
+                    )
+                    baseline = baseline_loop.run(
+                        prompt=scenario.prompt,
+                        scenario=scenario,
+                        expectations=scenario.expectations,
+                    )
+                    baseline.configuration = "generic_baseline"
 
-                # 2. Skillware Equipped Run: model with Skillware tools
-                skillware_loop = AgentLoop(
-                    adapter=adapter,
-                    skill_names=scenario.skills,
-                    mock=mock,
-                )
-                skillware = skillware_loop.run(
-                    prompt=scenario.prompt,
-                    scenario=scenario,
-                    expectations=scenario.expectations,
-                )
-                skillware.configuration = "skillware_equipped"
+                    # 2. Skillware Equipped Run: model with Skillware tools
+                    skillware_loop = AgentLoop(
+                        adapter=adapter,
+                        skill_names=scenario.skills,
+                        mock=mock,
+                    )
+                    skillware = skillware_loop.run(
+                        prompt=scenario.prompt,
+                        scenario=scenario,
+                        expectations=scenario.expectations,
+                    )
+                    skillware.configuration = "skillware_equipped"
 
             delta = CrucibleEvaluator.compute_delta(baseline, skillware)
             reports.append(delta)

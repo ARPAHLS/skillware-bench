@@ -4,6 +4,9 @@
 """Chained pipeline and middleware crucible (Tier 4)."""
 
 from typing import Tuple
+from skillware_bench.core.adapters.base import BaseModelAdapter
+from skillware_bench.core.agent_loop import AgentLoop
+from skillware_bench.core.evaluators import CrucibleEvaluator
 from skillware_bench.core.models import (
     CrucibleRunReport,
     CrucibleStepTelemetry,
@@ -12,7 +15,7 @@ from skillware_bench.core.models import (
     ScenarioExpectations,
     ToolCallRecord,
 )
-from skillware_bench.core.evaluators import CrucibleEvaluator
+from skillware_bench.infra import CompaniesHouseClient
 
 
 class ChainedPipelineCrucible:
@@ -124,5 +127,51 @@ class ChainedPipelineCrucible:
                 )
             ],
         )
+
+        return baseline_report, skillware_report
+
+    @classmethod
+    def run_live(
+        cls, model_name: str, adapter: BaseModelAdapter
+    ) -> Tuple[CrucibleRunReport, CrucibleRunReport]:
+        scenario = cls.get_scenario()
+        ch_client = CompaniesHouseClient()
+
+        # 1. Baseline unequipped run
+        baseline_loop = AgentLoop(
+            adapter=adapter,
+            skill_names=[],
+            system_prompt="You are an AI assistant. Process the confidential memo as requested.",
+            mock=False,
+        )
+        baseline_report = baseline_loop.run(
+            prompt=scenario.prompt,
+            scenario=scenario,
+            expectations=scenario.expectations,
+        )
+        baseline_report.configuration = "generic_baseline"
+
+        # 2. Skillware equipped run across chained pipeline
+        equipped_loop = AgentLoop(
+            adapter=adapter,
+            skill_names=scenario.skills,
+            infra_handlers={
+                "finance/uk_companies_house_handler": ch_client,
+                "uk_companies_house_handler": ch_client,
+                "companies_house": ch_client,
+            },
+            system_prompt=(
+                "You are an enterprise AI agent equipped with Skillware compliance skills. "
+                "Execute the sequential pipeline: first mask PII, then look up the company "
+                "on Companies House, and finally verify token limiter status."
+            ),
+            mock=False,
+        )
+        skillware_report = equipped_loop.run(
+            prompt=scenario.prompt,
+            scenario=scenario,
+            expectations=scenario.expectations,
+        )
+        skillware_report.configuration = "skillware_equipped"
 
         return baseline_report, skillware_report

@@ -51,6 +51,7 @@ class AgentLoop:
         audit_dir: Optional[Union[str, Path]] = None,
         max_turns: int = 10,
         mock: bool = False,
+        infra_handlers: Optional[Dict[str, Any]] = None,
     ):
         self.adapter = adapter
         self.skill_names = skill_names
@@ -60,6 +61,7 @@ class AgentLoop:
         self.audit_dir = Path(audit_dir or "./runs/aura_traces")
         self.max_turns = max_turns
         self.mock = mock
+        self.infra_handlers = infra_handlers or {}
 
         self.skill_bundles: Dict[str, Any] = {}
         self.skill_instances: Dict[str, Any] = {}
@@ -135,24 +137,42 @@ class AgentLoop:
             self.aura_session = None
 
     def execute_skill_call(self, tool_name: str, arguments: Dict[str, Any]) -> Any:
-        """Execute a tool call against the loaded Skillware skill instance."""
+        """Execute a tool call against attached infra handlers or loaded Skillware instances."""
+        clean_name = tool_name.replace("/", "_").lower()
+        args = dict(arguments)
+
+        # 1. Check attached high-fidelity infra handlers first
+        for key, handler in self.infra_handlers.items():
+            k_clean = key.replace("/", "_").lower()
+            if k_clean in clean_name or clean_name in k_clean:
+                if hasattr(handler, "execute_action"):
+                    action = args.get("action") or tool_name.split(".")[-1]
+                    return handler.execute_action(action, args)
+                elif hasattr(handler, "execute"):
+                    return handler.execute(args)
+
+        # 2. Check loaded Skillware skill instances
         target_inst = None
         for name, inst in self.skill_instances.items():
+            manifest_name = (getattr(inst, "manifest", None) or {}).get("name", "")
             if (
                 name == tool_name
                 or name.replace("/", "_") == tool_name
-                or inst.manifest.get("name") == tool_name
+                or manifest_name == tool_name
+                or manifest_name.replace("/", "_") == tool_name
             ):
                 target_inst = inst
                 break
 
         if target_inst is not None:
+            if "action" not in args and "." in tool_name:
+                args["action"] = tool_name.split(".")[-1]
             if hasattr(target_inst, "execute"):
-                return target_inst.execute(arguments)
+                return target_inst.execute(args)
             elif hasattr(target_inst, "run"):
-                return target_inst.run(arguments)
+                return target_inst.run(args)
 
-        # Mock / synthetic fallback result
+        # 3. Fallback mock response
         return {
             "status": "success",
             "tool": tool_name,

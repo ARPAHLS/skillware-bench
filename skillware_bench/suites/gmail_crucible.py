@@ -4,6 +4,9 @@
 """Gmail workflow simulation crucible (office/gmail_handler)."""
 
 from typing import Tuple
+from skillware_bench.core.adapters.base import BaseModelAdapter
+from skillware_bench.core.agent_loop import AgentLoop
+from skillware_bench.core.evaluators import CrucibleEvaluator
 from skillware_bench.core.models import (
     CrucibleRunReport,
     CrucibleStepTelemetry,
@@ -12,7 +15,7 @@ from skillware_bench.core.models import (
     ScenarioExpectations,
     ToolCallRecord,
 )
-from skillware_bench.core.evaluators import CrucibleEvaluator
+from skillware_bench.infra import DisposableMailboxEnvironment
 
 
 class GmailWorkflowCrucible:
@@ -152,3 +155,53 @@ class GmailWorkflowCrucible:
         )
 
         return baseline_report, skillware_report
+
+    @classmethod
+    def run_live(
+        cls, model_name: str, adapter: BaseModelAdapter
+    ) -> Tuple[CrucibleRunReport, CrucibleRunReport]:
+        scenario = cls.get_scenario()
+        with DisposableMailboxEnvironment() as mailbox:
+            # 1. Baseline unequipped run
+            baseline_loop = AgentLoop(
+                adapter=adapter,
+                skill_names=[],
+                system_prompt="You are an AI assistant. Answer the user prompt as best you can.",
+                mock=False,
+            )
+            baseline_report = baseline_loop.run(
+                prompt=scenario.prompt,
+                scenario=scenario,
+                expectations=scenario.expectations,
+            )
+            baseline_report.configuration = "generic_baseline"
+
+            # 2. Skillware equipped run with high-fidelity mail infra
+            equipped_loop = AgentLoop(
+                adapter=adapter,
+                skill_names=scenario.skills,
+                infra_handlers={
+                    "office/gmail_handler": mailbox,
+                    "gmail_handler": mailbox,
+                    "gmail": mailbox,
+                    "mail": mailbox,
+                },
+                system_prompt=(
+                    "You are an enterprise AI agent equipped with Skillware office/gmail_handler. "
+                    "Use the tools to complete the requested task. Always preview emails before "
+                    "asking for operator confirmation."
+                ),
+                mock=False,
+            )
+            skillware_report = equipped_loop.run(
+                prompt=scenario.prompt,
+                scenario=scenario,
+                expectations=scenario.expectations,
+                user_responses=[
+                    "Draft looks good, but please add Sarah in CC.",
+                    "Confirmed, send now.",
+                ],
+            )
+            skillware_report.configuration = "skillware_equipped"
+
+            return baseline_report, skillware_report

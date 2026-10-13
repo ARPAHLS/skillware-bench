@@ -33,8 +33,16 @@ class AdapterRegistry:
         return None
 
 
-def get_adapter(model_name: str, mock: bool = False, **kwargs: Any) -> BaseModelAdapter:
+def get_adapter(
+    model_name: str,
+    mock: bool = False,
+    adapter_path: Optional[str] = None,
+    **kwargs: Any,
+) -> BaseModelAdapter:
     """Resolve and instantiate the appropriate model adapter."""
+    if adapter_path:
+        return load_adapter_from_file(adapter_path, model_name=model_name, **kwargs)
+
     if mock:
         return MockModelAdapter(model_name=model_name, **kwargs)
 
@@ -81,3 +89,33 @@ def get_adapter(model_name: str, mock: bool = False, **kwargs: Any) -> BaseModel
 
     # Fallback to Mock if unrecognized, or raise if mock is not desired
     return MockModelAdapter(model_name=model_name, **kwargs)
+
+
+def load_adapter_from_file(file_path: str, **kwargs: Any) -> BaseModelAdapter:
+    """Dynamically load and instantiate a BaseModelAdapter subclass from a Python file."""
+    import importlib.util
+    import inspect
+    from pathlib import Path
+
+    path = Path(file_path).resolve()
+    if not path.exists():
+        raise FileNotFoundError(f"Adapter file not found: {file_path}")
+
+    spec = importlib.util.spec_from_file_location("custom_adapter_module", path)
+    if spec is None or spec.loader is None:
+        raise ImportError(f"Cannot load module from: {file_path}")
+
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+
+    for attr_name in dir(module):
+        attr = getattr(module, attr_name)
+        if (
+            inspect.isclass(attr)
+            and issubclass(attr, BaseModelAdapter)
+            and attr is not BaseModelAdapter
+        ):
+            model_name = kwargs.pop("model_name", "custom-byom-model")
+            return attr(model_name=model_name, **kwargs)
+
+    raise ValueError(f"No BaseModelAdapter subclass found in {file_path}")

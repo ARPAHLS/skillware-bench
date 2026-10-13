@@ -12,7 +12,11 @@ from skillware_bench.core.adapters.base import (
     calculate_cost,
     execute_with_retry,
 )
-from skillware_bench.core.adapters.factory import AdapterRegistry, get_adapter
+from skillware_bench.core.adapters.factory import (
+    AdapterRegistry,
+    get_adapter,
+    load_adapter_from_file,
+)
 from skillware_bench.core.adapters.gemini_adapter import GeminiAdapter
 from skillware_bench.core.adapters.mistral_adapter import MistralAdapter
 from skillware_bench.core.adapters.mock_adapter import (
@@ -32,6 +36,7 @@ __all__ = [
     "execute_with_retry",
     "AdapterRegistry",
     "get_adapter",
+    "load_adapter_from_file",
     "OpenAIAdapter",
     "AnthropicAdapter",
     "GeminiAdapter",

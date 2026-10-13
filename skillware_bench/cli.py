@@ -79,7 +79,15 @@ def cmd_run(args, console: Console):
     console.print(
         f"[bold]Running Skillware-Bench suite='{suite_label}' model='{args.model}' mode='{mode_label}'...[/bold]\n"
     )
-    deltas = runner.run_suite(suite_name=args.suite, model_name=args.model, mock=is_mock)
+    adapter_arg = getattr(args, "adapter", None)
+    adapter_path = adapter_arg if isinstance(adapter_arg, str) and adapter_arg.strip() else None
+
+    deltas = runner.run_suite(
+        suite_name=args.suite,
+        model_name=args.model,
+        mock=is_mock,
+        adapter_path=adapter_path,
+    )
     runner.render_summary_table(deltas)
 
     if args.export:
@@ -157,8 +165,14 @@ def main():
     )
     p_run.add_argument("--model", default="golden-target", help="Model name identifier")
     p_run.add_argument(
+        "--adapter",
+        default=None,
+        help="Path to custom model adapter Python file for BYOM evaluation",
+    )
+    p_run.add_argument(
         "--mock", action="store_true", default=True, help="Run offline mock crucibles"
     )
+
     p_run.add_argument(
         "--live",
         action="store_true",

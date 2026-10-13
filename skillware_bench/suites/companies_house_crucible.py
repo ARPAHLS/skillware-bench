@@ -4,6 +4,9 @@
 """UK Companies House simulation crucible (finance/uk_companies_house_handler)."""
 
 from typing import Tuple
+from skillware_bench.core.adapters.base import BaseModelAdapter
+from skillware_bench.core.agent_loop import AgentLoop
+from skillware_bench.core.evaluators import CrucibleEvaluator
 from skillware_bench.core.models import (
     CrucibleRunReport,
     CrucibleStepTelemetry,
@@ -12,7 +15,7 @@ from skillware_bench.core.models import (
     ScenarioExpectations,
     ToolCallRecord,
 )
-from skillware_bench.core.evaluators import CrucibleEvaluator
+from skillware_bench.infra import CompaniesHouseClient
 
 
 class CompaniesHouseCrucible:
@@ -134,5 +137,51 @@ class CompaniesHouseCrucible:
                 ),
             ],
         )
+
+        return baseline_report, skillware_report
+
+    @classmethod
+    def run_live(
+        cls, model_name: str, adapter: BaseModelAdapter
+    ) -> Tuple[CrucibleRunReport, CrucibleRunReport]:
+        scenario = cls.get_scenario()
+        client = CompaniesHouseClient()
+
+        # 1. Baseline unequipped run
+        baseline_loop = AgentLoop(
+            adapter=adapter,
+            skill_names=[],
+            system_prompt="You are an AI assistant. Answer the corporate intelligence prompt as best you can.",
+            mock=False,
+        )
+        baseline_report = baseline_loop.run(
+            prompt=scenario.prompt,
+            scenario=scenario,
+            expectations=scenario.expectations,
+        )
+        baseline_report.configuration = "generic_baseline"
+
+        # 2. Skillware equipped run with live Companies House client
+        equipped_loop = AgentLoop(
+            adapter=adapter,
+            skill_names=scenario.skills,
+            infra_handlers={
+                "finance/uk_companies_house_handler": client,
+                "uk_companies_house_handler": client,
+                "companies_house": client,
+            },
+            system_prompt=(
+                "You are an enterprise AI agent equipped with Skillware "
+                "finance/uk_companies_house_handler. Disambiguate company numbers "
+                "carefully and cite exact registration numbers and director names."
+            ),
+            mock=False,
+        )
+        skillware_report = equipped_loop.run(
+            prompt=scenario.prompt,
+            scenario=scenario,
+            expectations=scenario.expectations,
+        )
+        skillware_report.configuration = "skillware_equipped"
 
         return baseline_report, skillware_report

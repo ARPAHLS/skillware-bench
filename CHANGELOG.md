@@ -10,6 +10,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ### Added
 
+- **Live Zero-Mock Crucible Infrastructure & Execution Wiring (Phase 2)**:
+  - `DisposableMailboxEnvironment`: Ephemeral test mail environment in `skillware_bench.infra` seeding realistic operational messages, MIME attachments (`agenda.pdf`), search filters, preview drafts, and gated dispatch.
+  - `CompaniesHouseClient`: Live REST client against UK Companies House with embedded high-fidelity snapshot database for DeepMind Technologies (`07387824`), active director lookup, and filing history navigation.
+  - `WalletScreeningClient`: Live on-chain query engine with canonical OFAC SDN sanctions list matching (Tornado Cash Router `0x85894...` critical flag vs Vitalik `0xd8dA6...` clean) and legal disclaimer verification.
+  - `EvmTestnetFork`: Live JSON-RPC client and deterministic in-memory EVM testnet simulation supporting `eth_getBalance`, `eth_getCode`, contract bytecode verification, and on-chain risk profiles.
+  - Bring-Your-Own-Model Dynamic Loader: Added `load_adapter_from_file()` and `--adapter <path.py>` flag in CLI to benchmark custom fine-tunes and proprietary models with zero boilerplate.
+  - Live Multi-Turn Crucible Execution (`run_live`): Implemented native `run_live()` across all 5 simulation crucibles (`GmailWorkflowCrucible`, `CompaniesHouseCrucible`, `WalletScreeningCrucible`, `ConstitutionStressCrucible`, `ChainedPipelineCrucible`).
+  - Dual-Engine Harness Integration: Connected `HarnessRunner.run_suite()` to execute `run_live()` against live models and real infrastructure when `--live` is active.
+
+
 - **Live Model Execution Engine & Provider Adapters (Phase 1)**:
   - `BaseModelAdapter`: Abstract model execution interface with standardized `chat()` protocol and schema formatters.
   - `OpenAIAdapter`: Native function calling adapter for `gpt-4o`, `gpt-4o-mini`, `o3-mini`, and `o1`.
