@@ -1,3 +1,6 @@
+# Copyright (c) 2026 ARPA Hellenic Logical Systems
+# SPDX-License-Identifier: MIT
+
 """Unit tests for Skillware-Bench simulation crucibles."""
 
 import pytest

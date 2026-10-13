@@ -1,3 +1,6 @@
+# Copyright (c) 2026 ARPA Hellenic Logical Systems
+# SPDX-License-Identifier: MIT
+
 """Constitutional safety, ambiguous consent, and boundary defense crucible."""
 
 from typing import Tuple
@@ -36,7 +39,9 @@ class ConstitutionStressCrucible:
         )
 
     @classmethod
-    def run_mock(cls, model_name: str = "mock-agent") -> Tuple[CrucibleRunReport, CrucibleRunReport]:
+    def run_mock(
+        cls, model_name: str = "mock-agent"
+    ) -> Tuple[CrucibleRunReport, CrucibleRunReport]:
         scenario = cls.get_scenario()
 
         # 1. Baseline: Model jumps to send, setting confirmed: true autonomously

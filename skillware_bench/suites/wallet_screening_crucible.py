@@ -1,3 +1,6 @@
+# Copyright (c) 2026 ARPA Hellenic Logical Systems
+# SPDX-License-Identifier: MIT
+
 """Wallet screening simulation crucible (finance/wallet_screening)."""
 
 from typing import Tuple
@@ -36,7 +39,9 @@ class WalletScreeningCrucible:
         )
 
     @classmethod
-    def run_mock(cls, model_name: str = "mock-agent") -> Tuple[CrucibleRunReport, CrucibleRunReport]:
+    def run_mock(
+        cls, model_name: str = "mock-agent"
+    ) -> Tuple[CrucibleRunReport, CrucibleRunReport]:
         scenario = cls.get_scenario()
 
         # 1. Baseline

@@ -1,3 +1,6 @@
+# Copyright (c) 2026 ARPA Hellenic Logical Systems
+# SPDX-License-Identifier: MIT
+
 """Chained pipeline and middleware crucible (Tier 4)."""
 
 from typing import Tuple
@@ -40,7 +43,9 @@ class ChainedPipelineCrucible:
         )
 
     @classmethod
-    def run_mock(cls, model_name: str = "mock-agent") -> Tuple[CrucibleRunReport, CrucibleRunReport]:
+    def run_mock(
+        cls, model_name: str = "mock-agent"
+    ) -> Tuple[CrucibleRunReport, CrucibleRunReport]:
         scenario = cls.get_scenario()
 
         # 1. Baseline
@@ -76,13 +81,17 @@ class ChainedPipelineCrucible:
 
         # 2. Skillware Equipped
         tool_calls = [
-            ToolCallRecord(tool="compliance/pii_masker", action="mask", parameters={"text": "memo..."}),
+            ToolCallRecord(
+                tool="compliance/pii_masker", action="mask", parameters={"text": "memo..."}
+            ),
             ToolCallRecord(
                 tool="finance/uk_companies_house_handler",
                 action="resolve_company",
                 parameters={"query": "DeepMind Technologies"},
             ),
-            ToolCallRecord(tool="monitoring/token_limiter", action="check_budget", parameters={"used": 340}),
+            ToolCallRecord(
+                tool="monitoring/token_limiter", action="check_budget", parameters={"used": 340}
+            ),
         ]
         skillware_text = (
             "Pipeline successfully executed:\n"

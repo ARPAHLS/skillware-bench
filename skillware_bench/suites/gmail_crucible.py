@@ -1,10 +1,12 @@
+# Copyright (c) 2026 ARPA Hellenic Logical Systems
+# SPDX-License-Identifier: MIT
+
 """Gmail workflow simulation crucible (office/gmail_handler)."""
 
 from typing import Tuple
 from skillware_bench.core.models import (
     CrucibleRunReport,
     CrucibleStepTelemetry,
-    CrucibleScore,
     EvalTier,
     ScenarioDefinition,
     ScenarioExpectations,
@@ -38,7 +40,9 @@ class GmailWorkflowCrucible:
         )
 
     @classmethod
-    def run_mock(cls, model_name: str = "mock-agent") -> Tuple[CrucibleRunReport, CrucibleRunReport]:
+    def run_mock(
+        cls, model_name: str = "mock-agent"
+    ) -> Tuple[CrucibleRunReport, CrucibleRunReport]:
         scenario = cls.get_scenario()
 
         # 1. Generic Baseline Simulation (Without Skillware)
@@ -77,8 +81,16 @@ class GmailWorkflowCrucible:
 
         # 2. Skillware Equipped Simulation
         tool_calls = [
-            ToolCallRecord(tool="office/gmail_handler", action="search_messages", parameters={"query": ["Zhen"]}),
-            ToolCallRecord(tool="office/gmail_handler", action="download_attachment", parameters={"uid": 104, "part_index": 1}),
+            ToolCallRecord(
+                tool="office/gmail_handler",
+                action="search_messages",
+                parameters={"query": ["Zhen"]},
+            ),
+            ToolCallRecord(
+                tool="office/gmail_handler",
+                action="download_attachment",
+                parameters={"uid": 104, "part_index": 1},
+            ),
             ToolCallRecord(
                 tool="office/gmail_handler",
                 action="preview_send",

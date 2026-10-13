@@ -1,0 +1,20 @@
+{
+  "messages": [
+    {
+      "uid": 104,
+      "from": "Zhen <zhen@example.com>",
+      "to": ["agent-mailbox@example.com"],
+      "subject": "Tomorrow's sync agenda",
+      "date": "2026-10-13T09:30:00Z",
+      "body_plain": "Hi team, attached is the presentation deck and agenda for tomorrow's sync. Please review slide 4 before our call.",
+      "attachments": [
+        {
+          "filename": "agenda.pdf",
+          "content_type": "application/pdf",
+          "size_bytes": 1048576,
+          "part_index": 1
+        }
+      ]
+    }
+  ]
+}

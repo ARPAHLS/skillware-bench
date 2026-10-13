@@ -1,8 +1,11 @@
+# Copyright (c) 2026 ARPA Hellenic Logical Systems
+# SPDX-License-Identifier: MIT
+
 """Harness runner executing crucibles, compiling reports, and rendering summaries."""
 
 import json
 import os
-from typing import Dict, List, Optional
+from typing import List, Optional
 from rich.console import Console
 from rich.table import Table
 
@@ -25,7 +28,11 @@ class HarnessRunner:
     ) -> List[ComparativeDeltaReport]:
         reports: List[ComparativeDeltaReport] = []
 
-        crucible_keys = [suite_name] if suite_name and suite_name in ALL_CRUCIBLES else list(ALL_CRUCIBLES.keys())
+        crucible_keys = (
+            [suite_name]
+            if suite_name and suite_name in ALL_CRUCIBLES
+            else list(ALL_CRUCIBLES.keys())
+        )
 
         for key in crucible_keys:
             crucible_cls = ALL_CRUCIBLES[key]
@@ -36,7 +43,9 @@ class HarnessRunner:
         return reports
 
     def render_summary_table(self, deltas: List[ComparativeDeltaReport]):
-        table = Table(title="Skillware-Bench Empirical Progression & Delta Matrix", show_header=True)
+        table = Table(
+            title="Skillware-Bench Empirical Progression & Delta Matrix", show_header=True
+        )
         table.add_column("Crucible / Suite", style="cyan", no_wrap=True)
         table.add_column("Model", style="magenta")
         table.add_column("Base Score", justify="right")
@@ -47,7 +56,9 @@ class HarnessRunner:
         table.add_column("Pass", justify="center")
 
         for d in deltas:
-            pass_status = "[green]PASS[/green]" if d.with_skillware.score.passed else "[red]FAIL[/red]"
+            pass_status = (
+                "[green]PASS[/green]" if d.with_skillware.score.passed else "[red]FAIL[/red]"
+            )
             lift_style = "[green]+" if d.composite_score_lift > 0 else "[red]"
             table.add_row(
                 d.scenario_id,
@@ -62,7 +73,9 @@ class HarnessRunner:
 
         self.console.print(table)
 
-    def export_reports(self, deltas: List[ComparativeDeltaReport], output_dir: str = "./runs/reports"):
+    def export_reports(
+        self, deltas: List[ComparativeDeltaReport], output_dir: str = "./runs/reports"
+    ):
         os.makedirs(output_dir, exist_ok=True)
         path = os.path.join(output_dir, "benchmark_report.json")
         payload = [d.model_dump() for d in deltas]

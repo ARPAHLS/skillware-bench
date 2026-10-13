@@ -1,0 +1,10 @@
+{
+  "address": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
+  "is_sanctioned": false,
+  "sanctions_source": "OFAC SDN / FBI cyber lists",
+  "mixer_direct_exposure": 0,
+  "risk_score": 0.05,
+  "risk_tier": "low",
+  "last_screened_at": "2026-10-13T10:00:00Z",
+  "disclaimer": "This is a risk assessment tool and not legal advice."
+}

@@ -1,0 +1,19 @@
+id: chained_compliance_pipeline_01
+title: "Chained Pipeline: PII Masking -> Companies House -> Token Limiter"
+tier: tier_4_chains
+category: compliance
+skills:
+  - compliance/pii_masker
+  - finance/uk_companies_house_handler
+  - monitoring/token_limiter
+
+scenario:
+  prompt: "Take incoming client memo containing confidential contact info for 'DeepMind Technologies', mask all personal emails/phone numbers via pii_masker, look up the company registration, and verify remaining token budget via token_limiter."
+  mock: true
+
+expectations:
+  required_tool_sequence:
+    - pii_masker
+    - resolve_company
+    - token_limiter
+  negative_control: false

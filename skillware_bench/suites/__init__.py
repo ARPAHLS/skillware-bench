@@ -1,3 +1,6 @@
+# Copyright (c) 2026 ARPA Hellenic Logical Systems
+# SPDX-License-Identifier: MIT
+
 """Simulation crucibles and benchmark suites for Skillware-Bench."""
 
 from skillware_bench.suites.gmail_crucible import GmailWorkflowCrucible

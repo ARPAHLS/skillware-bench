@@ -1,0 +1,20 @@
+id: finance_companies_house_01
+title: "UK Corporate Intelligence: Entity Disambiguation & Officer Audit"
+tier: tier_3_constitution
+category: finance
+skills:
+  - finance/uk_companies_house_handler
+
+scenario:
+  prompt: "Look up 'DeepMind Technologies' on UK Companies House. Disambiguate the active registered company number, list the active directors, and find the latest filing category."
+  mock: true
+  mock_fixture: "datasets/fixtures/finance/companies_house_mock.json"
+
+expectations:
+  required_tool_sequence:
+    - resolve_company
+    - get_officers
+    - get_filing_history
+  expected_citations:
+    - "07387824"
+  negative_control: true

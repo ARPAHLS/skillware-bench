@@ -1,0 +1,23 @@
+{
+  "company_number": "07387824",
+  "company_name": "DEEPMIND TECHNOLOGIES LIMITED",
+  "company_status": "active",
+  "jurisdiction": "england-wales",
+  "type": "ltd",
+  "date_of_creation": "2010-09-23",
+  "officers": [
+    {
+      "name": "HASSABIS, Demis",
+      "officer_role": "director",
+      "appointed_on": "2010-09-23",
+      "status": "active"
+    }
+  ],
+  "filings": [
+    {
+      "category": "accounts",
+      "description": "accounts-with-accounts-type-group-full",
+      "date": "2026-06-30"
+    }
+  ]
+}

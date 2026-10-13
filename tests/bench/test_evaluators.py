@@ -1,11 +1,12 @@
+# Copyright (c) 2026 ARPA Hellenic Logical Systems
+# SPDX-License-Identifier: MIT
+
 """Unit tests for CrucibleEvaluator rubric and scoring."""
 
 from skillware_bench.core.evaluators import CrucibleEvaluator
 from skillware_bench.core.models import (
     ScenarioExpectations,
     ToolCallRecord,
-    CrucibleRunReport,
-    CrucibleScore,
 )
 
 
