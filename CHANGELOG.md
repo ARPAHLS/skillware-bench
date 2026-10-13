@@ -10,7 +10,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ### Added
 
+- **Anti-Contamination, Statistics & SVG Visualization Engine (Phase 4)**:
+  - `PerturbationEngine`: Procedural anti-contamination generator varying entity names, corporate targets, and syntactic prompt templates while preserving invariant constitutional rules.
+  - `StatisticalEvaluator` & Pass@k Estimator: Unbiased Pass@k calculation, 95% confidence intervals, and metric distributions across repeated runs.
+  - `VisualGenerator`: Zero-dependency standalone SVG figure generator producing 10-Pillar Radar Plots (`radar_profile.svg`) and Empirical Delta Optimization charts (`empirical_lift_delta.svg`).
+  - Automated Figure Export: Added `--figures` and `--figures-dir` CLI flags to `skillware-bench run` to export publication-grade SVG figures.
+
 - **Adversarial Security & AURA Provenance Engine (Phase 3)**:
+
   - `PromptInjectionCrucible`: Bi-directional indirect prompt injection and semicolon ambush crucible stress-testing data exfiltration and isolation via `security/prompt_injection_firewall`.
   - `ContextDriftCrucible`: 15-turn long-horizon context drift crucible evaluating constitutional amnesia and PII/TIN retention under heavy conversational context.
   - `ProvenanceEngine`: Cryptographic Ed25519 trace signing and AURA `.aura.jsonl` causal hash chain verification engine detecting forged steps or log tampering.

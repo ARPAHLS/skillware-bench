@@ -93,6 +93,9 @@ def cmd_run(args, console: Console):
     if args.export:
         runner.export_reports(deltas, output_dir=args.output_dir)
 
+    if getattr(args, "figures", False):
+        runner.export_figures(deltas, output_dir=getattr(args, "figures_dir", "./runs/figures"))
+
 
 def cmd_compare(args, console: Console):
     """Print detailed turn-by-turn comparison for a specific crucible."""
@@ -247,6 +250,17 @@ def main():
     )
     p_run.add_argument(
         "--output-dir", default="./runs/reports", help="Output directory for reports"
+    )
+    p_run.add_argument(
+        "--figures",
+        action="store_true",
+        default=False,
+        help="Generate standalone SVG figures (radar and empirical lift delta)",
+    )
+    p_run.add_argument(
+        "--figures-dir",
+        default="./runs/figures",
+        help="Output directory for generated figures",
     )
     p_run.set_defaults(func=cmd_run)
 

@@ -28,7 +28,9 @@ def test_cli_run():
     args.live = False
     args.adapter = None
     args.export = False
+    args.figures = False
     cmd_run(args, console)
+
     output = console.export_text()
     assert "Skillware-Bench Empirical Progression" in output
     assert "office_gmail_01" in output
@@ -78,8 +80,10 @@ class CustomTestAdapter(BaseModelAdapter):
     args.live = True
     args.adapter = str(adapter_file)
     args.export = False
+    args.figures = False
 
     cmd_run(args, console)
+
     output = console.export_text()
     assert "LIVE (real API execution)" in output
     assert "office_gmail_01" in output
