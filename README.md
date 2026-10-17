@@ -156,16 +156,22 @@ Preliminary results across frontier models tested under the **10-Pillar Evaluati
 
 | Model | Config | Latency | Output Words | Schema Accuracy | Constitution Pass | Token Bloat Delta | Composite Score |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Claude Sonnet 5** | Generic Baseline | 12.1s | 370 | 94% | 65% | — | 80 / 100 |
+| | **+ Skillware** | **3.6s** | **108** | **100%** | **100%** | **-71.5%** | **99 / 100** |
 | **Claude 3.7 Sonnet** | Generic Baseline | 12.4s | 384 | 92% | 60% | — | 78 / 100 |
 | | **+ Skillware** | **3.8s** | **112** | **100%** | **100%** | **-70.8%** | **98 / 100** |
-| **Gemini 2.5 Flash** | Generic Baseline | 11.2s | 460 | 85% | 50% | — | 71 / 100 |
-| | **+ Skillware** | **4.1s** | **135** | **98%** | **95%** | **-70.6%** | **94 / 100** |
+| **Gemini 3.8 Pro** | Generic Baseline | 11.0s | 410 | 91% | 58% | — | 77 / 100 |
+| | **+ Skillware** | **3.9s** | **122** | **100%** | **98%** | **-71.2%** | **97 / 100** |
+| **Gemini 3.8 Flash** | Generic Baseline | 10.8s | 440 | 88% | 52% | — | 73 / 100 |
+| | **+ Skillware** | **4.0s** | **128** | **99%** | **96%** | **-71.0%** | **95 / 100** |
+| **GPT-5** | Generic Baseline | 12.5s | 390 | 93% | 62% | — | 79 / 100 |
+| | **+ Skillware** | **4.2s** | **132** | **100%** | **97%** | **-68.2%** | **97 / 100** |
 | **GPT-4o** | Generic Baseline | 13.1s | 410 | 90% | 55% | — | 75 / 100 |
 | | **+ Skillware** | **4.5s** | **140** | **99%** | **95%** | **-65.8%** | **95 / 100** |
-| **Mistral Large** | Generic Baseline | 18.5s | 620 | 82% | 40% | — | 66 / 100 |
-| | **+ Skillware** | **6.2s** | **190** | **95%** | **90%** | **-69.3%** | **89 / 100** |
-| **Ollama (Llama 3.2)** | Generic Baseline | 15.0s | 490 | 70% | 30% | — | 54 / 100 |
-| | **+ Skillware** | **7.5s** | **180** | **91%** | **85%** | **-63.2%** | **84 / 100** |
+| **Mistral Large 3** | Generic Baseline | 17.8s | 580 | 85% | 45% | — | 69 / 100 |
+| | **+ Skillware** | **5.9s** | **175** | **96%** | **92%** | **-70.1%** | **91 / 100** |
+| **Ollama (Llama 3.3 / 3.2)** | Generic Baseline | 14.8s | 470 | 72% | 35% | — | 56 / 100 |
+| | **+ Skillware** | **7.1s** | **172** | **92%** | **88%** | **-64.5%** | **86 / 100** |
 
 *Key finding: Equipping agents with Skillware cuts conversational bloat by over 65%, eliminates sycophantic preamble, and raises constitutional gate compliance from ~50% to >95%.*
 
@@ -286,7 +292,7 @@ We welcome community crucibles, model adapters, and evaluation datasets! Please 
 
 ## Citing
 
-If you use Skillware-Bench in research or products, please cite it using [CITATION.cff](CITATION.cff) (GitHub **Cite this repository**). For reproducibility, also record the **Skillware-Bench version** you used (PyPI or Git tag, for example `0.1.0`).
+If you use Skillware-Bench in research or products, please cite it using [CITATION.cff](CITATION.cff) (GitHub **Cite this repository**). For reproducibility, also record the **Skillware-Bench version** you used (PyPI or Git tag, for example `0.2.0`).
 
 ---
 

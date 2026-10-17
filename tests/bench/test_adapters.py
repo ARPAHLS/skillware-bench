@@ -81,14 +81,23 @@ def test_adapter_factory_resolution():
     gpt = get_adapter("gpt-4o", mock=False)
     assert isinstance(gpt, OpenAIAdapter)
 
+    gpt5 = get_adapter("gpt-5", mock=False)
+    assert isinstance(gpt5, OpenAIAdapter)
+
     o3 = get_adapter("o3-mini", mock=False)
     assert isinstance(o3, OpenAIAdapter)
 
     claude = get_adapter("claude-3-7-sonnet", mock=False)
     assert isinstance(claude, AnthropicAdapter)
 
+    sonnet5 = get_adapter("sonnet-5", mock=False)
+    assert isinstance(sonnet5, AnthropicAdapter)
+
     gemini = get_adapter("gemini-2.5-flash", mock=False)
     assert isinstance(gemini, GeminiAdapter)
+
+    gemini38 = get_adapter("gemini-3.8-flash", mock=False)
+    assert isinstance(gemini38, GeminiAdapter)
 
     mistral = get_adapter("mistral-large-latest", mock=False)
     assert isinstance(mistral, MistralAdapter)

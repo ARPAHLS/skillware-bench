@@ -50,23 +50,34 @@ class ModelResponse:
 # Pricing matrix (USD per million tokens): (prompt, completion, cached_prompt)
 MODEL_PRICING_TABLE: Dict[str, Tuple[float, float, float]] = {
     # OpenAI
+    "gpt-5": (5.00, 20.00, 2.50),
+    "gpt-4.5": (10.00, 40.00, 5.00),
     "gpt-4o": (2.50, 10.00, 1.25),
     "gpt-4o-mini": (0.15, 0.60, 0.075),
     "o3-mini": (1.10, 4.40, 0.55),
     "o1": (15.00, 60.00, 7.50),
     # Anthropic
+    "claude-sonnet-5": (3.00, 15.00, 0.30),
+    "sonnet-5": (3.00, 15.00, 0.30),
+    "claude-5": (3.00, 15.00, 0.30),
     "claude-3-7-sonnet": (3.00, 15.00, 0.30),
     "claude-3-5-sonnet": (3.00, 15.00, 0.30),
     "claude-3-5-haiku": (0.80, 4.00, 0.08),
     # Google Gemini
+    "gemini-3.8-pro": (1.25, 5.00, 0.3125),
+    "gemini-3.8-flash": (0.075, 0.30, 0.01875),
+    "gemini-3.8": (0.075, 0.30, 0.01875),
+    "gemini-3-flash": (0.075, 0.30, 0.01875),
     "gemini-2.5-pro": (1.25, 5.00, 0.3125),
     "gemini-2.5-flash": (0.075, 0.30, 0.01875),
     "gemini-1.5-pro": (1.25, 5.00, 0.3125),
     "gemini-1.5-flash": (0.075, 0.30, 0.01875),
     # Mistral
+    "mistral-large-3": (2.00, 6.00, 0.0),
     "mistral-large": (2.00, 6.00, 0.0),
     "codestral": (0.30, 0.90, 0.0),
     # Local Sovereign (Zero API Cost)
+    "llama3.3": (0.0, 0.0, 0.0),
     "llama3.2": (0.0, 0.0, 0.0),
     "llama3": (0.0, 0.0, 0.0),
     "qwen2.5": (0.0, 0.0, 0.0),

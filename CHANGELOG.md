@@ -6,12 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-10-17
+
 ### Added
 
 - **Frontier Sweeps, Public Leaderboard & Release Readiness (Phase 6)**:
-  - Complete 7-crucible evaluation suite with empirical benchmark results across Claude 3.7 Sonnet, Gemini 2.5 Flash, GPT-4o, Mistral Large, and Ollama Llama 3.2.
+  - Complete 7-crucible evaluation suite with empirical benchmark results across Claude Sonnet 5, Claude 3.7 Sonnet, Gemini 3.8 Pro, Gemini 3.8 Flash, GPT-5, GPT-4o, Mistral Large 3, and Ollama Llama 3.3/3.2.
+  - Frontier model adapter resolution and pricing matrix for Claude Sonnet 5, Gemini 3.8, GPT-5, and Mistral Large 3.
   - Standalone SVG publication figures: `docs/figures/radar_profile.svg` and `docs/figures/empirical_lift_delta.svg`.
-  - Exported production HTML dashboard: `docs/dashboard.html` for GitHub Pages.
+  - Exported production HTML dashboard: `docs/dashboard.html` and root `docs/index.html` for GitHub Pages.
   - Interactive pastel splash banner and dispatch menu: `skillware-bench menu`.
   - Added CLI `perturb` command for dynamic anti-contamination task generation with reproducible random seeds.
   - Added CLI `new-model` command for instant Bring-Your-Own-Model (BYOM) adapter scaffolding.
@@ -24,6 +27,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ### Fixed
 
+- **Hermetic Infrastructure Unit Tests**: Made `CompaniesHouseClient` and `WalletScreeningClient` tests resilient by explicitly evaluating mock snapshots and ignoring placeholder local `.env` keys.
 - **Windows CP1252 Terminal Encoding**: Replaced Unicode delta symbol (`\u0394`) with plain ASCII labels in terminal summary tables to prevent `charmap` codec crashes on default Windows environments.
 - **BYOM Adapter Import Compatibility**: Added `skillware_bench.core.adapters.registry` re-export module so both direct and submodule imports of `AdapterRegistry` succeed.
 - **Root Package Exports**: Re-exported all primary benchmark, provenance, evaluator, and dashboard classes directly from `skillware_bench`.

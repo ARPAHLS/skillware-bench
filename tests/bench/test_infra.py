@@ -68,7 +68,7 @@ def test_disposable_mailbox_lifecycle():
 
 
 def test_companies_house_client():
-    client = CompaniesHouseClient()
+    client = CompaniesHouseClient(api_key="mock")
 
     # 1. Company resolution
     search = client.resolve_company("DeepMind")
@@ -98,7 +98,7 @@ def test_companies_house_client():
 
 
 def test_wallet_screening_client():
-    client = WalletScreeningClient()
+    client = WalletScreeningClient(api_key="mock")
 
     # 1. Tornado Cash Router (sanctioned)
     tc_address = "0x8589427373D6D84E98730D7795D8f6f8731FDA16"

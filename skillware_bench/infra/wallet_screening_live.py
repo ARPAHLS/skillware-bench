@@ -52,7 +52,18 @@ class WalletScreeningClient:
 
     @property
     def is_live(self) -> bool:
-        return bool(self.api_key and not self.api_key.startswith("mock"))
+        if not self.api_key:
+            return False
+        clean = self.api_key.strip().lower()
+        if (
+            clean.startswith("mock")
+            or "your_" in clean
+            or "placeholder" in clean
+            or "dummy" in clean
+            or "here" in clean
+        ):
+            return False
+        return True
 
     def validate_address(self, address: str) -> bool:
         """Validate standard Ethereum address hexadecimal format."""

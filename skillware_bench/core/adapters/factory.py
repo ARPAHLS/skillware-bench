@@ -60,18 +60,26 @@ def get_adapter(
     # OpenAI family
     if (
         name_lower.startswith("gpt-")
+        or name_lower.startswith("gpt")
         or name_lower.startswith("o1")
         or name_lower.startswith("o3")
+        or name_lower.startswith("o4")
         or name_lower.startswith("chatgpt-")
     ):
         return OpenAIAdapter(model_name=model_name, **kwargs)
 
     # Anthropic Claude family
-    if name_lower.startswith("claude-"):
+    if (
+        name_lower.startswith("claude-")
+        or name_lower.startswith("claude")
+        or name_lower.startswith("sonnet")
+        or name_lower.startswith("haiku")
+        or name_lower.startswith("opus")
+    ):
         return AnthropicAdapter(model_name=model_name, **kwargs)
 
     # Google Gemini family
-    if name_lower.startswith("gemini-"):
+    if name_lower.startswith("gemini-") or name_lower.startswith("gemini"):
         return GeminiAdapter(model_name=model_name, **kwargs)
 
     # Mistral AI family
