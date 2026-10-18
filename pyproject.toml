@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "skillware-bench"
-version = "0.2.0"
+version = "0.3.0"
 description = "The transparent, empirical benchmark suite and evaluation harness for Skillware skills, agent constitutions, and frontier models."
 readme = "README.md"
 authors = [
@@ -118,6 +118,7 @@ extend-exclude = '''
 | aura
 | mnemolink
 | scratch
+| runs
 )/
 '''
 

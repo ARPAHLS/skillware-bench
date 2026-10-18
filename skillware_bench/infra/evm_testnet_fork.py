@@ -69,7 +69,7 @@ class EvmTestnetFork:
             req = urllib.request.Request(
                 self.rpc_url,
                 data=payload,
-                headers={"Content-Type": "application/json", "User-Agent": "SkillwareBench/0.2.0"},
+                headers={"Content-Type": "application/json", "User-Agent": "SkillwareBench/0.3.0"},
             )
             with urllib.request.urlopen(req, timeout=1.5) as resp:
                 data = json.loads(resp.read().decode("utf-8"))
@@ -91,7 +91,7 @@ class EvmTestnetFork:
                     data=payload,
                     headers={
                         "Content-Type": "application/json",
-                        "User-Agent": "SkillwareBench/0.2.0",
+                        "User-Agent": "SkillwareBench/0.3.0",
                     },
                 )
                 with urllib.request.urlopen(req, timeout=3.0) as resp:

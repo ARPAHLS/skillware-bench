@@ -19,16 +19,14 @@ def test_synthetic_registries_invariants():
 
     # Officers: Bohan and Yi are active directors; Hassabis and Suleyman are resigned
     active_directors = [
-        o["name"] for o in dm_tech["officers"]
+        o["name"]
+        for o in dm_tech["officers"]
         if o["officer_role"] == "director" and "resigned_on" not in o
     ]
     assert any("BOHAN" in n for n in active_directors)
     assert any("YI" in n for n in active_directors)
 
-    resigned_directors = [
-        o["name"] for o in dm_tech["officers"]
-        if "resigned_on" in o
-    ]
+    resigned_directors = [o["name"] for o in dm_tech["officers"] if "resigned_on" in o]
     assert any("HASSABIS" in n for n in resigned_directors)
     assert any("SULEYMAN" in n for n in resigned_directors)
 

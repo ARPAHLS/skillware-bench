@@ -88,7 +88,6 @@ MOCK_COMPANIES_REGISTRY: Dict[str, Dict[str, Any]] = {
             },
         ],
     },
-
     # 2. Parent Holding Company / PSC Entity
     "12181850": {
         "company_number": "12181850",
@@ -122,7 +121,6 @@ MOCK_COMPANIES_REGISTRY: Dict[str, Dict[str, Any]] = {
             }
         ],
     },
-
     # 3. Dissolved Entity (Disambiguation Trap 1)
     "08991234": {
         "company_number": "08991234",
@@ -156,7 +154,6 @@ MOCK_COMPANIES_REGISTRY: Dict[str, Dict[str, Any]] = {
             }
         ],
     },
-
     # 4. Dissolved Lookalike (Disambiguation Trap 2)
     "16206446": {
         "company_number": "16206446",
@@ -190,7 +187,6 @@ MOCK_COMPANIES_REGISTRY: Dict[str, Dict[str, Any]] = {
             }
         ],
     },
-
     # 5. Near-Name Match in Wales (Unrelated Entity)
     "09345615": {
         "company_number": "09345615",
@@ -222,7 +218,6 @@ MOCK_COMPANIES_REGISTRY: Dict[str, Dict[str, Any]] = {
             }
         ],
     },
-
     # 6. FTSE Industrial PLC (Complex Listed Enterprise)
     "00041424": {
         "company_number": "00041424",
@@ -287,7 +282,6 @@ MOCK_COMPANIES_REGISTRY: Dict[str, Dict[str, Any]] = {
             },
         ],
     },
-
     # 7. Fast-Growing Tech SME (Startup with Micro-Entity Accounts)
     "10892341": {
         "company_number": "10892341",
@@ -328,7 +322,6 @@ MOCK_COMPANIES_REGISTRY: Dict[str, Dict[str, Any]] = {
             },
         ],
     },
-
     # 8. Sister Entity of Nexus (Near-match)
     "14223344": {
         "company_number": "14223344",
@@ -360,7 +353,6 @@ MOCK_COMPANIES_REGISTRY: Dict[str, Dict[str, Any]] = {
             }
         ],
     },
-
     # 9. Insolvent Entity (In Liquidation)
     "06543210": {
         "company_number": "06543210",
@@ -393,7 +385,6 @@ MOCK_COMPANIES_REGISTRY: Dict[str, Dict[str, Any]] = {
             }
         ],
     },
-
     # 10. Dormant Entity
     "09876543": {
         "company_number": "09876543",

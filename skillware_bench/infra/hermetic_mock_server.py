@@ -58,14 +58,16 @@ class HermeticMockRequestHandler(BaseHTTPRequestHandler):
             items = []
             for c_num, comp in MOCK_COMPANIES_REGISTRY.items():
                 if q in comp["company_name"].lower() or q in c_num:
-                    items.append({
-                        "company_number": c_num,
-                        "title": comp["company_name"],
-                        "company_status": comp["company_status"],
-                        "date_of_creation": comp["date_of_creation"],
-                        "company_type": comp["type"],
-                        "address": comp["registered_office_address"],
-                    })
+                    items.append(
+                        {
+                            "company_number": c_num,
+                            "title": comp["company_name"],
+                            "company_status": comp["company_status"],
+                            "date_of_creation": comp["date_of_creation"],
+                            "company_type": comp["type"],
+                            "address": comp["registered_office_address"],
+                        }
+                    )
             self._send_json(200, {"total_results": len(items), "items": items})
             return
 
@@ -75,14 +77,17 @@ class HermeticMockRequestHandler(BaseHTTPRequestHandler):
             c_num = parts[1].zfill(8)
             comp = MOCK_COMPANIES_REGISTRY.get(c_num)
             if comp:
-                self._send_json(200, {
-                    "company_number": c_num,
-                    "company_name": comp["company_name"],
-                    "company_status": comp["company_status"],
-                    "date_of_creation": comp["date_of_creation"],
-                    "type": comp["type"],
-                    "registered_office_address": comp["registered_office_address"],
-                })
+                self._send_json(
+                    200,
+                    {
+                        "company_number": c_num,
+                        "company_name": comp["company_name"],
+                        "company_status": comp["company_status"],
+                        "date_of_creation": comp["date_of_creation"],
+                        "type": comp["type"],
+                        "registered_office_address": comp["registered_office_address"],
+                    },
+                )
             else:
                 self._send_json(404, {"error": "Company not found", "company_number": c_num})
             return
@@ -98,12 +103,21 @@ class HermeticMockRequestHandler(BaseHTTPRequestHandler):
                 if active_only:
                     officers = [o for o in officers if "resigned_on" not in o]
                 if role_filter:
-                    officers = [o for o in officers if o.get("officer_role", "").lower() == role_filter.lower()]
-                self._send_json(200, {
-                    "total_results": len(officers),
-                    "active_count": sum(1 for o in comp.get("officers", []) if "resigned_on" not in o),
-                    "items": officers,
-                })
+                    officers = [
+                        o
+                        for o in officers
+                        if o.get("officer_role", "").lower() == role_filter.lower()
+                    ]
+                self._send_json(
+                    200,
+                    {
+                        "total_results": len(officers),
+                        "active_count": sum(
+                            1 for o in comp.get("officers", []) if "resigned_on" not in o
+                        ),
+                        "items": officers,
+                    },
+                )
             else:
                 self._send_json(404, {"error": "Company not found", "company_number": c_num})
             return
@@ -113,10 +127,13 @@ class HermeticMockRequestHandler(BaseHTTPRequestHandler):
             c_num = parts[1].zfill(8)
             comp = MOCK_COMPANIES_REGISTRY.get(c_num)
             if comp:
-                self._send_json(200, {
-                    "total_results": len(comp.get("filings", [])),
-                    "items": comp.get("filings", []),
-                })
+                self._send_json(
+                    200,
+                    {
+                        "total_results": len(comp.get("filings", [])),
+                        "items": comp.get("filings", []),
+                    },
+                )
             else:
                 self._send_json(404, {"error": "Company not found", "company_number": c_num})
             return
@@ -131,13 +148,15 @@ class HermeticMockRequestHandler(BaseHTTPRequestHandler):
             for uid, msg in MOCK_INBOX_REGISTRY.items():
                 haystack = f"{msg['from']} {msg['subject']} {msg['body_plain']}".lower()
                 if not q_terms or all(t in haystack for t in q_terms):
-                    results.append({
-                        "uid": uid,
-                        "from": msg["from"],
-                        "subject": msg["subject"],
-                        "date": msg["date"],
-                        "has_attachments": len(msg.get("attachments", [])) > 0,
-                    })
+                    results.append(
+                        {
+                            "uid": uid,
+                            "from": msg["from"],
+                            "subject": msg["subject"],
+                            "date": msg["date"],
+                            "has_attachments": len(msg.get("attachments", [])) > 0,
+                        }
+                    )
             self._send_json(200, {"messages": results})
             return
 
@@ -150,20 +169,29 @@ class HermeticMockRequestHandler(BaseHTTPRequestHandler):
                 clean_msg = dict(msg)
                 clean_atts = []
                 for att in msg.get("attachments", []):
-                    clean_atts.append({
-                        "part_index": att.get("part_index", 1),
-                        "filename": att.get("filename"),
-                        "mime_type": att.get("mime_type"),
-                        "size_bytes": len(att.get("content_bytes", b"")),
-                    })
+                    clean_atts.append(
+                        {
+                            "part_index": att.get("part_index", 1),
+                            "filename": att.get("filename"),
+                            "mime_type": att.get("mime_type"),
+                            "size_bytes": len(att.get("content_bytes", b"")),
+                        }
+                    )
                 clean_msg["attachments"] = clean_atts
                 self._send_json(200, {"status": "success", "message": clean_msg})
             else:
-                self._send_json(404, {"status": "error", "error": f"Message with UID {uid} not found"})
+                self._send_json(
+                    404, {"status": "error", "error": f"Message with UID {uid} not found"}
+                )
             return
 
         # GET /email/{uid}/attachment?part=1
-        if len(parts) == 3 and parts[0] == "email" and parts[1].isdigit() and parts[2] == "attachment":
+        if (
+            len(parts) == 3
+            and parts[0] == "email"
+            and parts[1].isdigit()
+            and parts[2] == "attachment"
+        ):
             uid = int(parts[1])
             part_idx = int(query_params.get("part", [1])[0])
             msg = MOCK_INBOX_REGISTRY.get(uid)
@@ -171,9 +199,15 @@ class HermeticMockRequestHandler(BaseHTTPRequestHandler):
                 for att in msg.get("attachments", []):
                     if att.get("part_index") == part_idx:
                         self.server.record_download(uid, att["filename"])
-                        self._send_bytes(200, att["content_bytes"], att.get("mime_type", "application/octet-stream"))
+                        self._send_bytes(
+                            200,
+                            att["content_bytes"],
+                            att.get("mime_type", "application/octet-stream"),
+                        )
                         return
-                self._send_json(404, {"error": f"Attachment part {part_idx} not found on message {uid}"})
+                self._send_json(
+                    404, {"error": f"Attachment part {part_idx} not found on message {uid}"}
+                )
             else:
                 self._send_json(404, {"error": f"Message {uid} not found"})
             return
@@ -185,6 +219,7 @@ class HermeticMockRequestHandler(BaseHTTPRequestHandler):
         if path == "/crypto/screen":
             addr = query_params.get("address", [""])[0].strip()
             from skillware_bench.infra.wallet_screening_live import WalletScreeningClient
+
             client = WalletScreeningClient(api_key="mock")
             self._send_json(200, client.screen_address(addr))
             return
@@ -223,11 +258,16 @@ class HermeticMockRequestHandler(BaseHTTPRequestHandler):
         if path == "/email/send":
             confirmed = bool(body_json.get("confirmed", False))
             if not confirmed:
-                self._send_json(403, {
-                    "status": "gated",
-                    "error": "Confirmation required before send. Call /email/preview first and verify human consent.",
-                    "confirmed": False,
-                })
+                self._send_json(
+                    403,
+                    {
+                        "status": "gated",
+                        "error": (
+                            "Confirmation required before send. Call /email/preview first and verify human consent."
+                        ),
+                        "confirmed": False,
+                    },
+                )
                 return
 
             outbound = {
@@ -247,7 +287,10 @@ class HermeticMockRequestHandler(BaseHTTPRequestHandler):
             text = body_json.get("source_text") or body_json.get("text", "")
             try:
                 from skillware.core.loader import SkillLoader
-                bundle = SkillLoader.load_skill("security/prompt_injection_firewall", check_requirements=False)
+
+                bundle = SkillLoader.load_skill(
+                    "security/prompt_injection_firewall", check_requirements=False
+                )
                 cls = SkillLoader.get_skill_class(bundle)
                 inst = cls()
                 res = inst.execute({"source_text": text})
@@ -275,12 +318,14 @@ class HermeticMockServer(ThreadingHTTPServer):
     def record_request(
         self, method: str, path: str, headers: Dict[str, str], body: Optional[Any] = None
     ) -> None:
-        self.request_history.append({
-            "method": method,
-            "path": path,
-            "headers": headers,
-            "body": body,
-        })
+        self.request_history.append(
+            {
+                "method": method,
+                "path": path,
+                "headers": headers,
+                "body": body,
+            }
+        )
 
     def record_download(self, uid: int, filename: str) -> None:
         self.downloaded_attachments.append({"uid": uid, "filename": filename})

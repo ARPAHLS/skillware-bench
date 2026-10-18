@@ -39,7 +39,7 @@ from skillware_bench.dashboard import DashboardGenerator  # noqa: E402
 from skillware_bench.suites import ALL_CRUCIBLES  # noqa: E402
 from skillware_bench.viz import VisualGenerator  # noqa: E402
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 __author__ = "ARPA Hellenic Logical Systems"
 
 __all__ = [

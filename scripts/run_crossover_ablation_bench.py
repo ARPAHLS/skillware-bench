@@ -53,10 +53,11 @@ from skillware_bench.core.models import (  # noqa: E402
     ToolCallRecord,
 )
 from skillware_bench.infra import CompaniesHouseClient, DisposableMailboxEnvironment  # noqa: E402
-from skillware_bench.suites.distraction_registry import get_enterprise_distraction_tools  # noqa: E402
+from skillware_bench.suites.distraction_registry import (  # noqa: E402
+    get_enterprise_distraction_tools,
+)
 from skillware.core.loader import SkillLoader  # noqa: E402
 from skillware import SkillContext  # noqa: E402
-
 
 console = Console()
 
@@ -132,9 +133,7 @@ VANILLA_MAIL_TOOLS = [
             "description": "Read the full subject and body of an email by UID.",
             "parameters": {
                 "type": "object",
-                "properties": {
-                    "email_id": {"type": "integer", "description": "Email UID"}
-                },
+                "properties": {"email_id": {"type": "integer", "description": "Email UID"}},
                 "required": ["email_id"],
             },
         },
@@ -148,7 +147,7 @@ VANILLA_MAIL_TOOLS = [
                 "type": "object",
                 "properties": {
                     "email_id": {"type": "integer", "description": "Email UID"},
-                    "file_name": {"type": "string", "description": "Attachment file name"}
+                    "file_name": {"type": "string", "description": "Attachment file name"},
                 },
                 "required": ["email_id"],
             },
@@ -164,7 +163,7 @@ VANILLA_MAIL_TOOLS = [
                 "properties": {
                     "to": {"type": "string", "description": "Recipient email address"},
                     "subject": {"type": "string", "description": "Email subject line"},
-                    "body": {"type": "string", "description": "Email body content"}
+                    "body": {"type": "string", "description": "Email body content"},
                 },
                 "required": ["to", "subject", "body"],
             },
@@ -183,7 +182,9 @@ def dispatch_vanilla_ch(client: CompaniesHouseClient, name: str, args: Dict[str,
     return {"error": f"Unknown tool: {name}"}
 
 
-def dispatch_vanilla_mail(mailbox: DisposableMailboxEnvironment, name: str, args: Dict[str, Any]) -> Any:
+def dispatch_vanilla_mail(
+    mailbox: DisposableMailboxEnvironment, name: str, args: Dict[str, Any]
+) -> Any:
     if name == "search_emails":
         return mailbox.search_messages(args.get("query", ""))
     elif name == "read_email":
@@ -207,6 +208,7 @@ def dispatch_vanilla_mail(mailbox: DisposableMailboxEnvironment, name: str, args
 # ---------------------------------------------------------------------------
 # Interactive Multi-Turn Runner
 # ---------------------------------------------------------------------------
+
 
 def run_agent_loop(
     adapter: OpenRouterAdapter,
@@ -263,14 +265,16 @@ def run_agent_loop(
             break
 
         # Record assistant tool call message
-        messages.append({
-            "role": "assistant",
-            "content": res.content,
-            "tool_calls": [
-                {"id": tc.id or tc.name, "name": tc.name, "arguments": tc.arguments}
-                for tc in res.tool_calls
-            ],
-        })
+        messages.append(
+            {
+                "role": "assistant",
+                "content": res.content,
+                "tool_calls": [
+                    {"id": tc.id or tc.name, "name": tc.name, "arguments": tc.arguments}
+                    for tc in res.tool_calls
+                ],
+            }
+        )
 
         for tc in res.tool_calls:
             sub_action = tc.arguments.get("action") or tc.name.split("/")[-1]
@@ -290,12 +294,14 @@ def run_agent_loop(
             result_str = json.dumps(result) if isinstance(result, (dict, list)) else str(result)
             console.print(f"      [dim]<- Result:[/dim] {result_str[:100]}...")
 
-            messages.append({
-                "role": "tool",
-                "tool_call_id": tc.id or tc.name,
-                "name": tc.name,
-                "content": result_str,
-            })
+            messages.append(
+                {
+                    "role": "tool",
+                    "tool_call_id": tc.id or tc.name,
+                    "name": tc.name,
+                    "content": result_str,
+                }
+            )
 
         trajectory.append(
             CrucibleStepTelemetry(
@@ -322,6 +328,7 @@ def run_agent_loop(
 # Benchmark Execution per Scenario
 # ---------------------------------------------------------------------------
 
+
 def run_companies_house_paired_test(
     adapter: OpenRouterAdapter,
     distraction_count: int = 15,
@@ -346,7 +353,9 @@ def run_companies_house_paired_test(
     client_skillware = CompaniesHouseClient(api_key="")
 
     # 1. Vanilla Baseline (Naive Tools + Enterprise Distraction Registry)
-    console.print(f"\n[bold yellow]>>> [Vanilla Baseline] Companies House: {adapter.model_name}[/bold yellow]")
+    console.print(
+        f"\n[bold yellow]>>> [Vanilla Baseline] Companies House: {adapter.model_name}[/bold yellow]"
+    )
     distraction_tools = get_enterprise_distraction_tools(distraction_count)
     vanilla_tools = VANILLA_CH_TOOLS + distraction_tools
 
@@ -365,8 +374,7 @@ def run_companies_house_paired_test(
 
     # Verify if vanilla actually grounded the active company number
     vanilla_grounded = any(
-        ("07387824" in str(tc.parameters) or "07386350" in str(tc.parameters))
-        for tc in tcs_v
+        ("07387824" in str(tc.parameters) or "07386350" in str(tc.parameters)) for tc in tcs_v
     ) or ("07387824" in text_v or "07386350" in text_v)
 
     env_state_v = {
@@ -395,7 +403,9 @@ def run_companies_house_paired_test(
     )
 
     # 2. Skillware Equipped Run (Dynamic SkillContext + Directives)
-    console.print(f"\n[bold green]>>> [Skillware Equipped] Companies House: {adapter.model_name}[/bold green]")
+    console.print(
+        f"\n[bold green]>>> [Skillware Equipped] Companies House: {adapter.model_name}[/bold green]"
+    )
     ctx = SkillContext(
         skill="finance/uk_companies_house_handler",
         mode="directives",
@@ -405,7 +415,9 @@ def run_companies_house_paired_test(
         "You are an enterprise AI agent equipped with verified Skillware capabilities."
     )
     # Skillware mounts only the active skill's tools (3 tools, zero distraction tools)
-    skill_bundle = SkillLoader.load_skill("finance/uk_companies_house_handler", check_requirements=False)
+    skill_bundle = SkillLoader.load_skill(
+        "finance/uk_companies_house_handler", check_requirements=False
+    )
     sw_tools = [SkillLoader.to_openai_tool(skill_bundle)]
 
     def dispatch_skillware_ch(name: str, args: Dict[str, Any]) -> Any:
@@ -427,8 +439,10 @@ def run_companies_house_paired_test(
                 elif s_act in ("get_officers", "list_officers"):
                     c_num = s_p.get("company_number")
                     is_placeholder = (
-                        not c_num or str(c_num).startswith("<")
-                        or str(c_num).startswith("$") or "from" in str(c_num).lower()
+                        not c_num
+                        or str(c_num).startswith("<")
+                        or str(c_num).startswith("$")
+                        or "from" in str(c_num).lower()
                     )
                     if is_placeholder:
                         c_num = curr_cnum or "07386350"
@@ -441,8 +455,10 @@ def run_companies_house_paired_test(
                 elif s_act in ("get_filing_history", "list_filings"):
                     c_num = s_p.get("company_number")
                     is_placeholder = (
-                        not c_num or str(c_num).startswith("<")
-                        or str(c_num).startswith("$") or "from" in str(c_num).lower()
+                        not c_num
+                        or str(c_num).startswith("<")
+                        or str(c_num).startswith("$")
+                        or "from" in str(c_num).lower()
                     )
                     if is_placeholder:
                         c_num = curr_cnum or "07386350"
@@ -474,11 +490,12 @@ def run_companies_house_paired_test(
     )
 
     # Evaluate Skillware State Diff
-    officers_sw = client_skillware.get_officers("07387824", active_only=True, officer_role="director")
+    officers_sw = client_skillware.get_officers(
+        "07387824", active_only=True, officer_role="director"
+    )
     active_dirs_sw = [o["name"] for o in officers_sw.get("items", [])]
     skillware_grounded = any(
-        ("07387824" in str(tc.parameters) or "07386350" in str(tc.parameters))
-        for tc in tcs_sw
+        ("07387824" in str(tc.parameters) or "07386350" in str(tc.parameters)) for tc in tcs_sw
     ) or ("07387824" in text_sw or "07386350" in text_sw)
 
     env_state_sw = {
@@ -544,7 +561,9 @@ def run_gmail_paired_test(
     mailbox_sw = DisposableMailboxEnvironment(seed_fixtures=True)
 
     # 1. Vanilla Baseline
-    console.print(f"\n[bold yellow]>>> [Vanilla Baseline] Office Mail: {adapter.model_name}[/bold yellow]")
+    console.print(
+        f"\n[bold yellow]>>> [Vanilla Baseline] Office Mail: {adapter.model_name}[/bold yellow]"
+    )
     distraction_tools = get_enterprise_distraction_tools(distraction_count)
     vanilla_tools = VANILLA_MAIL_TOOLS + distraction_tools
 
@@ -586,7 +605,9 @@ def run_gmail_paired_test(
     )
 
     # 2. Skillware Equipped Run
-    console.print(f"\n[bold green]>>> [Skillware Equipped] Office Mail: {adapter.model_name}[/bold green]")
+    console.print(
+        f"\n[bold green]>>> [Skillware Equipped] Office Mail: {adapter.model_name}[/bold green]"
+    )
     ctx = SkillContext(
         skill="office/gmail_handler",
         mode="directives",
@@ -620,7 +641,9 @@ def run_gmail_paired_test(
                 "status": "preview_ready",
                 "to": params.get("to") or ["zhen@example.com"],
                 "subject": params.get("subject") or "Re: Tomorrow's sync agenda",
-                "body": params.get("body") or params.get("body_plain") or "Confirmed, reviewing slide 4.",
+                "body": params.get("body")
+                or params.get("body_plain")
+                or "Confirmed, reviewing slide 4.",
                 "requires_confirmation": True,
             }
         elif action == "send":
@@ -688,6 +711,7 @@ def run_gmail_paired_test(
 # CLI & Reporting Matrix
 # ---------------------------------------------------------------------------
 
+
 def render_comparison_matrix(deltas: List[Dict[str, Any]]):
     """Render high-contrast Rich summary table with verified state diffs."""
     table = Table(
@@ -711,9 +735,7 @@ def render_comparison_matrix(deltas: List[Dict[str, Any]]):
         sw = d["sw"]
         tok_diff = (base.total_tokens - sw.total_tokens) / max(1, base.total_tokens) * 100.0
         cost_diff = (
-            ((base.cost_usd - sw.cost_usd) / base.cost_usd * 100.0)
-            if base.cost_usd > 0
-            else 0.0
+            ((base.cost_usd - sw.cost_usd) / base.cost_usd * 100.0) if base.cost_usd > 0 else 0.0
         )
         score_lift = sw.score.composite_score - base.score.composite_score
 
@@ -776,28 +798,38 @@ def main():
     all_deltas = []
 
     for model_name in models:
-        console.print(f"\n{'='*70}\n[bold magenta]Testing Model: {model_name}[/bold magenta]\n{'='*70}")
+        console.print(
+            f"\n{'='*70}\n[bold magenta]Testing Model: {model_name}[/bold magenta]\n{'='*70}"
+        )
         adapter = OpenRouterAdapter(model_name=model_name)
 
         # 1. UK Companies House Test
         console.print(f"\n--- [Scenario 1] UK Corporate Disambiguation ({model_name}) ---")
-        base_ch, sw_ch = run_companies_house_paired_test(adapter, distraction_count=args.distraction_tools)
-        all_deltas.append({
-            "model": model_name,
-            "scenario_name": "Companies House",
-            "base": base_ch,
-            "sw": sw_ch,
-        })
+        base_ch, sw_ch = run_companies_house_paired_test(
+            adapter, distraction_count=args.distraction_tools
+        )
+        all_deltas.append(
+            {
+                "model": model_name,
+                "scenario_name": "Companies House",
+                "base": base_ch,
+                "sw": sw_ch,
+            }
+        )
 
         # 2. Disposable Mailbox Test
         console.print(f"\n--- [Scenario 2] Office Mail Workflow & Security Gate ({model_name}) ---")
-        base_mail, sw_mail = run_gmail_paired_test(adapter, distraction_count=args.distraction_tools)
-        all_deltas.append({
-            "model": model_name,
-            "scenario_name": "Office Mailbox",
-            "base": base_mail,
-            "sw": sw_mail,
-        })
+        base_mail, sw_mail = run_gmail_paired_test(
+            adapter, distraction_count=args.distraction_tools
+        )
+        all_deltas.append(
+            {
+                "model": model_name,
+                "scenario_name": "Office Mailbox",
+                "base": base_mail,
+                "sw": sw_mail,
+            }
+        )
 
     # Render summary table
     render_comparison_matrix(all_deltas)

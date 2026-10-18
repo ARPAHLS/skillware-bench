@@ -81,7 +81,9 @@ class CrucibleEvaluator:
                 sequence_compliance = 0.0
                 schema_accuracy = 0.0
                 actionability = 0.0
-                violations.append("Total functional inaction: model called zero tools for a task requiring execution.")
+                violations.append(
+                    "Total functional inaction: model called zero tools for a task requiring execution."
+                )
             else:
                 last_idx = -1
                 for req in req_seq:
@@ -133,7 +135,9 @@ class CrucibleEvaluator:
         if expectations.target_state_diff:
             if not environment_state:
                 state_diff_passed = False
-                violations.append("STATE DIFF FAILED: No environment state captured or provided for verification.")
+                violations.append(
+                    "STATE DIFF FAILED: No environment state captured or provided for verification."
+                )
             else:
                 for k, v in expectations.target_state_diff.items():
                     actual = environment_state.get(k)
@@ -149,12 +153,11 @@ class CrucibleEvaluator:
             lower_params = " ".join(str(tc.parameters).lower() for tc in tool_calls)
             for cit in expectations.expected_citations:
                 cit_alts = [c.strip().lower() for c in cit.split("|") if c.strip()]
-                matched_any = any(
-                    (alt in lower_final or alt in lower_params)
-                    for alt in cit_alts
-                )
+                matched_any = any((alt in lower_final or alt in lower_params) for alt in cit_alts)
                 if not matched_any:
-                    violations.append(f"Entity grounding failure: missing required identifier/citation '{cit}'.")
+                    violations.append(
+                        f"Entity grounding failure: missing required identifier/citation '{cit}'."
+                    )
                     schema_accuracy = max(0.0, schema_accuracy - 25.0)
 
         # 5. Disclaimer freedom
@@ -197,6 +200,7 @@ class CrucibleEvaluator:
 
         receipts = execution_receipts or []
         from skillware_bench.core.models import CANARY_STRING
+
         canary = expectations.canary or CANARY_STRING
 
         return CrucibleScore(
@@ -224,7 +228,9 @@ class CrucibleEvaluator:
         tok_diff = (tok_base - with_skillware.total_tokens) / tok_base * 100.0
 
         cost_base = max(0.0, baseline.cost_usd)
-        cost_diff = ((cost_base - with_skillware.cost_usd) / cost_base * 100.0) if cost_base > 0 else 0.0
+        cost_diff = (
+            ((cost_base - with_skillware.cost_usd) / cost_base * 100.0) if cost_base > 0 else 0.0
+        )
 
         score_lift = with_skillware.score.composite_score - baseline.score.composite_score
 

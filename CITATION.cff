@@ -14,8 +14,8 @@ abstract: >-
   safety gates (preview-before-send, dry-runs, ambiguous consent), comparative
   with-vs-without skill efficiency (token bloat, latency, cost), and end-to-end
   real-world simulation crucibles.
-version: "0.2.0"
-date-released: "2026-10-17"
+version: "0.3.0"
+date-released: "2026-10-18"
 license: MIT
 repository-code: "https://github.com/arpahls/skillware-bench"
 url: "https://skillware.site"

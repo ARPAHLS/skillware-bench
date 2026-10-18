@@ -6,7 +6,9 @@ Skillware-Bench follows semantic versioning. We provide security updates and pat
 
 | Version | Supported | Description |
 | :--- | :---: | :--- |
-| **0.1.x** | Yes | Active development and initial benchmark release |
+| **0.3.x** | Yes | Current stable release with 23-model grand benchmark and tiered ablation harness |
+| **0.2.x** | Yes | Prior stable release with 7-crucible evaluation suite |
+| **0.1.x** | Limited | Initial alpha release |
 
 ## Benchmark Safety & Isolation Principles
 

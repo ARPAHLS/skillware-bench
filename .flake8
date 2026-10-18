@@ -12,4 +12,5 @@ exclude =
     skillware,
     aura,
     mnemolink,
-    scratch
+    scratch,
+    runs

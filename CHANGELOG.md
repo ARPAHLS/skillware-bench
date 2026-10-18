@@ -6,8 +6,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-10-18
+
 ### Added
 
+- **23-Model Grand Benchmark Suite (368 Layers, 736 Live Conditions)**:
+  - Comprehensive empirical evaluation across 23 sovereign and frontier language models spanning 11 model families:
+    - **Frontier APIs**: Anthropic Claude Sonnet 5, OpenAI GPT-6 Luna, Google Gemini 4 Argon, xAI Grok 4.7, DeepSeek v4 Pro.
+    - **Compact Workhorses**: Qwen 3.8 Flash, Google Gemini 3.8 Flash, Google Gemma 4 31B IT, DeepSeek v4.1 Flash (1017), Z-AI GLM 5.3 Flash, Xiaomi MiMo v2.6 Flash, Anthropic Claude Haiku 5.5, Meta Muse Spark 1.3, NVIDIA Nemotron 3.5 Lightning.
+    - **Sovereign Enterprise 70B+ & Open-Weight**: NVIDIA Nemotron 3 Ultra 550B, Z-AI GLM 5.3, Tencent Hunyuan 4 Preview, Xiaomi MiMo v2.6 Pro, Meta Llama 3.3 70B Instruct, Meta Llama 4 Scout, Meta Llama 4 Maverick, Meta Llama 3.1 8B Instruct, Qwen 3.6 35B A3B.
+  - **Empirical Grand Results**:
+    - Pass Rate: Vanilla 81.5% (300/368) vs. Skillware **91.6% (337/368)** (+10.1% overall pass lift).
+    - Token Efficiency: Vanilla 3,087,129 tokens vs. Skillware **1,500,967 tokens** (1,586,162 tokens saved, **51.4% reduction**).
+    - Latency: Vanilla 6,914.7s vs. Skillware **4,331.4s** (**1.60x overall speedup**).
+    - Work Avoided: **464 workspace scripts debugged in Vanilla vs. 0 in Skillware** (100% code debugging overhead eliminated).
 - **Progressive Tiered Ablation Benchmark Harness (`scripts/run_tiered_ablation_bench.py`)**:
   - Four progressive difficulty tiers: Tier 1 (Single Lookup), Tier 2 (Multi-Step Dependent Chain), Tier 3 (Disambiguation & Hierarchy), and Tier 4 (Adversarial Injection & Threat Neutralization).
   - Realistic Agent Economics: Replaced naive spoon-fed tools with raw agent primitives (`execute_python` and `http_request`). Vanilla models must discover endpoints, write complete scripts, debug runtime errors across turns, and absorb true context expansion costs.
@@ -19,16 +31,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
     - `office_mail` (`comms/disposable_mailbox`): 4 tiers (Direct Inbox, Binary Asset Extraction, Governed Confirmation Gate, Adversarial Phishing Neutralization).
     - `wallet_screening` (`finance/wallet_screening`): 4 tiers (OFAC Sanctions Lookup, Clean History & Risk Rating, Invalid Address Format Traversal, Governed Legal Disclaimer Gate).
     - `prompt_firewall` (`security/prompt_injection_firewall`): 4 tiers (Plaintext System Prompt Override, Invisible Zero-Width Unicode Smuggling, Leetspeak / ROT13 Adversarial Bypass, Precision Threat Sanitization).
-  - Multi-Model Empirical Runs Completed & Permanently Preserved:
-    - DeepSeek v4.1 Flash (`runs/tiered_ablation_20261017_180906/` to `182238/`): Skillware 8/8 (100%) vs Vanilla 7/8 (87.5%), 67.8% token savings, 60.7% cost savings, 2.6x speedup.
-    - Meta Llama 3.3 70B Instruct (`runs/tiered_ablation_20261018_105520/`): Skillware 6/8 (75%) vs Vanilla 3/8 (37.5%), 4.5x faster on Office Mail.
-    - Qwen 2.5 72B Instruct (`runs/tiered_ablation_20261018_105804/`): Skillware 22x faster on Companies House Tier 3 (14.4s vs 325.5s), Vanilla suffered 20-minute debugging collapse on Office Mail Tier 2.
-  - Zero-Emoji Hygiene Compliance: All files verified by `test_zero_emojis_in_tracked_files` with 100% pass rate across 70 tests.
+- **Universal OpenRouter Adapter Hardening (`skillware_bench/core/adapters/openrouter_adapter.py`)**:
+  - Recursive BNF grammar sanitizer (`_sanitize_tool_schema`) simplifying nested array schemas to prevent grammar blowouts on vLLM backends.
+  - Chat template collision resolution (`_sanitize_messages`) automatically merging system directives into the initial user turn when tools are active for Llama architectures.
+  - Resilient refusal extraction capturing explicit provider refusal payloads when message content is blank.
+- **Comprehensive Documentation Suite**:
+  - `docs/results/overview.md`: Complete cross-model standings and capability tier breakdowns.
+  - `docs/results/frontiers_vs_small.md`: Small Models + Skillware vs. Frontier LLMs Alone deep-dive.
+  - `docs/results/behavioral_contracts.md`: Base64 MIME attachment traps, confirmation gating, and error modes.
+  - `docs/results/token_economics.md`: Token economics, retry context bloat, and the 464 workspace scripts eliminated.
+  - `docs/results/models/`: 23 dedicated model cards with 16-layer breakdown tables and AURA receipts.
+- **Zero-Emoji Hygiene Compliance**: All repository files verified by `test_zero_emojis_in_tracked_files` with 100% pass rate across 70 tests.
 
 ### Changed
 
 - **Skillware Runtime Base URL Configuration**: Patched `finance/uk_companies_house_handler` to support runtime base URL overrides via `COMPANIES_HOUSE_BASE_URL` and `COMPANIES_HOUSE_DOCUMENT_API_BASE` for offline hermetic testing.
 - **Skill Context Optimization**: Tuned Skillware prompt injection to `brief` mode (236 characters) to eliminate redundant token bloat while preserving exact JSON function schema definitions.
+- **Version Bump**: Bumped core package version to `0.3.0`.
 
 
 ## [0.2.0] - 2026-10-17

@@ -194,8 +194,11 @@ def test_openrouter_adapter_routing_and_tool_formatting():
     # Message sanitization
     messages = [
         {"role": "user", "content": "hello"},
-        {"role": "assistant", "tool_calls": [{"id": "c1", "name": "search_messages", "arguments": {"query": "test"}}]},
-        {"role": "tool", "tool_call_id": "c1", "name": "search_messages", "content": "found 1"}
+        {
+            "role": "assistant",
+            "tool_calls": [{"id": "c1", "name": "search_messages", "arguments": {"query": "test"}}],
+        },
+        {"role": "tool", "tool_call_id": "c1", "name": "search_messages", "content": "found 1"},
     ]
     sanitized = adapter._sanitize_messages(messages, system_prompt="System instructions")
     assert len(sanitized) == 4

@@ -63,11 +63,7 @@ class CompaniesHouseClient:
 
     def __init__(self, api_key: Optional[str] = None, base_url: Optional[str] = None):
         self.api_key = api_key or os.environ.get("COMPANIES_HOUSE_API_KEY")
-        self.base_url = (
-            base_url
-            or os.environ.get("COMPANIES_HOUSE_BASE_URL")
-            or self.BASE_URL
-        )
+        self.base_url = base_url or os.environ.get("COMPANIES_HOUSE_BASE_URL") or self.BASE_URL
         self.session = requests.Session()
         if self.api_key:
             self.session.auth = (self.api_key, "")

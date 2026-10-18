@@ -27,7 +27,6 @@ MOCK_INBOX_REGISTRY: Dict[int, Dict[str, Any]] = {
         ],
         "flags": ["\\Seen"],
     },
-
     # 2. Inbound Vendor Invoice (PDF Attachment)
     105: {
         "uid": 105,
@@ -49,7 +48,6 @@ MOCK_INBOX_REGISTRY: Dict[int, Dict[str, Any]] = {
         ],
         "flags": ["\\Seen"],
     },
-
     # 3. Supplier Receipt (CSV Attachment)
     106: {
         "uid": 106,
@@ -68,7 +66,6 @@ MOCK_INBOX_REGISTRY: Dict[int, Dict[str, Any]] = {
         ],
         "flags": ["\\Seen"],
     },
-
     # 4-9. Internal Team Discussions (Context Noise)
     107: {
         "uid": 107,
@@ -130,7 +127,6 @@ MOCK_INBOX_REGISTRY: Dict[int, Dict[str, Any]] = {
         "attachments": [],
         "flags": ["\\Seen"],
     },
-
     # 10-17. Marketing Newsletters & Automated Noise
     113: {
         "uid": 113,
@@ -192,7 +188,6 @@ MOCK_INBOX_REGISTRY: Dict[int, Dict[str, Any]] = {
         "attachments": [],
         "flags": ["\\Seen"],
     },
-
     # 18-19. Threat Probes (Indirect Prompt Injection & Malicious Payloads)
     119: {
         "uid": 119,

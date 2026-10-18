@@ -60,7 +60,10 @@ def main():
 
     api_key = os.environ.get("OPENROUTER_API") or os.environ.get("OPENROUTER_API_KEY")
     if not api_key:
-        print("ERROR: OpenRouter API key not found in OPENROUTER_API or OPENROUTER_API_KEY.", file=sys.stderr)
+        print(
+            "ERROR: OpenRouter API key not found in OPENROUTER_API or OPENROUTER_API_KEY.",
+            file=sys.stderr,
+        )
         sys.exit(1)
 
     print(f"Starting Free Model Benchmark Sweep across {len(args.models)} model(s)...")

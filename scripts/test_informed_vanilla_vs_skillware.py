@@ -34,7 +34,6 @@ from skillware_bench.core.adapters.factory import get_adapter  # noqa: E402
 from skillware_bench.infra import CompaniesHouseClient, DisposableMailboxEnvironment  # noqa: E402
 from skillware.core.loader import SkillLoader  # noqa: E402
 
-
 # ---------------------------------------------------------
 # Naive Raw Tool Definitions for Vanilla Baseline
 # ---------------------------------------------------------
@@ -106,9 +105,7 @@ VANILLA_MAIL_TOOLS = [
             "description": "Read the full subject and body of an email by UID.",
             "parameters": {
                 "type": "object",
-                "properties": {
-                    "email_id": {"type": "integer", "description": "Email UID"}
-                },
+                "properties": {"email_id": {"type": "integer", "description": "Email UID"}},
                 "required": ["email_id"],
             },
         },
@@ -122,7 +119,7 @@ VANILLA_MAIL_TOOLS = [
                 "type": "object",
                 "properties": {
                     "email_id": {"type": "integer", "description": "Email UID"},
-                    "file_name": {"type": "string", "description": "Attachment file name"}
+                    "file_name": {"type": "string", "description": "Attachment file name"},
                 },
                 "required": ["email_id"],
             },
@@ -138,7 +135,7 @@ VANILLA_MAIL_TOOLS = [
                 "properties": {
                     "to": {"type": "string", "description": "Recipient email address"},
                     "subject": {"type": "string", "description": "Email subject line"},
-                    "body": {"type": "string", "description": "Email body content"}
+                    "body": {"type": "string", "description": "Email body content"},
                 },
                 "required": ["to", "subject", "body"],
             },
@@ -158,7 +155,9 @@ def execute_vanilla_ch_action(client: CompaniesHouseClient, name: str, args: Dic
     return {"error": f"Unknown tool: {name}"}
 
 
-def execute_vanilla_mail_action(mailbox: DisposableMailboxEnvironment, name: str, args: Dict[str, Any]) -> Any:
+def execute_vanilla_mail_action(
+    mailbox: DisposableMailboxEnvironment, name: str, args: Dict[str, Any]
+) -> Any:
     """Dispatch naive tool call to Mailbox simulator."""
     if name == "search_emails":
         return mailbox.search_messages(args.get("query", ""))
@@ -216,28 +215,35 @@ def run_agent_interactive(
             break
 
         # Record and execute tool calls
-        messages.append({
-            "role": "assistant",
-            "content": res.content,
-            "tool_calls": [
-                {"id": tc.id or tc.name, "name": tc.name, "arguments": tc.arguments}
-                for tc in res.tool_calls
-            ],
-        })
+        messages.append(
+            {
+                "role": "assistant",
+                "content": res.content,
+                "tool_calls": [
+                    {"id": tc.id or tc.name, "name": tc.name, "arguments": tc.arguments}
+                    for tc in res.tool_calls
+                ],
+            }
+        )
 
         for tc in res.tool_calls:
             tool_calls_executed.append((tc.name, tc.arguments))
-            print(f"      -> Invoking '{tc.name}' with args {json.dumps(tc.arguments)[:90]}...", flush=True)
+            print(
+                f"      -> Invoking '{tc.name}' with args {json.dumps(tc.arguments)[:90]}...",
+                flush=True,
+            )
             result = dispatcher_fn(tc.name, tc.arguments)
             result_str = json.dumps(result) if isinstance(result, dict) else str(result)
             print(f"      <- Result: {result_str[:110]}...", flush=True)
 
-            messages.append({
-                "role": "tool",
-                "tool_call_id": tc.id or tc.name,
-                "name": tc.name,
-                "content": result_str,
-            })
+            messages.append(
+                {
+                    "role": "tool",
+                    "tool_call_id": tc.id or tc.name,
+                    "name": tc.name,
+                    "content": result_str,
+                }
+            )
 
     return {
         "turns": turn,
@@ -285,7 +291,9 @@ def main():
             adapter=adapter,
             messages=[{"role": "user", "content": ch_prompt}],
             tools=VANILLA_CH_TOOLS,
-            dispatcher_fn=lambda name, args: execute_vanilla_ch_action(ch_client_vanilla, name, args),
+            dispatcher_fn=lambda name, args: execute_vanilla_ch_action(
+                ch_client_vanilla, name, args
+            ),
             max_turns=4,
             label="Vanilla",
         )
@@ -322,7 +330,9 @@ def main():
         )
 
         # Evaluate Scenario 1: Did Vanilla find Demis Hassabis and 07387824 vs Skillware?
-        vanilla_text = (vanilla_ch_res["final_text"] + " " + str(vanilla_ch_res["tool_calls"])).lower()
+        vanilla_text = (
+            vanilla_ch_res["final_text"] + " " + str(vanilla_ch_res["tool_calls"])
+        ).lower()
         sk_text = (sk_ch_res["final_text"] + " " + str(sk_ch_res["tool_calls"])).lower()
 
         v_found_num = "07387824" in vanilla_text
@@ -343,16 +353,18 @@ def main():
             flush=True,
         )
 
-        results.append({
-            "model": model_name,
-            "scenario": "companies_house",
-            "vanilla_tokens": vanilla_ch_res["total_tokens"],
-            "vanilla_turns": vanilla_ch_res["turns"],
-            "vanilla_success": v_found_num and v_found_director,
-            "skillware_tokens": sk_ch_res["total_tokens"],
-            "skillware_turns": sk_ch_res["turns"],
-            "skillware_success": sk_found_num and sk_found_director,
-        })
+        results.append(
+            {
+                "model": model_name,
+                "scenario": "companies_house",
+                "vanilla_tokens": vanilla_ch_res["total_tokens"],
+                "vanilla_turns": vanilla_ch_res["turns"],
+                "vanilla_success": v_found_num and v_found_director,
+                "skillware_tokens": sk_ch_res["total_tokens"],
+                "skillware_turns": sk_ch_res["turns"],
+                "skillware_success": sk_found_num and sk_found_director,
+            }
+        )
 
     # Print final summary table
     print("\n" + "=" * 70, flush=True)
