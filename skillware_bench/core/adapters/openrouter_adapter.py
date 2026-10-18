@@ -201,9 +201,7 @@ class OpenRouterAdapter(BaseModelAdapter):
                             or "unknown_tool"
                         )
                         args = (
-                            tc.get("arguments")
-                            or (tc.get("function") or {}).get("arguments")
-                            or {}
+                            tc.get("arguments") or (tc.get("function") or {}).get("arguments") or {}
                         )
                         args_str = json.dumps(args) if isinstance(args, dict) else str(args)
                         tc_list.append(
