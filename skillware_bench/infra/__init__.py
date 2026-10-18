@@ -9,6 +9,7 @@ from skillware_bench.infra.companies_house_live import (
 )
 from skillware_bench.infra.disposable_mailbox import DisposableMailboxEnvironment
 from skillware_bench.infra.evm_testnet_fork import CANONICAL_WALLETS, EvmTestnetFork
+from skillware_bench.infra.hermetic_mock_server import HermeticMockServer
 from skillware_bench.infra.wallet_screening_live import (
     MANDATORY_LEGAL_DISCLAIMER,
     WalletScreeningClient,
@@ -22,4 +23,5 @@ __all__ = [
     "MANDATORY_LEGAL_DISCLAIMER",
     "EvmTestnetFork",
     "CANONICAL_WALLETS",
+    "HermeticMockServer",
 ]

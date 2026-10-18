@@ -85,6 +85,13 @@ Run the complete evaluation suite locally:
 # Run all crucibles in deterministic mock mode
 skillware-bench run --mock --export
 
+# Benchmark live models via OpenRouter (any free or paid model)
+skillware-bench openrouter --models nvidia/nemotron-3.5-super-vl:free --crucibles gmail companies_house wallet_screening constitution
+
+# Or run the automated reproduction sweeps:
+python scripts/run_openrouter_free_bench.py
+python scripts/run_openrouter_paid_bench.py --models deepseek/deepseek-v4.1-flash-1017 google/gemini-4-argon
+
 # Generate publication-grade SVG figures and HTML dashboard
 skillware-bench run --figures
 skillware-bench dashboard

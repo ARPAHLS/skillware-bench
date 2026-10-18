@@ -45,6 +45,8 @@ def cmd_check_env(args, console: Console):
     table.add_column("Details", style="dim")
 
     keys_to_check = [
+        ("OpenRouter API", "OPENROUTER_API", "Primary OpenRouter key for frontier/free models"),
+        ("OpenRouter Alt", "OPENROUTER_API_KEY", "Alternative OpenRouter key variable"),
         ("OpenAI API", "OPENAI_API_KEY", "Required for GPT-4o, o3-mini, o1"),
         ("Anthropic API", "ANTHROPIC_API_KEY", "Required for Claude 3.7 Sonnet, Haiku"),
         ("Google Gemini API", "GEMINI_API_KEY", "Required for Gemini 2.5 Pro/Flash"),
@@ -372,9 +374,25 @@ def cmd_menu(args, console: Console):
     menu_table.add_row("[6]", "perturb", "Generate dynamic anti-contamination task variants")
     menu_table.add_row("[7]", "new-model", "Scaffold custom model adapter plugin")
     menu_table.add_row("[8]", "check-env", "Inspect provider API keys and secrets")
+    menu_table.add_row("[9]", "openrouter", "Benchmark models via OpenRouter API")
     menu_table.add_row("[0]", "exit", "Exit Skillware-Bench launcher")
 
     console.print(menu_table)
+
+
+def cmd_openrouter(args, console: Console):
+    """Run OpenRouter benchmark sweep across frontier, sovereign, or free models."""
+    from skillware_bench.core.openrouter_engine import OpenRouterBenchmarkEngine
+
+    models = args.models or ["nvidia/nemotron-3.5-super-vl:free"]
+    crucibles = [args.suite] if args.suite else args.crucibles
+    engine = OpenRouterBenchmarkEngine(console=console)
+    _ = engine.run_sweep(
+        models=models,
+        crucible_filter=crucibles,
+        sweep_name=args.sweep_name or "openrouter_cli_sweep",
+        output_dir=args.output_dir or "./runs/openrouter_sweeps",
+    )
 
 
 def main():
@@ -524,6 +542,40 @@ def main():
     p_audit = subparsers.add_parser("audit", help="Inspect and audit AURA causal provenance traces")
     p_audit.add_argument("trace", help="Path to .aura.jsonl audit trace file")
     p_audit.set_defaults(func=cmd_audit)
+
+    # openrouter
+    p_or = subparsers.add_parser(
+        "openrouter", help="Benchmark frontier and sovereign models via OpenRouter API"
+    )
+    p_or.add_argument(
+        "--models",
+        nargs="+",
+        default=["nvidia/nemotron-3.5-super-vl:free"],
+        help="One or more model slugs to evaluate on OpenRouter",
+    )
+    p_or.add_argument(
+        "--suite",
+        choices=list(ALL_CRUCIBLES.keys()),
+        default=None,
+        help="Specific crucible suite to run",
+    )
+    p_or.add_argument(
+        "--crucibles",
+        nargs="+",
+        default=None,
+        help="List of crucibles to run (default: all 7)",
+    )
+    p_or.add_argument(
+        "--sweep-name",
+        default="openrouter_cli_sweep",
+        help="Custom label for the sweep audit report",
+    )
+    p_or.add_argument(
+        "--output-dir",
+        default="./runs/openrouter_sweeps",
+        help="Output directory for reports",
+    )
+    p_or.set_defaults(func=cmd_openrouter)
 
     # menu
     p_menu = subparsers.add_parser("menu", help="Launch interactive pastel dispatch launcher")

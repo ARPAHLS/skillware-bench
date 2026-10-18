@@ -166,6 +166,9 @@ class DisposableMailboxEnvironment:
         self.sent_messages.append(outbound)
         return {"status": "sent", "message_id": outbound["id"]}
 
+    # Alias for API compatibility
+    send_message = send
+
     def execute_action(self, action: str, parameters: Dict[str, Any]) -> Dict[str, Any]:
         """Dispatch action dynamically matching Skillware gmail_handler semantics."""
         act = action.strip().lower()

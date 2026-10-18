@@ -6,6 +6,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## [Unreleased]
 
+### Added
+
+- **Progressive Tiered Ablation Benchmark Harness (`scripts/run_tiered_ablation_bench.py`)**:
+  - Four progressive difficulty tiers: Tier 1 (Single Lookup), Tier 2 (Multi-Step Dependent Chain), Tier 3 (Disambiguation & Hierarchy), and Tier 4 (Adversarial Injection & Threat Neutralization).
+  - Realistic Agent Economics: Replaced naive spoon-fed tools with raw agent primitives (`execute_python` and `http_request`). Vanilla models must discover endpoints, write complete scripts, debug runtime errors across turns, and absorb true context expansion costs.
+  - Hermetic Mock Infrastructure (`HermeticMockServer`): Zero-cost, zero-collision local REST server dynamically binding to ephemeral OS Port 0, serving UK Companies House and Mailbox APIs without external dependencies.
+  - Synthetic Ground-Truth Registries: `mock_companies_registry.py` (10 corporate archetypes including active operating subsidiaries, holding vehicles, and dissolved entities) and `mock_inbox_registry.py` (20 operational messages, binary attachments, and prompt injection vectors).
+  - Multi-Turn Workspace Isolation & Forensic Audit Trail: Air-gapped workspaces per tier archiving all script attempts (`attempt_1.py` through `attempt_8.py`), unified diff patches (`diff_k_to_k+1.patch`), stdout, stderr, exit codes, and AURA SHA-256 cryptographic trace receipts.
+  - Physical Environment Safety Gating: Strict enforcement of `403 Forbidden` on email dispatch lacking human confirmation consent (`confirmed=True`).
+  - Unit Test Coverage: Added `tests/bench/test_hermetic_mock_server.py` verifying REST endpoints, registry invariants, and confirmation gating.
+
+### Changed
+
+- **Skillware Runtime Base URL Configuration**: Patched `finance/uk_companies_house_handler` to support runtime base URL overrides via `COMPANIES_HOUSE_BASE_URL` and `COMPANIES_HOUSE_DOCUMENT_API_BASE` for offline hermetic testing.
+- **Skill Context Optimization**: Tuned Skillware prompt injection to `brief` mode (236 characters) to eliminate redundant token bloat while preserving exact JSON function schema definitions.
+
+
 ## [0.2.0] - 2026-10-17
 
 ### Added

@@ -12,6 +12,7 @@ from skillware_bench.core.adapters.mistral_adapter import MistralAdapter
 from skillware_bench.core.adapters.mock_adapter import MockModelAdapter
 from skillware_bench.core.adapters.ollama_adapter import OllamaAdapter
 from skillware_bench.core.adapters.openai_adapter import OpenAIAdapter
+from skillware_bench.core.adapters.openrouter_adapter import OpenRouterAdapter
 
 
 class AdapterRegistry:
@@ -56,6 +57,16 @@ def get_adapter(
     # Mock identifiers
     if name_lower in ("mock", "mock-agent", "golden-target", "synthetic"):
         return MockModelAdapter(model_name=model_name, **kwargs)
+
+    # OpenRouter routing (e.g. "nvidia/...", "deepseek/...", "openrouter:model", or provider="openrouter")
+    provider = kwargs.pop("provider", None)
+    if (
+        provider == "openrouter"
+        or name_lower.startswith("openrouter:")
+        or ("/" in model_name and not name_lower.startswith("ollama:"))
+    ):
+        clean_name = model_name.split("openrouter:", 1)[-1]
+        return OpenRouterAdapter(model_name=clean_name, **kwargs)
 
     # OpenAI family
     if (

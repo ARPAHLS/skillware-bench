@@ -22,6 +22,7 @@ from skillware_bench.core.adapters.mock_adapter import (
 )
 from skillware_bench.core.adapters.ollama_adapter import OllamaAdapter
 from skillware_bench.core.adapters.openai_adapter import OpenAIAdapter
+from skillware_bench.core.adapters.openrouter_adapter import OpenRouterAdapter
 
 
 def test_token_usage_and_pricing():
@@ -171,3 +172,35 @@ def test_tool_formatting_helpers():
     assert len(formatted_claude) == 1
     assert formatted_claude[0]["name"] == "lookup_company"
     assert "input_schema" in formatted_claude[0]
+
+
+def test_openrouter_adapter_routing_and_tool_formatting():
+    adapter = get_adapter("nvidia/nemotron-3.5-super-vl:free", api_key="sk-or-dummy")
+    assert isinstance(adapter, OpenRouterAdapter)
+    assert adapter.model_name == "nvidia/nemotron-3.5-super-vl:free"
+
+    sample_tools = [
+        {
+            "name": "search_messages",
+            "description": "Search inbox",
+            "parameters": {"type": "object", "properties": {"query": {"type": "string"}}},
+        }
+    ]
+    formatted = adapter.format_tools(sample_tools)
+    assert len(formatted) == 1
+    assert formatted[0]["type"] == "function"
+    assert formatted[0]["function"]["name"] == "search_messages"
+
+    # Message sanitization
+    messages = [
+        {"role": "user", "content": "hello"},
+        {"role": "assistant", "tool_calls": [{"id": "c1", "name": "search_messages", "arguments": {"query": "test"}}]},
+        {"role": "tool", "tool_call_id": "c1", "name": "search_messages", "content": "found 1"}
+    ]
+    sanitized = adapter._sanitize_messages(messages, system_prompt="System instructions")
+    assert len(sanitized) == 4
+    assert sanitized[0]["role"] == "system"
+    assert sanitized[2]["tool_calls"][0]["type"] == "function"
+    assert sanitized[2]["tool_calls"][0]["function"]["name"] == "search_messages"
+    assert sanitized[3]["role"] == "tool"
+    assert sanitized[3]["tool_call_id"] == "c1"

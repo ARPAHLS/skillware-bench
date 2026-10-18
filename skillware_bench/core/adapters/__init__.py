@@ -26,6 +26,7 @@ from skillware_bench.core.adapters.mock_adapter import (
 )
 from skillware_bench.core.adapters.ollama_adapter import OllamaAdapter
 from skillware_bench.core.adapters.openai_adapter import OpenAIAdapter
+from skillware_bench.core.adapters.openrouter_adapter import OpenRouterAdapter
 
 __all__ = [
     "BaseModelAdapter",
@@ -38,6 +39,7 @@ __all__ = [
     "get_adapter",
     "load_adapter_from_file",
     "OpenAIAdapter",
+    "OpenRouterAdapter",
     "AnthropicAdapter",
     "GeminiAdapter",
     "MistralAdapter",

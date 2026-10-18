@@ -104,14 +104,24 @@ class HarnessRunner:
             lift_style = "[green]+" if d.composite_score_lift > 0 else "[red]"
             # Format clean crucible identifier
             clean_name = d.scenario_id.replace("_01", "")
+            lat_str = (
+                f"-{d.latency_reduction_pct:.1f}%"
+                if d.latency_reduction_pct >= 0
+                else f"+{abs(d.latency_reduction_pct):.1f}%"
+            )
+            tok_str = (
+                f"-{d.token_reduction_pct:.1f}%"
+                if d.token_reduction_pct >= 0
+                else f"+{abs(d.token_reduction_pct):.1f}%"
+            )
             table.add_row(
                 clean_name,
                 d.model,
                 f"{d.baseline.score.composite_score:.1f}",
                 f"{d.with_skillware.score.composite_score:.1f}",
                 f"{lift_style}{d.composite_score_lift:.1f}[/]",
-                f"-{d.latency_reduction_pct:.1f}%",
-                f"-{d.token_reduction_pct:.1f}%",
+                lat_str,
+                tok_str,
                 pass_status,
             )
 
@@ -119,13 +129,22 @@ class HarnessRunner:
 
     def export_reports(
         self, deltas: List[ComparativeDeltaReport], output_dir: str = "./runs/reports"
-    ):
+    ) -> str:
+        import datetime
+
         os.makedirs(output_dir, exist_ok=True)
-        path = os.path.join(output_dir, "benchmark_report.json")
+        timestamp = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%d_%H%M%S")
+        ts_path = os.path.join(output_dir, f"benchmark_report_{timestamp}.json")
+        latest_path = os.path.join(output_dir, "benchmark_report.json")
         payload = [d.model_dump() for d in deltas]
-        with open(path, "w", encoding="utf-8") as f:
+
+        with open(ts_path, "w", encoding="utf-8") as f:
             json.dump(payload, f, indent=2)
-        self.console.print(f"[dim]Exported benchmark report to [bold]{path}[/bold][/dim]")
+        with open(latest_path, "w", encoding="utf-8") as f:
+            json.dump(payload, f, indent=2)
+
+        self.console.print(f"[dim]Exported benchmark audit report to [bold]{ts_path}[/bold][/dim]")
+        return ts_path
 
     def export_figures(
         self, deltas: List[ComparativeDeltaReport], output_dir: str = "./runs/figures"

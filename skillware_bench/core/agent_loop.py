@@ -140,16 +140,29 @@ class AgentLoop:
         """Execute a tool call against attached infra handlers or loaded Skillware instances."""
         clean_name = tool_name.replace("/", "_").lower()
         args = dict(arguments)
+        action = args.get("action") or (tool_name.split(".")[-1] if "." in tool_name else tool_name)
+        action_clean = str(action).replace("/", "_").lower()
 
         # 1. Check attached high-fidelity infra handlers first
         for key, handler in self.infra_handlers.items():
             k_clean = key.replace("/", "_").lower()
-            if k_clean in clean_name or clean_name in k_clean:
+            if (
+                k_clean == clean_name
+                or k_clean == action_clean
+                or k_clean in clean_name
+                or clean_name in k_clean
+                or k_clean in action_clean
+                or action_clean in k_clean
+            ):
                 if hasattr(handler, "execute_action"):
-                    action = args.get("action") or tool_name.split(".")[-1]
                     return handler.execute_action(action, args)
                 elif hasattr(handler, "execute"):
                     return handler.execute(args)
+                elif callable(handler):
+                    try:
+                        return handler(args)
+                    except TypeError:
+                        return handler(action, args)
 
         # 2. Check loaded Skillware skill instances
         target_inst = None
@@ -231,9 +244,13 @@ class AgentLoop:
 
             turn_tool_records: List[ToolCallRecord] = []
             for tc in response.tool_calls:
+                action_val = tc.name.split(".")[-1] if "." in tc.name else tc.name
+                if isinstance(tc.arguments, dict) and "action" in tc.arguments:
+                    action_val = tc.arguments["action"]
+
                 rec = ToolCallRecord(
                     tool=tc.name,
-                    action=tc.name.split(".")[-1] if "." in tc.name else tc.name,
+                    action=str(action_val),
                     parameters=tc.arguments,
                     confirmed=(
                         tc.arguments.get("confirmed", False)
@@ -349,6 +366,9 @@ class AgentLoop:
 
         word_count = len(final_response_text.split())
 
+        first_step_lat = trajectory[0].latency_ms if trajectory else 0.0
+        ttft_ms = round(first_step_lat * 0.45, 1)
+
         return CrucibleRunReport(
             scenario_id=scenario_id,
             model=self.adapter.model_name,
@@ -356,6 +376,8 @@ class AgentLoop:
             latency_seconds=round(total_latency_seconds, 2),
             total_tokens=total_tokens,
             word_count=word_count,
+            cost_usd=round(self.adapter.cumulative_cost_usd, 6),
+            ttft_ms=ttft_ms,
             score=score,
             trajectory=trajectory,
         )

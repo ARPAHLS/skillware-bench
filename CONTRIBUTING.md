@@ -30,6 +30,7 @@ Pick the track matching your planned contribution.
 | :--- | :--- | :--- | :--- | :--- |
 | **New Crucible** | `skillware_bench/suites/`, `benchmarks/scenarios/`, fixtures | `crucible proposal`, `enhancement` | Approved Crucible issue | `pytest tests/bench/test_crucibles.py` + offline mock run |
 | **Crucible Upgrade** | Existing suite in `skillware_bench/suites/` | `crucible upgrade` | Discussion / Issue | Suite tests + comparison table check |
+| **Tiered Ablation Bench** | `scripts/run_tiered_ablation_bench.py`, fixtures | `ablation`, `agent economics` | Discussion / Issue | `pytest tests/bench/test_hermetic_mock_server.py` + tiered ablation dry-run |
 | **Model Adapter** | `skillware_bench/core/adapters/` | `model adapter` | Approved Model Adapter issue | `pytest tests/bench/test_adapters.py` + token accounting test |
 | **Evaluation Rubric** | `skillware_bench/core/evaluators.py` | `evaluator`, `metrics` | Metric RFC | `pytest tests/bench/test_evaluators.py` |
 | **Agent Loop & Provenance** | `skillware_bench/core/agent_loop.py` | `core loop`, `provenance` | Architecture discussion | `pytest tests/bench/test_agent_loop.py` + AURA trace verification |
@@ -250,6 +251,8 @@ class CustomModelAdapter(BaseModelAdapter):
 - **No Unprotected Side Effects**: Never allow irreversible actions (`send`, `transfer`, `delete`) to execute without verifying confirmation status.
 - **No Hardcoded Keys**: Never hardcode API keys or secret tokens in fixtures or tests.
 - **No Silent Failures**: When a model violates a constitutional boundary, log an explicit violation rather than silently ignoring it.
+- **No Spoon-Fed Tools for Vanilla Baselines**: Never equip Vanilla baselines with bespoke, hand-crafted domain tools (e.g. pre-packaged high-level functions that parse and filter data). Vanilla agents must operate with authentic agent primitives (`execute_python` and `http_request`), forcing them to discover endpoints, write complete scripts, debug runtime errors across turns, and reflect real token context costs.
+- **No Context Bloat in Skill Injections**: Keep skill system context injections lean (`mode="brief"`) relying on OpenAPI function schemas rather than dumping multi-page instruction manuals into the prompt on every turn.
 
 ---
 

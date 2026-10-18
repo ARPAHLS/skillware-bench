@@ -61,14 +61,21 @@ class CompaniesHouseClient:
 
     BASE_URL = "https://api.company-information.service.gov.uk"
 
-    def __init__(self, api_key: Optional[str] = None):
+    def __init__(self, api_key: Optional[str] = None, base_url: Optional[str] = None):
         self.api_key = api_key or os.environ.get("COMPANIES_HOUSE_API_KEY")
+        self.base_url = (
+            base_url
+            or os.environ.get("COMPANIES_HOUSE_BASE_URL")
+            or self.BASE_URL
+        )
         self.session = requests.Session()
         if self.api_key:
             self.session.auth = (self.api_key, "")
 
     @property
     def is_live(self) -> bool:
+        if "127.0.0.1" in self.base_url or "localhost" in self.base_url:
+            return True
         if not self.api_key:
             return False
         clean = self.api_key.strip().lower()
@@ -87,7 +94,7 @@ class CompaniesHouseClient:
         if self.is_live:
             try:
                 resp = self.session.get(
-                    f"{self.BASE_URL}/search/companies",
+                    f"{self.base_url}/search/companies",
                     params={"q": query, "items_per_page": 5},
                     timeout=10,
                 )
@@ -132,7 +139,7 @@ class CompaniesHouseClient:
         if self.is_live:
             try:
                 resp = self.session.get(
-                    f"{self.BASE_URL}/company/{c_clean}",
+                    f"{self.base_url}/company/{c_clean}",
                     timeout=10,
                 )
                 if resp.status_code == 200:
@@ -152,13 +159,22 @@ class CompaniesHouseClient:
             }
         return {"error": "Company not found", "company_number": company_number}
 
-    def get_officers(self, company_number: str) -> Dict[str, Any]:
+    def get_officers(
+        self,
+        company_number: str,
+        active_only: bool = True,
+        officer_role: Optional[str] = None,
+    ) -> Dict[str, Any]:
         """Fetch active officers and directors for a company."""
         c_clean = company_number.strip().zfill(8)
         if self.is_live:
             try:
+                params: Dict[str, Any] = {}
+                if officer_role:
+                    params["officer_role"] = officer_role
                 resp = self.session.get(
-                    f"{self.BASE_URL}/company/{c_clean}/officers",
+                    f"{self.base_url}/company/{c_clean}/officers",
+                    params=params,
                     timeout=10,
                 )
                 if resp.status_code == 200:
@@ -168,10 +184,15 @@ class CompaniesHouseClient:
 
         data = SNAPSHOT_COMPANIES.get(c_clean)
         if data:
+            officers = data["officers"]
+            if officer_role:
+                officers = [
+                    o for o in officers if o.get("officer_role", "").lower() == officer_role.lower()
+                ]
             return {
-                "items": data["officers"],
-                "total_results": len(data["officers"]),
-                "active_count": len(data["officers"]),
+                "items": officers,
+                "total_results": len(officers),
+                "active_count": len(officers),
             }
         return {"items": [], "total_results": 0}
 
@@ -181,7 +202,7 @@ class CompaniesHouseClient:
         if self.is_live:
             try:
                 resp = self.session.get(
-                    f"{self.BASE_URL}/company/{c_clean}/filing-history",
+                    f"{self.base_url}/company/{c_clean}/filing-history",
                     timeout=10,
                 )
                 if resp.status_code == 200:

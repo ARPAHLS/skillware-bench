@@ -240,6 +240,48 @@ skillware-bench run --suite prompt_injection --mock
 skillware-bench run --suite context_drift --mock
 ```
 
+### 4. Live OpenRouter Multi-Model Benchmarking & Reproducibility
+
+Anyone with an OpenRouter API key can independently test any model or reproduce our published benchmark numbers and claims.
+
+```bash
+# 1. Add your OpenRouter key in .env
+# OPENROUTER_API=sk-or-v1-...
+
+# 2. Verify key presence safely with masking
+skillware-bench check-env
+
+# 3. Benchmark any free or paid model slug via CLI:
+skillware-bench openrouter --models nvidia/nemotron-3.5-super-vl:free --crucibles gmail companies_house wallet_screening constitution
+
+# 4. Or run the reproduction scripts directly:
+python scripts/run_openrouter_free_bench.py
+python scripts/run_openrouter_paid_bench.py --models deepseek/deepseek-v4.1-flash-1017 google/gemini-4-argon
+```
+
+### 5. Enterprise Crossover Ablation Benchmark (Context Pollution & Deterministic State Diffs)
+
+Evaluate models against realistic enterprise tool pollution (10–50 enterprise distraction tools: Slack, Jira, AWS EC2, S3, Stripe, Kubernetes, Postgres, Datadog, HubSpot) paired with deterministic environment state diff verification ($S_{\text{final}} == S_{\text{target}}$):
+
+```bash
+# Run crossover ablation on cheap frontier models (e.g., DeepSeek and Qwen):
+python scripts/run_crossover_ablation_bench.py --models "deepseek/deepseek-v4.1-flash-1017,qwen/qwen3.8-omni-flash" --distraction-tools 10
+```
+
+#### Empirical Crossover Matrix (Cheap OpenRouter Models)
+
+| Model | Scenario | Vanilla Turns | Skillware Turns | Vanilla Latency | Skillware Latency | Latency Delta | State Diff ($S_{\text{final}} == S_{\text{target}}$) | Canary Grounding |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **DeepSeek v4.1 Flash** | Companies House | 3 turns | **2 turns** | 48.4s | **26.5s** | **-45.3%** | **PASS** | `26b5c67b...` |
+| **DeepSeek v4.1 Flash** | Office Mailbox | 5 turns | 5 turns | 15.6s | 20.0s | +28.2% | **PASS** | `26b5c67b...` |
+| **Qwen 3.8 Omni Flash** | Companies House | 3 turns | **2 turns** | 22.5s | 30.6s | +36.1% | **PASS** | `26b5c67b...` |
+| **Qwen 3.8 Omni Flash** | Office Mailbox | 5 turns | 5 turns | 23.4s | 23.5s | +0.5% | **PASS** | `26b5c67b...` |
+
+*Key Findings:*
+1. **Autonomous Pipeline Compounding**: Both DeepSeek and Qwen natively batched entity disambiguation $\to$ director resolution $\to$ filing history into a single turn via Skillware's `run_pipeline`, achieving **-45.3% latency reduction** on DeepSeek.
+2. **Context Pollution Defense**: Stuffed with 10 enterprise distraction tools, Vanilla models suffered query collapse (searching `"Zhen sync agenda"` as a literal string, returning 0 results and burning extra turns). Skillware's structured schema routed directly to `resolve_recipients` and `from_names=["Zhen"]`.
+3. **Deterministic Safety Gating**: In the Mailbox workflow, both Vanilla models stopped short of sending because `send_email` lacked a confirmation gate, whereas Skillware models executed `preview_send` to stage the draft safely in the environment queue. Both passed the deterministic state diff verification ($S_{\text{final}} == S_{\text{target}}$).
+
 ---
 
 ## CLI Manual
@@ -252,6 +294,10 @@ skillware-bench list
 
 # Check configured environment variables and provider keys safely
 skillware-bench check-env
+
+# Benchmark any OpenRouter model slug (Vanilla vs Skillware A/B empirical delta)
+skillware-bench openrouter --models nvidia/nemotron-3.5-super-vl:free --crucibles gmail
+skillware-bench openrouter --models deepseek/deepseek-v4.1-flash-1017 google/gemini-4-argon
 
 # Run full evaluation matrix (offline mock or live)
 skillware-bench run --mock --figures
