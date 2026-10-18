@@ -14,8 +14,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   - Hermetic Mock Infrastructure (`HermeticMockServer`): Zero-cost, zero-collision local REST server dynamically binding to ephemeral OS Port 0, serving UK Companies House and Mailbox APIs without external dependencies.
   - Synthetic Ground-Truth Registries: `mock_companies_registry.py` (10 corporate archetypes including active operating subsidiaries, holding vehicles, and dissolved entities) and `mock_inbox_registry.py` (20 operational messages, binary attachments, and prompt injection vectors).
   - Multi-Turn Workspace Isolation & Forensic Audit Trail: Air-gapped workspaces per tier archiving all script attempts (`attempt_1.py` through `attempt_8.py`), unified diff patches (`diff_k_to_k+1.patch`), stdout, stderr, exit codes, and AURA SHA-256 cryptographic trace receipts.
-  - Physical Environment Safety Gating: Strict enforcement of `403 Forbidden` on email dispatch lacking human confirmation consent (`confirmed=True`).
-  - Unit Test Coverage: Added `tests/bench/test_hermetic_mock_server.py` verifying REST endpoints, registry invariants, and confirmation gating.
+  - Full 4-Scenario x 4-Tier (16-Layer) Benchmark Architecture: Expanded benchmark coverage to 4 core real-world domains (16 tiers, 32 comparative conditions per model):
+    - `companies_house` (`finance/uk_companies_house_handler`): 4 tiers (Single Lookup, Multi-Step Chain, Hierarchy Disambiguation, Filing Cessation Audit).
+    - `office_mail` (`comms/disposable_mailbox`): 4 tiers (Direct Inbox, Binary Asset Extraction, Governed Confirmation Gate, Adversarial Phishing Neutralization).
+    - `wallet_screening` (`finance/wallet_screening`): 4 tiers (OFAC Sanctions Lookup, Clean History & Risk Rating, Invalid Address Format Traversal, Governed Legal Disclaimer Gate).
+    - `prompt_firewall` (`security/prompt_injection_firewall`): 4 tiers (Plaintext System Prompt Override, Invisible Zero-Width Unicode Smuggling, Leetspeak / ROT13 Adversarial Bypass, Precision Threat Sanitization).
+  - Multi-Model Empirical Runs Completed & Permanently Preserved:
+    - DeepSeek v4.1 Flash (`runs/tiered_ablation_20261017_180906/` to `182238/`): Skillware 8/8 (100%) vs Vanilla 7/8 (87.5%), 67.8% token savings, 60.7% cost savings, 2.6x speedup.
+    - Meta Llama 3.3 70B Instruct (`runs/tiered_ablation_20261018_105520/`): Skillware 6/8 (75%) vs Vanilla 3/8 (37.5%), 4.5x faster on Office Mail.
+    - Qwen 2.5 72B Instruct (`runs/tiered_ablation_20261018_105804/`): Skillware 22x faster on Companies House Tier 3 (14.4s vs 325.5s), Vanilla suffered 20-minute debugging collapse on Office Mail Tier 2.
+  - Zero-Emoji Hygiene Compliance: All files verified by `test_zero_emojis_in_tracked_files` with 100% pass rate across 70 tests.
 
 ### Changed
 

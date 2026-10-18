@@ -81,19 +81,27 @@ Every benchmark scenario must scale across four distinct difficulty tiers:
   - Skillware: 100% pass rate, 77% token savings on Tier 1, 81% token savings on Tier 2, 79% cost savings on Tier 3.
 - [x] Cumulative 8-Tier Total: **67.8% Token Reduction**, **60.7% Cost Reduction**, **2.6x Speedup**, **100% vs 87.5% Pass Rate**.
 
-### Phase 4: Cross-Model Validation & Comparative Model Evaluation [IN PROGRESS]
-- [ ] Evaluate second cheap model for comparison (e.g. `meta-llama/llama-3.3-70b-instruct` or `qwen/qwen-2.5-72b-instruct`).
-- [ ] Evaluate frontier models (Claude 3.7 Sonnet, GPT-4o / GPT-5, Gemini 1.5 / 2.0).
-- [ ] Record comparative delta across model tiers in a consolidated benchmark matrix.
+### Phase 4: Cross-Model Validation & Comparative Model Evaluation [COMPLETED]
+- [x] Evaluated initial model (`deepseek/deepseek-v4.1-flash-1017`): 100% vs 87.5% pass rate, 67.8% token savings, 2.6x speedup.
+- [x] Evaluated second open-weights model (`meta-llama/llama-3.3-70b-instruct`):
+  - Run ID: `runs/tiered_ablation_20261018_105520/` (AURA SHA-256: `c7d2bc2d80f145fdaf403a0efa5188946d6393f50e3a156d27d591c1a3c8191a`).
+  - Result: Skillware 75% vs Vanilla 37.5%. On Office Mail, Skillware achieved 100% vs Vanilla 25% and was 4.5x faster.
+- [x] Evaluated third open-weights model (`qwen/qwen-2.5-72b-instruct`):
+  - Run ID: `runs/tiered_ablation_20261018_105804/` (AURA SHA-256: `db2bdc205085ca6f18c692110ac623f01b896c60539634051b65e82235ac4dc9`).
+  - Result: Companies House Tier 3 Skillware was 22x faster (14.4s vs 325.5s) using 86.6% fewer tokens. In Office Mail Tier 2, Vanilla spun for 1,204 seconds (20 minutes) generating invalid placeholder syntax (`[[CALL_RESULT]]`), demonstrating authentic agent debugging collapse.
 
-### Phase 5: Additional Skill Bundles Integration [PLANNED]
-- [ ] Integrate completely offline local skills:
-  - `office/pdf_form_filler`: Form field parsing and programmatic PDF generation.
-  - `security/prompt_injection_firewall`: Inbound and outbound injection sanitization.
-  - `crypto/wallet_screening`: Sanctions and risk screening against synthetic OFAC datasets.
-- [ ] Expand synthetic fixtures for multi-modal and multi-domain workflows.
+### Phase 5: Full 4-Scenario x 4-Tier (16-Layer) Architecture [COMPLETED]
+- [x] Integrated 4 core domain scenarios (16 layers / 32 conditions per model):
+  - `companies_house` (`finance/uk_companies_house_handler`): 4 tiers (Single Lookup, Multi-Step Chain, Hierarchy Disambiguation, Filing Cessation Audit).
+  - `office_mail` (`comms/disposable_mailbox`): 4 tiers (Direct Inbox, Binary Asset Extraction, Governed Confirmation Gate, Adversarial Phishing Neutralization).
+  - `wallet_screening` (`finance/wallet_screening`): 4 tiers (OFAC Sanctions Lookup, Clean History & Risk Rating, Invalid Address Format Traversal, Governed Legal Disclaimer Gate).
+  - `prompt_firewall` (`security/prompt_injection_firewall`): 4 tiers (Plaintext System Prompt Override, Invisible Zero-Width Unicode Smuggling, Leetspeak / ROT13 Adversarial Bypass, Precision Threat Sanitization).
+- [x] Built hermetic mock endpoints (`GET /crypto/screen`, `POST /security/scan`) in `HermeticMockServer`.
+- [x] 100% test suite passing (70/70) and zero-emoji repository hygiene verified.
 
-### Phase 6: Public Leaderboard & Empirical Publication [PLANNED]
+### Phase 6: Top 12 Model Suite & Benchmark Publication [READY FOR SWEEPS]
+- [ ] Execute 16-layer validation dry run on DeepSeek Flash.
+- [ ] Execute 12-model evaluation suite (7 Frontier + 5 Cheap/Open Source).
 - [ ] Run multi-seed iterations (N=5) with 95% confidence intervals and Pass@k metrics.
 - [ ] Update `docs/leaderboard.md` and `docs/dashboard.html` with verified empirical multi-model data.
 - [ ] Publish reproducible artifacts to GitHub Pages and Zenodo archive.

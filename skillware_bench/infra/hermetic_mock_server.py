@@ -178,6 +178,17 @@ class HermeticMockRequestHandler(BaseHTTPRequestHandler):
                 self._send_json(404, {"error": f"Message {uid} not found"})
             return
 
+        # -------------------------------------------------------------
+        # 3. Crypto Wallet Screening Endpoints
+        # -------------------------------------------------------------
+        # GET /crypto/screen?address=...
+        if path == "/crypto/screen":
+            addr = query_params.get("address", [""])[0].strip()
+            from skillware_bench.infra.wallet_screening_live import WalletScreeningClient
+            client = WalletScreeningClient(api_key="mock")
+            self._send_json(200, client.screen_address(addr))
+            return
+
         self._send_json(404, {"error": f"Endpoint not found: {path}"})
 
     def do_POST(self) -> None:
@@ -229,6 +240,20 @@ class HermeticMockRequestHandler(BaseHTTPRequestHandler):
             }
             self.server.sent_messages.append(outbound)
             self._send_json(200, {"status": "sent", "message_id": outbound["id"]})
+            return
+
+        # POST /security/scan (Prompt injection & text sanitization)
+        if path == "/security/scan":
+            text = body_json.get("source_text") or body_json.get("text", "")
+            try:
+                from skillware.core.loader import SkillLoader
+                bundle = SkillLoader.load_skill("security/prompt_injection_firewall", check_requirements=False)
+                cls = SkillLoader.get_skill_class(bundle)
+                inst = cls()
+                res = inst.execute({"source_text": text})
+                self._send_json(200, res)
+            except Exception as exc:
+                self._send_json(500, {"error": str(exc)})
             return
 
         self._send_json(404, {"error": f"Endpoint not found: {path}"})
