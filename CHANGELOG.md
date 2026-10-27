@@ -11,7 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Added
 
 - **Publication Exhibit Suite (46 Active High-Resolution Exhibits)**:
-  - Exported all 46 active publication-grade exhibits from `scratch/figuregen/clean htmls/` as 2x device-pixel-ratio PNGs into `docs/figures/`.
+  - Exported all 46 active publication-grade exhibits from `scratch/figuregen/clean htmls/` as 3x device-pixel-ratio (Retina / 300 DPI, 2520px–2700px) PNGs into `docs/figures/`.
   - Created `docs/figures/manifest.json` cataloging each exhibit's metadata, titles, clean authoritative captions, and file sizes.
   - Documented 19 deferred exhibits reserved for specialized ablation extensions in `docs/exhibits.md`.
   - Added `docs/exhibits.md` featuring the complete gallery and taxonomy across 6 publication themes.
