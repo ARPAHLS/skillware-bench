@@ -44,15 +44,23 @@ Comprehensive empirical evaluation of 23 sovereign and frontier language models 
 
 ## Benchmark Master Summaries
 
+### Table 7 — Four-Axis Master Operational Summary Across 12 Representative Models
+
 <div align="center">
-  <img src="../figures/tab07_four_axis_summary.png" alt="Tab. 7 — Four-Axis Master Summary Across 12 Models" width="100%" />
+  <img src="../figures/tab07_four_axis_summary.png" alt="Table 7 — Four-Axis Master Summary Across 12 Models" width="100%" />
 </div>
+
+<br />
 
 > **Table 7.** Four-axis master operational summary across 12 representative model architectures alongside the 23-model grand fleet aggregate (736 live experimental conditions). Across all four operational tiers—Frontier APIs, Enterprise deployments, Compact workhorses, and Edge models—Skillware delivers simultaneous multi-dimensional gains: compressing token expenditure by 29.6% to 77.1%, speeding up end-to-end task execution by 1.36x to 2.35x, elevating composite benchmark pass rates from 81.5% to 91.6%, and completely eliminating workspace script debugging traps (464 scripts eliminated to 0). Shaded row highlights the open-weight capability paradox, where compact models achieve frontier-grade execution when equipped with deterministic tools.
 
+### Figure 25 — Capability Compression Heatmap Across 23 Models & 4 Crucibles
+
 <div align="center">
-  <img src="../figures/fig25_capability_compression_heatmap.png" alt="Fig. 25 — Capability Compression Heatmap" width="100%" />
+  <img src="../figures/fig25_capability_compression_heatmap.png" alt="Figure 25 — Capability Compression Heatmap" width="100%" />
 </div>
+
+<br />
 
 > **Figure 25.** Capability compression heatmap across all 23 evaluated models and 4 enterprise crucibles (736 live experimental conditions). Cells display exact empirical pass rate lift (Δ percentage points) when equipping baseline models with Skillware execution manifests. Across the fleet, Skillware produces a +10.1% grand aggregate pass lift (from 81.5% to 91.6% fleet success, 337/368 vs 300/368 tasks passed). Uplift is heavily concentrated in complex multi-step stateful workflows: Office Mail achieves a fleet lift of +22.8% (68.5% → 91.3%), and Companies House records +12.0% (75.0% → 87.0%). Compact open-weight models achieve the largest single gains—most notably Meta Llama 4 Maverick (+56.2% lift, from 37.5% to 93.8% across 16 tasks)—effectively closing the capability gap with unassisted frontier models at a fraction of inference cost. Models are sorted by Grand Mean lift descending, then vanilla baseline.
 

@@ -2,9 +2,13 @@
 
 The Progressive Tiered Ablation Benchmark tests models across four core simulation crucibles, each structured into four progressive difficulty tiers (16 layers total).
 
+### Table 1 — Taxonomy of the Four Simulation Crucibles
+
 <div align="center">
-  <img src="figures/tab01_ecosystem_taxonomy.png" alt="Tab. 1 — Taxonomy of the Four Simulation Crucibles" width="100%" />
+  <img src="figures/tab01_ecosystem_taxonomy.png" alt="Table 1 — Taxonomy of the Four Simulation Crucibles" width="100%" />
 </div>
+
+<br />
 
 > **Table 1.** Taxonomy of the four simulation crucibles across 23 frontier and sovereign models under 736 live experimental conditions. Autonomous agents are evaluated across four representative enterprise domains enforcing distinct determinism levels, latency bounds, and physical environment state gates. Unassisted models frequently collapse when forced to parse unstructured binary streams or navigate adversarial prompts in-context, whereas Skillware binds specialized tools and constitutional invariants to ensure zero-debugging execution.
 
@@ -56,15 +60,23 @@ The Progressive Tiered Ablation Benchmark tests models across four core simulati
 
 ## Firewall Gating Overhead & Threat Interception
 
+### Table 2 — Three-Stage Firewall Overhead & Gating Latency
+
 <div align="center">
-  <img src="figures/tab02_three_stage_firewall.png" alt="Tab. 2 — The Three-Stage Firewall & Gating Latency" width="100%" />
+  <img src="figures/tab02_three_stage_firewall.png" alt="Table 2 — Three-Stage Firewall & Gating Latency" width="100%" />
 </div>
+
+<br />
 
 > **Table 2.** The three-stage firewall overhead, benchmarked across 736 conditions in Skillware-Bench v0.3.0. Static schema and BNF linting (0.3 ms), AURA cryptographic provenance anchoring (0.5 ms), and physical runtime gating with hermetic state diffing (0.4 ms) sum to exactly 1.2 ms of median overhead and 0 prompt tokens. By executing governance entirely in sub-millisecond host micro-compute before model ingestion, security and defense consume CPU cycles rather than context rent, completely eliminating cognitive prompt tax and preventing the 464 script debugging loops that trap unassisted models.
 
+### Figure 28 — Multi-Stage Kill-Chain Threat Interception Rates
+
 <div align="center">
-  <img src="figures/fig28_kill_chain_coverage.png" alt="Fig. 28 — Kill-Chain Threat Intercept Rates" width="100%" />
+  <img src="figures/fig28_kill_chain_coverage.png" alt="Figure 28 — Kill-Chain Threat Intercept Rates" width="100%" />
 </div>
+
+<br />
 
 > **Figure 28.** Threat intercept rates across the six canonical attack stages (Reconnaissance, Delivery, Exploitation, Control, Exfiltration, Persistence). While unassisted vanilla models fail to reliably intercept adversarial vectors—averaging only 32.8% defense across stages—Skillware achieves a 99.6% mean intercept rate. Early stages (Recon, Delivery) are caught via offline static schema linting (0.3 ms, 0 token overhead); execution exploits and control hijacks are halted by runtime provenance gates and manifest contracts (0.9 ms); and unauthorized exfiltration or persistence writes are intercepted by deterministic 50 µs reflex egress filters.
 

@@ -451,9 +451,9 @@
     "caption": "Table 1. Taxonomy of the four simulation crucibles across 23 frontier and sovereign models under 736 live experimental conditions. Autonomous agents are evaluated across four representative enterprise domains enforcing distinct determinism levels, latency bounds, and physical environment state gates. Unassisted models frequently collapse when forced to parse unstructured binary streams or navigate adversarial prompts in-context, whereas Skillware binds specialized tools and constitutional invariants to ensure zero-debugging execution.",
     "dimensions": [
       2700,
-      876
+      852
     ],
-    "size_bytes": 189660
+    "size_bytes": 182479
   },
   "tab02": {
     "id": "tab02",
@@ -463,9 +463,9 @@
     "caption": "Table 2. The three-stage firewall overhead, benchmarked across 736 conditions in Skillware-Bench v0.3.0. Static schema and BNF linting (0.3 ms), AURA cryptographic provenance anchoring (0.5 ms), and physical runtime gating with hermetic state diffing (0.4 ms) sum to exactly 1.2 ms of median overhead and 0 prompt tokens. By executing governance entirely in sub-millisecond host micro-compute before model ingestion, security and defense consume CPU cycles rather than context rent, completely eliminating cognitive prompt tax and preventing the 464 script debugging loops that trap unassisted models.",
     "dimensions": [
       2700,
-      912
+      888
     ],
-    "size_bytes": 153725
+    "size_bytes": 148368
   },
   "tab03": {
     "id": "tab03",
@@ -475,9 +475,9 @@
     "caption": "Table 3. The four-tier progressive difficulty matrix across 16 evaluated layers (averaged across 23 models under 736 conditions). Tiers test progression from atomic tool calls to multi-step DAG execution, confirmation gates, and adversarial injection. Unassisted models collapse in Tiers 2 and 3 when forced to write ad-hoc Python code to parse multi-step binary streams (464 scripts debugged). Skillware provides deterministic schema contracts, pre-compiled binary handlers, and immutable constitutional gates, delivering a +17.4% lift in Tier 2 and lifting aggregate benchmark pass rate from 81.5% to 91.6%.",
     "dimensions": [
       2700,
-      1119
+      1095
     ],
-    "size_bytes": 253030
+    "size_bytes": 243357
   },
   "tab04": {
     "id": "tab04",
@@ -487,9 +487,9 @@
     "caption": "Table 4. Eight-model representative benchmark standings, evaluated across 16 layers (32 live experimental conditions per model). Shaded row indicates the open-weight paradox entry (*token savings for Maverick measured per solved task: Vanilla solved 6/16 tasks; Skillware solved 15/16). Across both frontier APIs and compact workhorses, Skillware delivers positive pass rate lifts and substantial token compression: compact models like Qwen 3.8 Flash gain +18.8% to reach 100% pass rates at 1/30 operational cost (77.1% token savings), while Gemini 3.8 Flash retains 100% accuracy while eliminating 43 debugging scripts. Sovereign enterprise models (GLM 5.3, Hunyuan 4) reach 100% completion with up to 2.35x speedup, while Meta Llama 4 Maverick achieves the benchmark's largest single uplift (+56.2% lift, from 37.5% to 93.8%), overcoming cognitive paralysis on multi-step tool execution.",
     "dimensions": [
       2700,
-      1110
+      1086
     ],
-    "size_bytes": 183439
+    "size_bytes": 176041
   },
   "tab05": {
     "id": "tab05",
@@ -499,9 +499,9 @@
     "caption": "Table 5. Cross-crucible token consumption and efficiency economics, averaged across 23 frontier and sovereign models under 736 live experimental conditions (92 conditions per crucible; token counts include all conversational turns and error stack traces). Unassisted vanilla models suffer extreme context blowout when synthesizing and retrying ad-hoc Python scripts to handle binary MIME streams, API retries, and adversarial injections (burning 3.09M tokens across 464 debug attempts). Equipping models with Skillware compresses token expenditure by 17.2% to 73.6% (51.4% aggregate savings, saving 1.59M tokens) while eliminating 100% of workspace debugging loops (464 scripts) and lifting pass rates across all four enterprise simulation crucibles.",
     "dimensions": [
       2700,
-      813
+      789
     ],
-    "size_bytes": 132963
+    "size_bytes": 124051
   },
   "tab06": {
     "id": "tab06",
@@ -511,9 +511,9 @@
     "caption": "Table 6. Adversarial telemetry across Tier 4 stress conditions evaluated across all 23 models (92 live experimental conditions). Unassisted vanilla baselines defend 82.6% of adversarial scenarios overall but suffer heavy vulnerability on statutory entity overrides (39.1% failure rate) and phishing URL extraction, requiring seconds of speculative autoregression and executing 115 debugging scripts. Skillware enforces immutable constitutional contracts and zero-token firewall gating, elevating defense to 92.4% (+9.8% lift) with zero unconfirmed actions.",
     "dimensions": [
       2700,
-      1233
+      1209
     ],
-    "size_bytes": 199495
+    "size_bytes": 191962
   },
   "tab07": {
     "id": "tab07",
@@ -523,9 +523,9 @@
     "caption": "Table 7. Four-axis master operational summary across 12 representative model architectures alongside the 23-model grand fleet aggregate (736 live experimental conditions). Across all four operational tiers\u2014Frontier APIs, Enterprise deployments, Compact workhorses, and Edge models\u2014Skillware delivers simultaneous multi-dimensional gains: compressing token expenditure by 29.6% to 77.1%, speeding up end-to-end task execution by 1.36x to 2.35x, elevating composite benchmark pass rates from 81.5% to 91.6%, and completely eliminating workspace script debugging traps (464 scripts eliminated to 0). Shaded row highlights the open-weight capability paradox, where compact models achieve frontier-grade execution when equipped with deterministic tools.",
     "dimensions": [
       2700,
-      1632
+      1608
     ],
-    "size_bytes": 290656
+    "size_bytes": 282472
   },
   "tab09": {
     "id": "tab09",
@@ -535,9 +535,9 @@
     "caption": "Table 9. Line-item token and direct cost decomposition across all 23 models (736 live experimental conditions). Decomposes aggregate benchmark expenditure across prompt prefill rent, model output generation, recursive script debugging retries, and host-side verification gating. Structured skill execution reduces context prefill from 2.72M to 1.30M tokens (\u221252.4%) by replacing voluminous prose documentation with compact typed schemas. In Vanilla mode, 151 of 368 conditions trapped models in repetitive script debugging loops generating 464 ad-hoc execution attempts, which are completely eliminated under Skillware. Deterministic host governance adds only 1.2 ms of median latency with zero token expenditure, yielding an overall 51.4% reduction in token consumption and a 41.7% reduction in direct API expenditure.",
     "dimensions": [
       2700,
-      1026
+      1002
     ],
-    "size_bytes": 200779
+    "size_bytes": 195405
   },
   "tab10": {
     "id": "tab10",
@@ -547,8 +547,8 @@
     "caption": "Table 10. Statistical reproducibility and token variance contraction across the four crucibles (736 live experimental conditions across 23 models). Reports sample mean token consumption, sample standard deviation (\u03c3), and coefficient of variation (CV = \u03c3 / mean). In Vanilla execution, runaway speculative script generation and error-retry spirals produce massive dispersion, with prompt injection defense reaching a CV of 1.91 (4,385 \u00b1 8,368 tokens). Equipping models with deterministic Skillware contracts compresses standard deviation by 40.6% to 89.4% (58.5% fleet-wide contraction), collapsing the performance envelope into a predictable band and eliminating the catastrophic right-tail token consumption spikes that plague unconstrained agents.",
     "dimensions": [
       2700,
-      768
+      744
     ],
-    "size_bytes": 157432
+    "size_bytes": 148563
   }
 }

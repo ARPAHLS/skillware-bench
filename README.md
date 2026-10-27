@@ -20,9 +20,13 @@ Across the complete 23-model evaluation roster (spanning 11 sovereign and commer
 | **Total Cumulative Latency** | 6914.7s (115.2m) | **4331.4s (72.2m)** | **1.60x execution speedup** |
 | **Workspace Scripts Debugged** | 464 scripts debugged | **0 scripts** | **100% code debugging eliminated** |
 
+### Figure 25 — Capability Compression Heatmap Across the 23-Model Fleet
+
 <div align="center">
-  <img src="docs/figures/fig25_capability_compression_heatmap.png" alt="Fig. 25 — Capability Compression Heatmap" width="100%" />
+  <img src="docs/figures/fig25_capability_compression_heatmap.png" alt="Figure 25 — Capability Compression Heatmap" width="100%" />
 </div>
+
+<br />
 
 > **Figure 25.** Capability compression heatmap across all 23 evaluated models and 4 enterprise crucibles (736 live experimental conditions). Cells display exact empirical pass rate lift (&Delta; percentage points) when equipping baseline models with Skillware execution manifests. Across the fleet, Skillware produces a **+10.1% grand aggregate pass lift** (from 81.5% to 91.6% fleet success, 337/368 vs 300/368 tasks passed). Uplift is heavily concentrated in complex multi-step stateful workflows: **Office Mail** achieves a fleet lift of **+22.8%** (68.5% &rarr; 91.3%), and **Companies House** records **+12.0%** (75.0% &rarr; 87.0%). Compact open-weight models achieve the largest single gains—most notably Meta Llama 4 Maverick (+56.2% lift, from 37.5% to 93.8% across 16 tasks)—effectively closing the capability gap with unassisted frontier models at a fraction of inference cost. Models are sorted by Grand Mean lift descending, then vanilla baseline.
 
@@ -43,9 +47,13 @@ Across the complete 23-model evaluation roster (spanning 11 sovereign and commer
 
 *Full rankings across all 23 models are available in the [Cross-Model Benchmark Overview](docs/results/overview.md).*
 
+### Table 7 — Four-Axis Master Operational Summary
+
 <div align="center">
-  <img src="docs/figures/tab07_four_axis_summary.png" alt="Tab. 7 — Four-Axis Master Summary" width="100%" />
+  <img src="docs/figures/tab07_four_axis_summary.png" alt="Table 7 — Four-Axis Master Summary" width="100%" />
 </div>
+
+<br />
 
 > **Table 7.** Four-axis master benchmark summary across 12 representative frontier and sovereign architectures (384 live conditions). Models are sorted by Skillware Accuracy descending within capability tiers. Pass lift reflects delta percentage points over unassisted Vanilla baselines. Token reduction captures total prompt and completion token savings. Speedup denotes wall-clock runtime acceleration. Code Debugging Eliminated denotes total elimination of ad-hoc bash and python script repair loops (464 loops fleet-wide in Vanilla vs 0 in Skillware).
 
@@ -54,16 +62,20 @@ Across the complete 23-model evaluation roster (spanning 11 sovereign and commer
 1. **Small Sovereign Models + Skillware Match or Outperform Frontier LLMs Alone**: Compact open-weight models (e.g. Qwen 3.6 35B, Gemma 4 31B, Nemotron 3.5 Lightning) equipped with deterministic skills consistently achieve higher pass rates (14-16/16) and lower latency than unassisted frontier APIs operating in Vanilla mode (e.g. Claude Sonnet 5, GPT-6 Luna, Grok 4.7). See [Frontiers vs Small Models Deep-Dive](docs/results/frontiers_vs_small.md).
 
 <div align="center">
-  <img src="docs/figures/fig12_cost_capability_frontier.png" alt="Fig. 12 — Cost-Capability Frontier" width="100%" />
+  <img src="docs/figures/fig12_cost_capability_frontier.png" alt="Figure 12 — Cost-Capability Frontier" width="100%" />
 </div>
+
+<br />
 
 > **Figure 12.** The cost–capability frontier across eight representative models from the benchmark fleet. Each dashed trajectory connects a model from its Vanilla baseline (ochre) to its Skillware equipped operating point (emerald green). The Skillware frontier dominates the Vanilla fleet everywhere, shifting up (higher accuracy across 16 benchmark layers) and to the left (lower operational token cost per task).
 
 2. **Elimination of the Base64 MIME Attachment Failure Trap**: Across nearly all frontier models in Vanilla mode, extracting binary email attachments caused catastrophic failures, triggering 5 to 11 debug attempts and burning tens of thousands of tokens. Skillware resolved attachments in 2 to 3 turns without executing any workspace scripts. See [Behavioral Contracts Analysis](docs/results/behavioral_contracts.md).
 
 <div align="center">
-  <img src="docs/figures/fig11_latency_anatomy.png" alt="Fig. 11 — Latency Anatomy" width="100%" />
+  <img src="docs/figures/fig11_latency_anatomy.png" alt="Figure 11 — Latency Anatomy" width="100%" />
 </div>
+
+<br />
 
 > **Figure 11.** Latency anatomy of a complex reference workflow (Office Mail Tier 2). JIT context excision shrinks prefill latency from 4.1 s to 0.7 s, compact model routing shortens decode from 6.2 s to 3.4 s, and deterministic host validation eliminates speculative error loops: end-to-end median latency falls from 14.2 s to 6.3 s (−55.6%). Time to first token (TTFT) collapses from 1.9 s to 0.4 s.
 

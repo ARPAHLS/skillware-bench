@@ -40,15 +40,27 @@ Empirical performance evaluation across 23 sovereign and frontier models executi
 
 ## Benchmark Standings & Trajectories
 
+### Table 4 — Eight-Model Representative Benchmark Standings
+
+To understand how individual model families respond when moving from unassisted Vanilla code generation to Skillware execution manifests, Table 4 highlights eight representative architectures across the four capability tiers.
+
 <div align="center">
-  <img src="figures/tab04_eight_model_leaderboard.png" alt="Tab. 4 — Eight-Model Representative Benchmark Standings" width="100%" />
+  <img src="figures/tab04_eight_model_leaderboard.png" alt="Table 4 — Eight-Model Representative Benchmark Standings" width="100%" />
 </div>
+
+<br />
 
 > **Table 4.** Eight-model representative benchmark standings, evaluated across 16 layers (32 live experimental conditions per model). Shaded row indicates the open-weight paradox entry (*token savings for Maverick measured per solved task: Vanilla solved 6/16 tasks; Skillware solved 15/16). Across both frontier APIs and compact workhorses, Skillware delivers positive pass rate lifts and substantial token compression: compact models like Qwen 3.8 Flash gain +18.8% to reach 100% pass rates at 1/30 operational cost (77.1% token savings), while Gemini 3.8 Flash retains 100% accuracy while eliminating 43 debugging scripts. Sovereign enterprise models (GLM 5.3, Hunyuan 4) reach 100% completion with up to 2.35x speedup, while Meta Llama 4 Maverick achieves the benchmark's largest single uplift (+56.2% lift, from 37.5% to 93.8%), overcoming cognitive paralysis on multi-step tool execution.
 
+### Figure 18 — Equip-Any-Model Pass Rate Uplift
+
+The slope graph in Figure 18 maps the transition trajectory of 14 key model architectures. Connecting each model's unassisted baseline to its equipped operating point reveals that Skillware's highest relative gains occur in compact sovereign models that otherwise stumble on recursive syntax errors.
+
 <div align="center">
-  <img src="figures/fig18_equip_any_model_uplift.png" alt="Fig. 18 — Equip-Any-Model Pass Rate Uplift" width="100%" />
+  <img src="figures/fig18_equip_any_model_uplift.png" alt="Figure 18 — Equip-Any-Model Pass Rate Uplift" width="100%" />
 </div>
+
+<br />
 
 > **Figure 18.** Pass rate trajectory under Skillware equipment across 14 representative models. Left axis ranks models by Vanilla unassisted pass rate (from Gemini 3.8 Flash at 100.0% down to Llama 4 Maverick at 37.5%). Right axis ranks models by net absolute pass rate lift under Skillware (from Maverick at +56.2% down to Gemini 3.8 Flash and Claude Sonnet 5 at +0.0%). Sovereign and compact workhorses achieve the steepest improvements when decoupled from raw code generation, with Meta Llama 4 Maverick jumping from 37.5% to 93.8% to achieve parity with frontier models.
 

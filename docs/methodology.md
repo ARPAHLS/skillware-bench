@@ -4,9 +4,13 @@
 
 Skillware-Bench evaluates language models on realistic agent economics rather than abstract trivia or single-shot synthetic function schemas. It establishes an empirical baseline comparing **unconditioned, prompt-based code generation (Vanilla Baseline)** against **governed, deterministic skill execution (Skillware Equipped)** across progressive difficulty tiers.
 
+### Figure 21 — The Skillware-Bench Measurement Harness Architecture
+
 <div align="center">
-  <img src="figures/fig21_measurement_harness.png" alt="Fig. 21 — The Skillware-Bench Measurement Harness" width="100%" />
+  <img src="figures/fig21_measurement_harness.png" alt="Figure 21 — The Skillware-Bench Measurement Harness" width="100%" />
 </div>
+
+<br />
 
 > **Figure 21.** The Skillware-Bench measurement harness. 23 frontier and sovereign model adapters evaluate across a 16-layer progressive ablation matrix (4 crucibles × 4 difficulty tiers, 736 conditions). Two parallel execution rails compare unconditioned code generation (vanilla track: Python synthesis, 30s timeout sandbox, AST unified diffs) against governed execution (equipped track: typed skill bundles, JSON/BNF schema validation, deterministic JIT handlers). Every trial executes within an isolated hermetic execution sandbox (air-gapped workspaces, ephemeral Port 0 mock APIs), scored by multi-vector state diff evaluators and cryptographically anchored by the AURA AuditSpine.
 
@@ -28,9 +32,13 @@ Across 23 evaluated models, this produces **368 benchmark layers and 736 live ex
 | **Crypto AML Sanction Screening** | `finance/wallet_screening` | OFAC sanctions verification, clean history scoring, invalid hex checksum validation, zero address leakage. |
 | **Prompt Injection Firewall** | `security/prompt_injection_firewall` | Plaintext override detection, zero-width unicode smuggling, ROT13 obfuscation bypass, clean content excision. |
 
+### Table 3 — The Four-Tier Progressive Difficulty Matrix
+
 <div align="center">
-  <img src="figures/tab03_progressive_difficulty_tiers.png" alt="Tab. 3 — The Four-Tier Progressive Difficulty Matrix" width="100%" />
+  <img src="figures/tab03_progressive_difficulty_tiers.png" alt="Table 3 — The Four-Tier Progressive Difficulty Matrix" width="100%" />
 </div>
+
+<br />
 
 > **Table 3.** The four-tier progressive difficulty matrix across 16 evaluated layers (averaged across 23 models under 736 conditions). Tiers test progression from atomic tool calls to multi-step DAG execution, confirmation gates, and adversarial injection. Unassisted models collapse in Tiers 2 and 3 when forced to write ad-hoc Python code to parse multi-step binary streams (464 scripts debugged). Skillware provides deterministic schema contracts, pre-compiled binary handlers, and immutable constitutional gates, delivering a +17.4% lift in Tier 2 and lifting aggregate benchmark pass rate from 81.5% to 91.6%.
 
@@ -38,9 +46,13 @@ Across 23 evaluated models, this produces **368 benchmark layers and 736 live ex
 
 Rather than injecting monolithic system prompts, know-how in Skillware is compiled into self-contained, typed bundles:
 
+### Figure 2 — Anatomical Breakdown of a First-Class Skill Bundle
+
 <div align="center">
-  <img src="figures/fig02_bundle_anatomy.png" alt="Fig. 2 — Anatomy of a Skill Bundle" width="100%" />
+  <img src="figures/fig02_bundle_anatomy.png" alt="Figure 2 — Anatomy of a Skill Bundle" width="100%" />
 </div>
+
+<br />
 
 > **Figure 2.** Anatomy of a Skillware skill bundle, exemplified by finance/uk_companies_house_handler . Know-how is decomposed into five first-class primitives rather than monolithic prompts: Contract ( manifest.yaml declares 12 typed actions, parameter JSON schemas, and permissions), Effect ( skill.py implements deterministic API execution, pagination, and bounded in-memory bytes), Directive ( instructions.md provides SOP guidance, disambiguation rules, and progressive disclosure), Assurance ( test_skill.py provides hermetic pytest fixtures and schema consistency invariants), and Corpus ( data/ stores domain reference lexicons such as UK/US terminology mappings). This atomic structure enables portable loading across diverse host agent runtimes with zero external dependencies.
 

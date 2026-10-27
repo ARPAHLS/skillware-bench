@@ -36,15 +36,23 @@ Deploying proprietary frontier APIs incurs substantial per-token costs, unpredic
 
 ## Empirical Exhibits
 
+### Figure 5 — The Empirical Parameter Paradox Across Parameter Scales
+
 <div align="center">
-  <img src="../figures/fig05_parameter_paradox.png" alt="Fig. 5 — The Parameter Paradox (Small Models + Skillware vs Large Models)" width="100%" />
+  <img src="../figures/fig05_parameter_paradox.png" alt="Figure 5 — The Parameter Paradox (Small Models + Skillware vs Large Models)" width="100%" />
 </div>
+
+<br />
 
 > **Figure 5.** The empirical parameter paradox. Across three decades of parameter scale (8B to 550B+), Skillware-equipped models maintain a decisive performance wedge over unequipped baselines. The wedge is widest for compact sovereign models: an equipped Qwen 3.8 Flash (16B) or Gemma 4 (31B) achieves a perfect 16/16 (100.0%) pass rate, outscoring unequipped frontier models Claude Sonnet 5 and GPT-6 Luna (both 14/16, 87.5%) at roughly 1/30th the operational cost. Without skillware, unequipped frontier models plateau below 90% due to boundary failures on unconstrained tool contracts, whereas compact workhorses equipped with validated bundles eliminate execution regressions.
 
+### Figure 18 — Equip-Any-Model Pass Rate Uplift Trajectories
+
 <div align="center">
-  <img src="../figures/fig18_equip_any_model_uplift.png" alt="Fig. 18 — Equip-Any-Model Pass Rate Uplift" width="100%" />
+  <img src="../figures/fig18_equip_any_model_uplift.png" alt="Figure 18 — Equip-Any-Model Pass Rate Uplift" width="100%" />
 </div>
+
+<br />
 
 > **Figure 18.** Pass rate trajectory under Skillware equipment across 14 representative models. Left axis ranks models by Vanilla unassisted pass rate (from Gemini 3.8 Flash at 100.0% down to Llama 4 Maverick at 37.5%). Right axis ranks models by net absolute pass rate lift under Skillware (from Maverick at +56.2% down to Gemini 3.8 Flash and Claude Sonnet 5 at +0.0%). Sovereign and compact workhorses achieve the steepest improvements when decoupled from raw code generation, with Meta Llama 4 Maverick jumping from 37.5% to 93.8% to achieve parity with frontier models.
 
