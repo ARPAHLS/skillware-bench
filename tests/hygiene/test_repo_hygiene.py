@@ -89,6 +89,9 @@ def test_zero_emojis_in_tracked_files():
     for file_rel in result.stdout.splitlines():
         if file_rel.endswith((".png", ".ico", ".jpg", ".svg")):
             continue
+        if file_rel.startswith("benchmarks/reports/") and file_rel.endswith(".json"):
+            # Raw benchmark telemetry preserves literal model completions
+            continue
         full_path = REPO_ROOT / file_rel
         if not full_path.exists():
             continue

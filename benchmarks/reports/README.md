@@ -1,14 +1,57 @@
 # Skillware-Bench Canonical Execution Reports & Cryptographic Receipts
 
-This directory contains the canonical execution reports for all 23 models evaluated in the Skillware-Bench Progressive Tiered Ablation Benchmark (v0.3.1).
+This directory contains the canonical benchmark execution reports for all 23 models evaluated in the Skillware-Bench Progressive Tiered Ablation Benchmark (v0.3.1).
 
-Each report record captures the complete, turn-by-turn experimental telemetry across 16 progressive layers (32 evaluated conditions per model, 736 conditions total):
+Each JSON report captures the complete, turn-by-turn experimental telemetry across 16 progressive layers (32 evaluated conditions per model, 736 live conditions fleet-wide):
 - Exact turn counts and tool invocations
-- Model token usage (prompt and completion tokens)
+- Model token consumption (prompt and completion tokens)
 - Execution latencies and script debugging attempts
-- Physical environment state diffs
+- Physical environment state diffs (e.g. disk file artifacts, confirmation preview calls)
 - Multi-vector evaluator verdicts (PASS/FAIL)
-- The anchored AURA SHA-256 cryptographic receipt
+- The anchored [AURA](https://github.com/arpahls/aura) SHA-256 cryptographic receipt
+
+---
+
+### Figure 21 — The Skillware-Bench Measurement Harness & Attestation Spine
+
+<div align="center">
+  <img src="../../docs/figures/fig21_measurement_harness.png" alt="Figure 21 — The Skillware-Bench Measurement Harness" width="100%" />
+</div>
+
+<br />
+
+> **Figure 21.** The Skillware-Bench measurement harness architecture. 23 frontier and sovereign model adapters evaluate across a 16-layer progressive ablation matrix (4 crucibles x 4 difficulty tiers, 736 live conditions). Two parallel execution rails compare unconditioned code generation (vanilla track) against governed execution (equipped track). Every trial executes within an isolated hermetic sandbox, scored by multi-vector state diff evaluators and cryptographically anchored by the AURA AuditSpine.
+
+---
+
+## How AURA Provenance Works
+
+### 1. Why AURA Was Used
+In contemporary AI evaluation, benchmarks frequently suffer from a credibility deficit: scores are self-reported, model generations and prompt traces are rarely published in verifiable form, and token costs are often opaque or rounded. 
+
+Skillware-Bench integrates **AURA (Agent Universal Runtime Audit)** to eliminate the need for trust:
+- Rather than taking benchmark tables on faith, every trial is continuously recorded by the AURA AuditSpine.
+- The spine operates in sub-millisecond host compute (<50 µs overhead per turn, <0.01% runtime tax), completely outside model prompt context rent.
+- Every turn, parameter schema, external mock API interaction, and physical environment diff is committed into an immutable Merkle DAG.
+
+### 2. What Is Encapsulated in the Receipt
+When an evaluation run finishes, the harness canonicalizes the full execution record (run metadata, model identifier, timestamp, and all 32 condition verdicts and telemetry records). It hashes this canonical JSON structure using SHA-256 to produce an immutable receipt:
+
+```json
+"aura_cryptographic_receipt": {
+  "sha256": "cf7c13b4e74273ec745f0afda62f26e0f0cf93105c49c5c0ef89a2439e285ae0",
+  "engine": "AURA AuditSpine / SHA-256",
+  "verified": true
+}
+```
+
+### 3. Why Changing Data Breaks Verification
+SHA-256 possesses the **cryptographic avalanche effect**: altering even a single bit in the input produces a radically divergent digest.
+- **Modifying Pass/Fail Verdicts**: Changing a model's score from 13/16 to 16/16 alters the hash.
+- **Adjusting Token Counts**: Modifying token totals by even 1 token produces an immediate mismatch.
+- **Altering Latencies or Text**: Editing raw assistant responses, turn counts, or timestamps breaks verification.
+
+When `skillware-bench verify` inspects a report, it independently recalculates the canonical SHA-256 hash across the report payload. If any field has been modified, the verification engine immediately flags `HASH_MISMATCH` and halts with exit code 1.
 
 ---
 
@@ -54,7 +97,8 @@ skillware-bench verify benchmarks/reports/google_gemma_4_31b_it.json
 skillware-bench verify benchmarks/reports/meta_llama_4_maverick.json
 ```
 
-Output:
+### Output Example
+
 ```text
 Verifying AURA benchmark report receipt: benchmarks/reports/google_gemma_4_31b_it.json...
 
