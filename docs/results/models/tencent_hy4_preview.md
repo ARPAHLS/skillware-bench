@@ -66,8 +66,16 @@ This benchmark run was recorded with deterministic step tracking and anchored vi
 }
 ```
 
-Verification receipts can be reproduced by re-running the test suite with:
+The canonical execution record is tracked in [enchmarks/reports/tencent_hy4_preview.json](../../../benchmarks/reports/tencent_hy4_preview.json).
 
-```bash
+Verify the cryptographic receipt instantly without API keys:
+
+`ash
+skillware-bench verify benchmarks/reports/tencent_hy4_preview.json
+`
+
+Live benchmark execution can also be reproduced via:
+
+`ash
 python scripts/run_tiered_ablation_bench.py --model tencent/hy4-preview
-```
+`

@@ -140,13 +140,55 @@ def cmd_compare(args, console: Console):
 
 
 def cmd_verify(args, console: Console):
-    """Verify cryptographic hash chain and Ed25519 signature of an AURA audit trace."""
+    """Verify cryptographic hash chain and Ed25519 signature of an AURA audit trace or benchmark report."""
+    from pathlib import Path
     from skillware_bench.core.provenance import ProvenanceEngine
 
-    trace_file = args.trace
-    console.print(f"[bold]Verifying AURA audit trace: {trace_file}...[/bold]\n")
+    target_file = args.trace
+    path = Path(target_file)
+    if not path.is_file():
+        console.print(f"[bold red]Error: Target file not found: {target_file}[/bold red]")
+        sys.exit(1)
+
+    # Check if target is a JSON benchmark report or a JSONL trace
+    if target_file.endswith(".json") and not target_file.endswith(".jsonl"):
+        console.print(f"[bold]Verifying AURA benchmark report receipt: {target_file}...[/bold]\n")
+        try:
+            res = ProvenanceEngine.verify_report(target_file)
+            if res["valid"]:
+                console.print(
+                    "[bold green][PASS] Benchmark Execution Report Verification Succeeded[/bold green]"
+                )
+                console.print(f"  * Run ID: [cyan]{res['run_id']}[/cyan]")
+                console.print(f"  * Model: [bold]{res['model']}[/bold]")
+                cond_info = (
+                    f"{res['total_conditions']} "
+                    f"(Vanilla: {res['vanilla_pass']} passed, Skillware: {res['skillware_pass']} passed)"
+                )
+                console.print(f"  * Conditions Evaluated: {cond_info}")
+                console.print(
+                    f"  * AURA Cryptographic Receipt (SHA-256): [green]{res['receipt_hash']}[/green]"
+                )
+                console.print(f"  * Attestation Engine: {res['engine']}")
+                console.print(
+                    "  * Integrity Status: [bold green]AUTHENTIC / UNTAMPERED[/bold green]"
+                )
+            else:
+                console.print("[bold red][FAIL] Benchmark Report Verification Failed[/bold red]")
+                console.print(f"  * Reason: {res.get('error') or res.get('verdict')}")
+                if "expected_hash" in res and "computed_hash" in res:
+                    console.print(f"  * Expected Hash: [green]{res['expected_hash']}[/green]")
+                    console.print(f"  * Computed Hash: [red]{res['computed_hash']}[/red]")
+                sys.exit(1)
+        except Exception as e:
+            console.print(f"[bold red]Error verifying report: {str(e)}[/bold red]")
+            sys.exit(1)
+        return
+
+    # Otherwise verify as an AURA .aura.jsonl trace
+    console.print(f"[bold]Verifying AURA audit trace: {target_file}...[/bold]\n")
     try:
-        res = ProvenanceEngine.verify_trace(trace_file)
+        res = ProvenanceEngine.verify_trace(target_file)
         if res["valid"]:
             console.print(
                 "[bold green][PASS] Cryptographic Trace Verification Succeeded[/bold green]"
@@ -467,7 +509,9 @@ def main():
     p_verify = subparsers.add_parser(
         "verify", help="Cryptographically verify AURA causal audit traces and signatures"
     )
-    p_verify.add_argument("trace", help="Path to .aura.jsonl audit trace file")
+    p_verify.add_argument(
+        "trace", help="Path to .aura.jsonl audit trace or benchmark report .json file"
+    )
     p_verify.set_defaults(func=cmd_verify)
 
     # export-compliance

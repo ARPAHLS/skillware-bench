@@ -89,16 +89,14 @@ The SHA-256 hash covers the exact input configuration, step sequences, tool argu
 
 ---
 
-## Reproduction Guide
+## Cryptographic Receipts & Verification
 
-To run a complete 16-layer tiered ablation benchmark for any supported model:
+All 23 canonical benchmark execution reports are tracked directly in [`benchmarks/reports/`](../benchmarks/reports/README.md).
+
+To cryptographically verify any published report in under one second without calling APIs:
 
 ```bash
-# Run single model
-python scripts/run_tiered_ablation_bench.py --model anthropic/claude-sonnet-5
-
-# Run sovereign model locally or via OpenRouter
-python scripts/run_tiered_ablation_bench.py --model qwen/qwen3.6-35b-a3b
+skillware-bench verify benchmarks/reports/google_gemma_4_31b_it.json
 ```
 
 ---

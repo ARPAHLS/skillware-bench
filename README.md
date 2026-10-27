@@ -160,6 +160,12 @@ python scripts/run_tiered_ablation_bench.py --model qwen/qwen3.6-35b-a3b
 
 Every benchmark evaluation produces a verified cryptographic receipt anchored via the [AURA](https://github.com/arpahls/aura) attestation spine. Receipts contain a SHA-256 causal DAG hash over all executed turns, tool invocations, token metrics, and scoring outputs to ensure tamper-evident verification.
 
+The complete canonical execution reports for all 23 evaluated models are tracked in [`benchmarks/reports/`](benchmarks/reports/README.md). Verify any model's receipt instantly without API keys:
+
+```bash
+skillware-bench verify benchmarks/reports/google_gemma_4_31b_it.json
+```
+
 ## Citing
 
 If you use Skillware-Bench in research or products, please cite it using [CITATION.cff](CITATION.cff) (GitHub **Cite this repository**). For reproducibility, also record the **Skillware-Bench version** you used (Git tag, for example `0.3.1`).

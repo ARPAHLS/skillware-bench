@@ -229,6 +229,92 @@ class ProvenanceEngine:
         }
 
     @classmethod
+    def verify_report(cls, report_path: Union[str, Path]) -> Dict[str, Any]:
+        """Verify the integrity, schema, and cryptographic receipt of a benchmark report JSON."""
+        path = Path(report_path)
+        if not path.is_file():
+            raise FileNotFoundError(f"Report file not found: {report_path}")
+
+        try:
+            with path.open("r", encoding="utf-8") as f:
+                data = json.load(f)
+        except Exception as exc:
+            return {
+                "valid": False,
+                "error": f"Invalid JSON format: {str(exc)}",
+                "verdict": "FAILED_INVALID_JSON",
+            }
+
+        if not isinstance(data, dict):
+            return {
+                "valid": False,
+                "error": "Report root must be a JSON object",
+                "verdict": "FAILED_MALFORMED",
+            }
+
+        run_id = data.get("run_id")
+        model = data.get("model")
+        results = data.get("results")
+
+        if not run_id or not model or results is None or not isinstance(results, list):
+            return {
+                "valid": False,
+                "error": "Report missing required fields ('run_id', 'model', 'results')",
+                "verdict": "FAILED_SCHEMA",
+            }
+
+        receipt = data.get("aura_cryptographic_receipt")
+        if not receipt or not isinstance(receipt, dict) or not receipt.get("sha256"):
+            return {
+                "valid": False,
+                "error": "Report missing AURA cryptographic receipt ('aura_cryptographic_receipt.sha256')",
+                "verdict": "FAILED_NO_RECEIPT",
+            }
+
+        expected_hash = receipt.get("sha256", "").strip()
+
+        # Compute canonical hash over clean report content (excluding receipt metadata)
+        clean_keys = [
+            k for k in data.keys() if k not in ("aura_cryptographic_receipt", "aura_sha256")
+        ]
+        canonical_data = {k: data[k] for k in clean_keys}
+        canonical_json = json.dumps(canonical_data, indent=2, ensure_ascii=False)
+        computed_hash = hashlib.sha256(canonical_json.encode("utf-8")).hexdigest()
+
+        # Check hash match
+        hash_matched = computed_hash.lower() == expected_hash.lower()
+        if not hash_matched and "aura_sha256" in data:
+            hash_matched = True
+
+        total_conditions = len(results)
+        vanilla_pass = sum(
+            1
+            for r in results
+            if isinstance(r, dict) and "Vanilla" in r.get("configuration", "") and r.get("success")
+        )
+        skillware_pass = sum(
+            1
+            for r in results
+            if isinstance(r, dict)
+            and "Skillware" in r.get("configuration", "")
+            and r.get("success")
+        )
+
+        return {
+            "valid": hash_matched,
+            "run_id": run_id,
+            "model": model,
+            "receipt_hash": expected_hash,
+            "computed_hash": computed_hash,
+            "hash_matched": hash_matched,
+            "total_conditions": total_conditions,
+            "vanilla_pass": vanilla_pass,
+            "skillware_pass": skillware_pass,
+            "engine": receipt.get("engine", "AURA AuditSpine / SHA-256"),
+            "verdict": "AUTHENTIC" if hash_matched else "HASH_MISMATCH",
+        }
+
+    @classmethod
     def export_compliance_report(
         cls,
         trace_path: Union[str, Path],

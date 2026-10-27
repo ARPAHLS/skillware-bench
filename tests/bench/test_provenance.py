@@ -135,3 +135,66 @@ def test_cli_verify_and_compliance_commands(tmp_path: Path):
     assert "Auditing AURA Causal Provenance Trace" in out_audit
     assert "Events Verified" in out_audit
     assert "AUTHENTIC" in out_audit
+
+
+def test_provenance_report_verification(tmp_path: Path):
+    import hashlib
+
+    # 1. Valid report test
+    report_data = {
+        "run_id": "tiered_ablation_unit_test",
+        "timestamp_utc": "20261027_120000",
+        "model": "test-provider/test-model",
+        "results": [
+            {
+                "configuration": "Vanilla Baseline",
+                "scenario": "office_mail",
+                "tier": 1,
+                "success": True,
+            },
+            {
+                "configuration": "Skillware Equipped",
+                "scenario": "office_mail",
+                "tier": 1,
+                "success": True,
+            },
+        ],
+    }
+    canonical_json = json.dumps(report_data, indent=2, ensure_ascii=False)
+    computed_hash = hashlib.sha256(canonical_json.encode("utf-8")).hexdigest()
+    report_data["aura_cryptographic_receipt"] = {
+        "sha256": computed_hash,
+        "engine": "AURA AuditSpine / SHA-256",
+        "verified": True,
+    }
+
+    report_path = tmp_path / "test_report.json"
+    report_path.write_text(json.dumps(report_data, indent=2, ensure_ascii=False), encoding="utf-8")
+
+    res = ProvenanceEngine.verify_report(report_path)
+    assert res["valid"] is True
+    assert res["verdict"] == "AUTHENTIC"
+    assert res["receipt_hash"] == computed_hash
+    assert res["total_conditions"] == 2
+    assert res["vanilla_pass"] == 1
+    assert res["skillware_pass"] == 1
+
+    # 2. Tampered report test (modifying success verdict)
+    report_data["results"][0]["success"] = False
+    tampered_path = tmp_path / "tampered_report.json"
+    tampered_path.write_text(
+        json.dumps(report_data, indent=2, ensure_ascii=False), encoding="utf-8"
+    )
+
+    tampered_res = ProvenanceEngine.verify_report(tampered_path)
+    assert tampered_res["valid"] is False
+    assert tampered_res["verdict"] == "HASH_MISMATCH"
+
+    # 3. CLI verify on report test
+    console = Console(record=True, width=120)
+    args = MagicMock()
+    args.trace = str(report_path)
+    cmd_verify(args, console)
+    out_verify = console.export_text()
+    assert "[PASS] Benchmark Execution Report Verification Succeeded" in out_verify
+    assert "AUTHENTIC / UNTAMPERED" in out_verify

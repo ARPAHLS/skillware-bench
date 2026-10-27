@@ -66,8 +66,16 @@ This benchmark run was recorded with deterministic step tracking and anchored vi
 }
 ```
 
-Verification receipts can be reproduced by re-running the test suite with:
+The canonical execution record is tracked in [enchmarks/reports/qwen_qwen3_6_35b_a3b.json](../../../benchmarks/reports/qwen_qwen3_6_35b_a3b.json).
 
-```bash
+Verify the cryptographic receipt instantly without API keys:
+
+`ash
+skillware-bench verify benchmarks/reports/qwen_qwen3_6_35b_a3b.json
+`
+
+Live benchmark execution can also be reproduced via:
+
+`ash
 python scripts/run_tiered_ablation_bench.py --model qwen/qwen3.6-35b-a3b
-```
+`

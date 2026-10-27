@@ -66,8 +66,16 @@ This benchmark run was recorded with deterministic step tracking and anchored vi
 }
 ```
 
-Verification receipts can be reproduced by re-running the test suite with:
+The canonical execution record is tracked in [enchmarks/reports/anthropic_claude_sonnet_5.json](../../../benchmarks/reports/anthropic_claude_sonnet_5.json).
 
-```bash
+Verify the cryptographic receipt instantly without API keys:
+
+`ash
+skillware-bench verify benchmarks/reports/anthropic_claude_sonnet_5.json
+`
+
+Live benchmark execution can also be reproduced via:
+
+`ash
 python scripts/run_tiered_ablation_bench.py --model anthropic/claude-sonnet-5
-```
+`
