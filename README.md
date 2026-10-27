@@ -1,8 +1,33 @@
 # Skillware-Bench
 
-The Transparent, Empirical Benchmark Harness for Governed Agent Skills.
+<div align="center">
+  <p>The Transparent, Empirical Benchmark Harness for Governed Agent Skills.</p>
+  <p>Quantifying how frontier and sovereign language models execute real-world tasks, enforce constitutional safety gates, and eliminate token bloat.</p>
+</div>
 
-Quantifying how frontier and sovereign language models execute real-world tasks, enforce constitutional safety gates, and eliminate token bloat.
+<br/>
+
+<div align="center">
+  <img src="https://img.shields.io/badge/License-MIT-efcefa?style=flat-square" alt="License">
+  <img src="https://img.shields.io/badge/Python-3.10+-bae6fd?style=flat-square" alt="Python Version">
+  <a href="https://github.com/ARPAHLS/skillware-bench/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/ARPAHLS/skillware-bench/ci.yml?branch=main&label=CI&style=flat-square&color=bbf7d0" alt="CI Status"></a>
+  <a href="https://github.com/arpahls/aura"><img src="https://img.shields.io/badge/Attestation-AURA%20DAG-ffdac1?style=flat-square" alt="Attestation AURA"></a>
+</div>
+
+<br/>
+
+<div align="center">
+  <a href="#benchmark-overview">Overview</a> •
+  <a href="#grand-aggregate-results-23-models-736-test-conditions">Grand Aggregate</a> •
+  <a href="#top-10-model-standings">Leaderboard</a> •
+  <a href="#key-empirical-findings">Key Findings</a> •
+  <a href="#documentation-sitemap">Documentation</a> •
+  <a href="#quick-start--reproduction">Quick Start</a> •
+  <a href="#citing">Citing</a> •
+  <a href="#license">License</a>
+</div>
+
+---
 
 ## Benchmark Overview
 
@@ -105,10 +130,26 @@ cd skillware-bench
 pip install -e .
 ```
 
-### Running the Progressive Tiered Ablation Benchmark
+### 1. Interactive CLI & Mock Execution (Zero API Keys Required)
 
 ```bash
-# Run benchmark on any supported model
+# Launch interactive pastel menu
+skillware-bench menu
+
+# Execute offline deterministic simulation crucibles
+skillware-bench run --mock
+
+# Compare with-Skillware vs vanilla baseline turn-by-turn
+skillware-bench compare --suite gmail
+
+# Generate interactive inspection dashboard
+skillware-bench dashboard --output ./runs/dashboard.html
+```
+
+### 2. Live Progressive Tiered Ablation Sweeps
+
+```bash
+# Run benchmark on any supported model via API
 python scripts/run_tiered_ablation_bench.py --model deepseek/deepseek-v4.1-flash-1017
 
 # Run on a compact sovereign model
@@ -118,6 +159,10 @@ python scripts/run_tiered_ablation_bench.py --model qwen/qwen3.6-35b-a3b
 ## Cryptographic Receipts via AURA
 
 Every benchmark evaluation produces a verified cryptographic receipt anchored via the [AURA](https://github.com/arpahls/aura) attestation spine. Receipts contain a SHA-256 causal DAG hash over all executed turns, tool invocations, token metrics, and scoring outputs to ensure tamper-evident verification.
+
+## Citing
+
+If you use Skillware-Bench in research or products, please cite it using [CITATION.cff](CITATION.cff) (GitHub **Cite this repository**). For reproducibility, also record the **Skillware-Bench version** you used (Git tag, for example `0.3.1`).
 
 ## License
 
