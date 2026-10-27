@@ -95,10 +95,6 @@ def cmd_run(args, console: Console):
     if args.export:
         runner.export_reports(deltas, output_dir=args.output_dir)
 
-    if getattr(args, "figures", False):
-        runner.export_figures(deltas, output_dir=getattr(args, "figures_dir", "./runs/figures"))
-
-
 def cmd_compare(args, console: Console):
     """Print detailed turn-by-turn comparison for a specific crucible."""
     if args.suite not in ALL_CRUCIBLES:
