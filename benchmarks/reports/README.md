@@ -26,16 +26,19 @@ Each JSON report captures the complete, turn-by-turn experimental telemetry acro
 
 ## How AURA Provenance Works
 
-### 1. Why AURA Was Used
-In contemporary AI evaluation, benchmarks frequently suffer from a credibility deficit: scores are self-reported, model generations and prompt traces are rarely published in verifiable form, and token costs are often opaque or rounded. 
+### 1. Grounding & Role of AURA Harness
+In AI evaluation, empirical benchmarks frequently suffer from reproducibility and credibility deficits: scores are self-reported, model completions and trajectory logs are rarely published in verifiable form, and token costs are often opaque or rounded. 
 
-Skillware-Bench integrates **AURA (Agent Universal Runtime Audit)** to eliminate the need for trust:
-- Rather than taking benchmark tables on faith, every trial is continuously recorded by the AURA AuditSpine.
-- The spine operates in sub-millisecond host compute (<50 µs overhead per turn, <0.01% runtime tax), completely outside model prompt context rent.
-- Every turn, parameter schema, external mock API interaction, and physical environment diff is committed into an immutable Merkle DAG.
+Skillware-Bench integrates [AURA Harness](https://github.com/arpahls/aura) (Greek: *αύρα* / *AVRA*, PyPI: `aura-harness`), the runtime coat for agent loops developed by ARPA Hellenic Logical Systems, to eliminate trust assumptions:
+- **A Runtime Coat, Not an Orchestrator**: AURA wraps around the agent body/host loop (`SkillwareHost`). It does not replace the loop or consume prompt tokens; it sits at the host boundary, records what occurred, and exports verified session deliverables.
+- **Host Membrane & Egress Policy Boundary**: Operating across the membrane (session-open ingress context normalization, host cavity execution, and egress policy gating), AURA intercepts every tool invocation, validates parameter schemas, and enforces runtime constraints before actions leave the runtime cavity.
+- **Continuous AuditSpine**: Every execution turn, parameter validation check, tool dispatch, external mock API interaction, and physical environment state mutation is appended in real time as an immutable causal event (`AuraEvent`) on the audit spine.
+- **Sub-Millisecond Overhead**: The AURA audit spine operates entirely in sub-millisecond host compute (<50 µs overhead per event, <0.01% runtime tax), completely isolated from model prompt context and cognitive rent.
 
-### 2. What Is Encapsulated in the Receipt
-When an evaluation run finishes, the harness canonicalizes the full execution record (run metadata, model identifier, timestamp, and all 32 condition verdicts and telemetry records). It hashes this canonical JSON structure using SHA-256 to produce an immutable receipt:
+### 2. Sealed Session Export & Cryptographic Receipts
+When an ablation trial or full 16-layer evaluation concludes, AURA seals the session deliverable:
+- The complete execution telemetry—canonical run configuration, model adapter identifier, timestamp, all 32 condition verdicts, raw token usages, and step traces—is canonicalized into an immutable representation.
+- A deterministic SHA-256 digest is computed across the sealed payload, producing the cryptographic receipt (`aura_cryptographic_receipt`):
 
 ```json
 "aura_cryptographic_receipt": {
@@ -45,13 +48,13 @@ When an evaluation run finishes, the harness canonicalizes the full execution re
 }
 ```
 
-### 3. Why Changing Data Breaks Verification
-SHA-256 possesses the **cryptographic avalanche effect**: altering even a single bit in the input produces a radically divergent digest.
-- **Modifying Pass/Fail Verdicts**: Changing a model's score from 13/16 to 16/16 alters the hash.
-- **Adjusting Token Counts**: Modifying token totals by even 1 token produces an immediate mismatch.
-- **Altering Latencies or Text**: Editing raw assistant responses, turn counts, or timestamps breaks verification.
+### 3. Why Tampering Breaks Cryptographic Verification
+SHA-256 exhibits the **cryptographic avalanche effect**: altering even a single byte or character anywhere in the report produces a completely divergent digest.
+- **Modifying Pass/Fail Verdicts**: Changing a model's score from 13/16 to 16/16 alters the canonical JSON body and causes instant verification failure.
+- **Adjusting Token Totals**: Modifying prompt or completion token counts by even 1 token invalidates the digest.
+- **Altering Latencies or Text**: Modifying raw assistant completions, turn counts, tool arguments, or execution timestamps breaks the hash.
 
-When `skillware-bench verify` inspects a report, it independently recalculates the canonical SHA-256 hash across the report payload. If any field has been modified, the verification engine immediately flags `HASH_MISMATCH` and halts with exit code 1.
+When `skillware-bench verify` inspects any report, it independently parses and recalculates the canonical SHA-256 digest across the report payload. If any field has been modified, tampered with, or corrupted, the verification engine immediately flags `HASH_MISMATCH` and halts with exit code 1.
 
 ---
 
