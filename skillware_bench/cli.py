@@ -95,6 +95,7 @@ def cmd_run(args, console: Console):
     if args.export:
         runner.export_reports(deltas, output_dir=args.output_dir)
 
+
 def cmd_compare(args, console: Console):
     """Print detailed turn-by-turn comparison for a specific crucible."""
     if args.suite not in ALL_CRUCIBLES:
