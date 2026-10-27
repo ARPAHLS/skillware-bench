@@ -34,9 +34,27 @@ Compact models with Skillware executed the deterministic `download_attachment` o
 ### 3. Economic and Sovereign Implication
 Deploying proprietary frontier APIs incurs substantial per-token costs, unpredictable latency spikes, and data privacy exposure. These empirical results prove that enterprise deployments can host sovereign compact models (16B-35B) locally or within sovereign VPC boundaries and achieve frontier-grade or superior reliability by augmenting them with governed Skillware skills.
 
-## Visual Overview
+## Empirical Exhibits
 
-```
-[Figure: Small Sovereign Models + Skillware vs Frontier LLMs Alone]
-Reference: ../figures/small_vs_frontier_comparison.png
-```
+<div align="center">
+  <img src="../figures/fig05_parameter_paradox.png" alt="Fig. 5 — The Parameter Paradox (Small Models + Skillware vs Large Models)" width="100%" />
+</div>
+
+> **Figure 5.** The empirical parameter paradox. Across three decades of parameter scale (8B to 550B+), Skillware-equipped models maintain a decisive performance wedge over unequipped baselines. The wedge is widest for compact sovereign models: an equipped Qwen 3.8 Flash (16B) or Gemma 4 (31B) achieves a perfect 16/16 (100.0%) pass rate, outscoring unequipped frontier models Claude Sonnet 5 and GPT-6 Luna (both 14/16, 87.5%) at roughly 1/30th the operational cost. Without skillware, unequipped frontier models plateau below 90% due to boundary failures on unconstrained tool contracts, whereas compact workhorses equipped with validated bundles eliminate execution regressions.
+
+<div align="center">
+  <img src="../figures/fig18_equip_any_model_uplift.png" alt="Fig. 18 — Equip-Any-Model Pass Rate Uplift" width="100%" />
+</div>
+
+> **Figure 18.** Pass rate trajectory under Skillware equipment across 14 representative models. Left axis ranks models by Vanilla unassisted pass rate (from Gemini 3.8 Flash at 100.0% down to Llama 4 Maverick at 37.5%). Right axis ranks models by net absolute pass rate lift under Skillware (from Maverick at +56.2% down to Gemini 3.8 Flash and Claude Sonnet 5 at +0.0%). Sovereign and compact workhorses achieve the steepest improvements when decoupled from raw code generation, with Meta Llama 4 Maverick jumping from 37.5% to 93.8% to achieve parity with frontier models.
+
+---
+
+## Related Analyses & Catalogs
+
+- [Cross-Model Benchmark Overview](overview.md)
+- [Complete Benchmark Exhibits Catalog](../exhibits.md)
+- [Execution Latency, Throughput & Cryptographic Audit Spine](latency_and_auditability.md)
+- [Behavioral Contracts, Safety Gating & Error Modes](behavioral_contracts.md)
+- [Token Economics & Overhead Work Avoided](token_economics.md)
+- [Master Leaderboard](../leaderboard.md)

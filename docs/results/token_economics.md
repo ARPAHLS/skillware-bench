@@ -61,9 +61,33 @@ The table below shows the total number of workspace scripts written, executed, a
 - **Cumulative Latency**: Dropped from 6,914.7 seconds (115.2 minutes) to 4,331.4 seconds (72.2 minutes), representing a **1.60x overall execution speedup**.
 - **Financial Savings**: Reduced upstream API cost by 41.8% on commercial endpoints, while dramatically improving throughput on sovereign self-hosted hardware.
 
-## Visual Overview
+## Empirical Token & Cost Exhibits
 
-```
-[Figure: Cumulative Token Consumption and Context Growth Curves]
-Reference: ../figures/token_consumption_curves.png
-```
+<div align="center">
+  <img src="../figures/fig04_cost_cascade.png" alt="Fig. 4 — The Benchmark Cost Cascade" width="100%" />
+</div>
+
+> **Figure 4.** The benchmark cost cascade for a complex multi-turn task episode. The cascade illustrates compound enterprise spend reduction when migrating from monolithic frontier models ($15.58 on unassisted multi-turn script debugging) to equipped compact workhorses ($0.42 on sovereign compact models): eliminating the recursive script debugging tax (−$6.47), JIT schema and directive excision (−$6.22), and compact workhorse substitution (−$2.47) achieve an aggregate 97.3% cost reduction.
+
+<div align="center">
+  <img src="../figures/fig20_token_ledger_per_call.png" alt="Fig. 20 — Token Ledger per Call on Attachment Extraction" width="100%" />
+</div>
+
+> **Figure 20.** Token ledger decomposition per successful tool call during Office Mail attachment extraction. Unassisted Vanilla execution incurs a severe token tax (5,520 tokens per call), driven by verbose schema and documentation prefill (1,840 tokens), monolithic tool preambles (620 tokens), subprocess retry overhead (940 tokens), and traceback repair loops (780 tokens). Equipping models with Skillware preserves baseline task reasoning (1,340 tokens) while excising redundant documentation down to compact typed schemas (220 tokens, −88%) and eliminating code repair loops entirely (0 tokens, −100%), yielding a 70.6% reduction in per-call token expenditure (1,620 tokens total).
+
+<div align="center">
+  <img src="../figures/fig47_completion_bloat_ratio.png" alt="Fig. 47 — Completion Bloat vs Actionable Inference" width="100%" />
+</div>
+
+> **Figure 47.** Decomposition of generated completion tokens into actionable payload versus execution overhead across all 736 benchmark conditions. In unassisted Vanilla agents, average output generation reaches 984 completion tokens/task , heavily driven by throwaway code-gen overhead (synthesizing 464 python scripts, bash commands, and error apologies in retry loops). Under Skillware, completion volume drops to 556 tokens/task (−43.5% output compression) , where 86.4% of generated tokens directly execute structured tool dispatches and verified payloads with zero script syntax or traceback reflection loops.
+
+---
+
+## Related Analyses & Catalogs
+
+- [Cross-Model Benchmark Overview](overview.md)
+- [Complete Benchmark Exhibits Catalog](../exhibits.md)
+- [Small Models + Skillware vs. Frontier LLMs Alone](frontiers_vs_small.md)
+- [Execution Latency, Throughput & Cryptographic Audit Spine](latency_and_auditability.md)
+- [Behavioral Contracts, Safety Gating & Error Modes](behavioral_contracts.md)
+- [Master Leaderboard](../leaderboard.md)

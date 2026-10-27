@@ -8,7 +8,7 @@ Evaluation scorecard and empirical metrics for `DeepSeek v4 Pro` under the Progr
 | :--- | :--- |
 | **Model Name** | `deepseek/deepseek-v4-pro` |
 | **Brand / Provider** | DeepSeek |
-| **Capability Tier** | Frontier API |
+| **Capability Tier** | Frontier |
 | **Architecture / Size** | Frontier MoE |
 | **Context Window** | 128k |
 | **Benchmark Run ID** | `tiered_ablation_20261018_135545` |

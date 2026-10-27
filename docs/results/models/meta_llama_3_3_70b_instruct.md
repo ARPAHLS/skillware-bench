@@ -8,7 +8,7 @@ Evaluation scorecard and empirical metrics for `Meta Llama 3.3 70B Instruct` und
 | :--- | :--- |
 | **Model Name** | `meta-llama/llama-3.3-70b-instruct` |
 | **Brand / Provider** | Meta |
-| **Capability Tier** | Sovereign Enterprise 70B+ |
+| **Capability Tier** | Enterprise |
 | **Architecture / Size** | 70B dense |
 | **Context Window** | 128k |
 | **Benchmark Run ID** | `tiered_ablation_20261018_135052` |

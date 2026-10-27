@@ -8,7 +8,7 @@ Evaluation scorecard and empirical metrics for `NVIDIA Nemotron 3.5 Lightning` u
 | :--- | :--- |
 | **Model Name** | `nvidia/nemotron-3.5-lightning` |
 | **Brand / Provider** | NVIDIA |
-| **Capability Tier** | Compact Workhorse |
+| **Capability Tier** | Compact |
 | **Architecture / Size** | Compact Sovereign |
 | **Context Window** | 128k |
 | **Benchmark Run ID** | `tiered_ablation_20261018_151238` |

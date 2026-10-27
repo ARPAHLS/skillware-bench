@@ -8,7 +8,7 @@ Evaluation scorecard and empirical metrics for `OpenAI GPT-6 Luna` under the Pro
 | :--- | :--- |
 | **Model Name** | `openai/gpt-6-luna` |
 | **Brand / Provider** | OpenAI |
-| **Capability Tier** | Frontier API |
+| **Capability Tier** | Frontier |
 | **Architecture / Size** | Frontier |
 | **Context Window** | 128k |
 | **Benchmark Run ID** | `tiered_ablation_20261018_122923` |

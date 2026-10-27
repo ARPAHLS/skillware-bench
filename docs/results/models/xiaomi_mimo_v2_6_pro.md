@@ -8,7 +8,7 @@ Evaluation scorecard and empirical metrics for `Xiaomi MiMo v2.6 Pro` under the 
 | :--- | :--- |
 | **Model Name** | `xiaomi/mimo-v2.6-pro` |
 | **Brand / Provider** | Xiaomi |
-| **Capability Tier** | Sovereign Enterprise 70B+ |
+| **Capability Tier** | Enterprise |
 | **Architecture / Size** | Flagship MoE |
 | **Context Window** | 64k |
 | **Benchmark Run ID** | `tiered_ablation_20261018_144702` |

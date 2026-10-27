@@ -8,7 +8,7 @@ Evaluation scorecard and empirical metrics for `NVIDIA Nemotron 3 Ultra 550B` un
 | :--- | :--- |
 | **Model Name** | `nvidia/nemotron-3-ultra-550b-a55b:free` |
 | **Brand / Provider** | NVIDIA |
-| **Capability Tier** | Sovereign Enterprise 70B+ |
+| **Capability Tier** | Enterprise |
 | **Architecture / Size** | 550B (55B active) |
 | **Context Window** | 128k |
 | **Benchmark Run ID** | `tiered_ablation_20261018_134045` |

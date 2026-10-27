@@ -8,7 +8,7 @@ Evaluation scorecard and empirical metrics for `Meta Llama 4 Maverick` under the
 | :--- | :--- |
 | **Model Name** | `meta-llama/llama-4-maverick` |
 | **Brand / Provider** | Meta |
-| **Capability Tier** | Sovereign Open-Weight 8B |
+| **Capability Tier** | Compact |
 | **Architecture / Size** | 17B active (128E MoE) |
 | **Context Window** | 128k |
 | **Benchmark Run ID** | `tiered_ablation_20261018_161259` |

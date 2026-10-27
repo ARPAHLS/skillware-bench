@@ -8,7 +8,7 @@ Evaluation scorecard and empirical metrics for `Google Gemini 4 Argon` under the
 | :--- | :--- |
 | **Model Name** | `google/gemini-4-argon` |
 | **Brand / Provider** | Google |
-| **Capability Tier** | Frontier API |
+| **Capability Tier** | Frontier |
 | **Architecture / Size** | Frontier |
 | **Context Window** | 1000k |
 | **Benchmark Run ID** | `tiered_ablation_20261018_123506` |

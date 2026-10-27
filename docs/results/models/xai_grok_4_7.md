@@ -8,7 +8,7 @@ Evaluation scorecard and empirical metrics for `xAI Grok 4.7` under the Progress
 | :--- | :--- |
 | **Model Name** | `x-ai/grok-4.7` |
 | **Brand / Provider** | xAI |
-| **Capability Tier** | Frontier API |
+| **Capability Tier** | Frontier |
 | **Architecture / Size** | Frontier |
 | **Context Window** | 128k |
 | **Benchmark Run ID** | `tiered_ablation_20261018_124535` |

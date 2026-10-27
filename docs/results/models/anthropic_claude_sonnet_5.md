@@ -8,7 +8,7 @@ Evaluation scorecard and empirical metrics for `Anthropic Claude Sonnet 5` under
 | :--- | :--- |
 | **Model Name** | `anthropic/claude-sonnet-5` |
 | **Brand / Provider** | Anthropic |
-| **Capability Tier** | Frontier API |
+| **Capability Tier** | Frontier |
 | **Architecture / Size** | Frontier |
 | **Context Window** | 200k |
 | **Benchmark Run ID** | `tiered_ablation_20261018_122016` |

@@ -8,7 +8,7 @@ Evaluation scorecard and empirical metrics for `Meta Muse Spark 1.3` under the P
 | :--- | :--- |
 | **Model Name** | `meta/muse-spark-1.3` |
 | **Brand / Provider** | Meta |
-| **Capability Tier** | Compact Workhorse |
+| **Capability Tier** | Compact |
 | **Architecture / Size** | Spark MoE |
 | **Context Window** | 128k |
 | **Benchmark Run ID** | `tiered_ablation_20261018_153326` |

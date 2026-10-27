@@ -8,7 +8,7 @@ Evaluation scorecard and empirical metrics for `Tencent Hunyuan 4 Preview` under
 | :--- | :--- |
 | **Model Name** | `tencent/hy4-preview` |
 | **Brand / Provider** | Tencent |
-| **Capability Tier** | Sovereign Enterprise 70B+ |
+| **Capability Tier** | Enterprise |
 | **Architecture / Size** | Hunyuan MoE |
 | **Context Window** | 64k |
 | **Benchmark Run ID** | `tiered_ablation_20261018_132236` |

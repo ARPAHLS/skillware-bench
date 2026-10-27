@@ -8,7 +8,7 @@ Evaluation scorecard and empirical metrics for `Meta Llama 4 Scout` under the Pr
 | :--- | :--- |
 | **Model Name** | `meta-llama/llama-4-scout` |
 | **Brand / Provider** | Meta |
-| **Capability Tier** | Sovereign Open-Weight 8B |
+| **Capability Tier** | Edge |
 | **Architecture / Size** | 17B active (128E MoE) |
 | **Context Window** | 128k |
 | **Benchmark Run ID** | `tiered_ablation_20261018_154401` |

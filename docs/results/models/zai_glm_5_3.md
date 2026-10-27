@@ -8,7 +8,7 @@ Evaluation scorecard and empirical metrics for `Z-AI GLM 5.3` under the Progress
 | :--- | :--- |
 | **Model Name** | `z-ai/glm-5.3` |
 | **Brand / Provider** | Z-AI |
-| **Capability Tier** | Sovereign Enterprise 70B+ |
+| **Capability Tier** | Enterprise |
 | **Architecture / Size** | Flagship MoE |
 | **Context Window** | 128k |
 | **Benchmark Run ID** | `tiered_ablation_20261018_144158` |

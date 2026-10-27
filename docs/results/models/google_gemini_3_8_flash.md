@@ -8,7 +8,7 @@ Evaluation scorecard and empirical metrics for `Google Gemini 3.8 Flash` under t
 | :--- | :--- |
 | **Model Name** | `google/gemini-3.8-flash` |
 | **Brand / Provider** | Google |
-| **Capability Tier** | Compact Workhorse |
+| **Capability Tier** | Compact |
 | **Architecture / Size** | Compact Frontier |
 | **Context Window** | 1000k |
 | **Benchmark Run ID** | `tiered_ablation_20261018_141430` |

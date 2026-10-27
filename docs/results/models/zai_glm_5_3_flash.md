@@ -8,7 +8,7 @@ Evaluation scorecard and empirical metrics for `Z-AI GLM 5.3 Flash` under the Pr
 | :--- | :--- |
 | **Model Name** | `z-ai/glm-5.3-flash` |
 | **Brand / Provider** | Z-AI |
-| **Capability Tier** | Compact Workhorse |
+| **Capability Tier** | Compact |
 | **Architecture / Size** | 20B active (MoE) |
 | **Context Window** | 128k |
 | **Benchmark Run ID** | `tiered_ablation_20261018_130317` |

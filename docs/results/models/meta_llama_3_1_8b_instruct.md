@@ -8,7 +8,7 @@ Evaluation scorecard and empirical metrics for `Meta Llama 3.1 8B Instruct` unde
 | :--- | :--- |
 | **Model Name** | `meta-llama/llama-3.1-8b-instruct` |
 | **Brand / Provider** | Meta |
-| **Capability Tier** | Sovereign Open-Weight 8B |
+| **Capability Tier** | Edge |
 | **Architecture / Size** | 8B dense |
 | **Context Window** | 128k |
 | **Benchmark Run ID** | `tiered_ablation_20261018_152036` |

@@ -8,7 +8,7 @@ Evaluation scorecard and empirical metrics for `Qwen 3.8 Flash` under the Progre
 | :--- | :--- |
 | **Model Name** | `qwen/qwen3.8-flash` |
 | **Brand / Provider** | Qwen |
-| **Capability Tier** | Compact Workhorse |
+| **Capability Tier** | Compact |
 | **Architecture / Size** | Flash MoE |
 | **Context Window** | 128k |
 | **Benchmark Run ID** | `tiered_ablation_20261018_142249` |

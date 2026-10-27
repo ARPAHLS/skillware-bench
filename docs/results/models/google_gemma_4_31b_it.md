@@ -8,7 +8,7 @@ Evaluation scorecard and empirical metrics for `Google Gemma 4 31B IT` under the
 | :--- | :--- |
 | **Model Name** | `google/gemma-4-31b-it` |
 | **Brand / Provider** | Google |
-| **Capability Tier** | Compact Workhorse |
+| **Capability Tier** | Edge |
 | **Architecture / Size** | 31B dense |
 | **Context Window** | 128k |
 | **Benchmark Run ID** | `tiered_ablation_20261018_152532` |

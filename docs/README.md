@@ -5,8 +5,11 @@ Welcome to the technical documentation and empirical findings repository for **S
 ## Master Documentation Sitemap
 
 ### 1. Empirical Results & Cross-Model Standings
+- [Master Leaderboard](leaderboard.md): Complete benchmark rankings and standings across the 23-model fleet.
 - [Cross-Model Benchmark Overview](results/overview.md): Comprehensive 23-model cross-comparison tables, overall rankings, and capability tier breakdowns.
+- [Complete Benchmark Exhibits Catalog](exhibits.md): Master catalog of all 46 active publication figures and tables (with high-res PNG previews) alongside 19 deferred exhibits.
 - [Small Models + Skillware vs Frontier LLMs Alone](results/frontiers_vs_small.md): Empirical proof that compact sovereign models with deterministic skills match or outperform unassisted frontier APIs.
+- [Execution Latency, Throughput & Cryptographic Audit Spine](results/latency_and_auditability.md): Deep-dive into execution latency, concurrency throughput scaling, tail latency compression, and AURA attestation overhead.
 - [Behavioral Contracts, Safety Gating & Error Modes](results/behavioral_contracts.md): In-depth examination of the 4 simulation crucibles, base64 MIME attachment traps, confirmation gating, and injection resilience.
 - [Token Economics & Overhead Work Avoided](results/token_economics.md): Detailed analysis of the 464 workspace scripts debugged in Vanilla vs 0 in Skillware, token compression curves, and cost savings.
 

@@ -8,7 +8,7 @@ Evaluation scorecard and empirical metrics for `Anthropic Claude Haiku 5.5` unde
 | :--- | :--- |
 | **Model Name** | `anthropic/claude-haiku-5.5` |
 | **Brand / Provider** | Anthropic |
-| **Capability Tier** | Compact Workhorse |
+| **Capability Tier** | Compact |
 | **Architecture / Size** | Compact Frontier |
 | **Context Window** | 200k |
 | **Benchmark Run ID** | `tiered_ablation_20261018_141034` |

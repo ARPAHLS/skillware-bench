@@ -42,9 +42,33 @@ Across the 736 live experimental test conditions (368 Vanilla Baseline vs 368 Sk
 | **Zero-Width Unicode Blindness** | 34.8% of models | **0.0%** | Deterministic pre-tokenization sanitization filter |
 | **Address Leakage in AML** | 26.1% of models | **0.0%** | Offline mock registry and privacy boundary enforcement |
 
-## Visual Overview
+## Behavioral Gating & Safety Exhibits
 
-```
-[Figure: Behavioral Error Modes and Safety Gate Success Rates]
-Reference: ../figures/behavioral_safety_gates.png
-```
+<div align="center">
+  <img src="../figures/fig06_context_excision.png" alt="Fig. 6 — Context Excision" width="100%" />
+</div>
+
+> **Figure 6.** Decomposition of prompt context excision across the benchmark simulation crucibles. Red hatching denotes resident context excised from the model's inference hot path: redundant system preambles, exhaustive tool schemas, few-shot demonstration banks, and accumulated debugging history. By offloading executable skill logic (skill.py) and schema verification to deterministic host-side JIT handlers, resident prompt context collapses by 84.0% on average (from 15,400 to 2,460 tokens), slashing per-turn prefill latency and eliminating distraction-induced contract hallucination.
+
+<div align="center">
+  <img src="../figures/fig07_wallet_gate.png" alt="Fig. 7 — Deterministic Execution & Contract Gating" width="100%" />
+</div>
+
+> **Figure 7.** Deterministic execution pipeline in Skillware. When an agent invokes a skill, capability is decoupled from intelligence: rather than relying on stochastic LLM code generation or open-ended prompt heuristics, execution passes through a strict Contract gate (manifest.yaml), runs pre-compiled, offline-tested Python logic inside the Effect handler (skill.py), and returns a structured response envelope (ready, needs_input, error). By delegating domain logic to deterministic Python rather than generative inference, Skillware achieves 100% reproducible verdicts, eliminates behavioral drift across model architectures, and executes complex tasks with zero logic token expenditure.
+
+<div align="center">
+  <img src="../figures/fig33_call_survival_flow.png" alt="Fig. 33 — 368-Layer Call Survival Flow" width="100%" />
+</div>
+
+> **Figure 33.** Tool invocation survival flow normalized across 1,000 emitted calls per arm (reconciling with the 368 benchmark conditions in Fig. 23). In unassisted vanilla execution, 11.8% of emitted calls fail preflight schema validation (118 invalid calls), and while 231 calls recover through replanning loops, 57 calls abort completely. In contrast, Skillware preflight gates enforce typing upfront (99.6% valid), resolving edge cases via fast typed reflexes (52 repaired) to deliver 941 clean first-pass calls (94.1% clean first pass vs 71.2% vanilla) with only 7 terminal aborts. Across the full 368 benchmark tasks, this mechanism lifts completed conditions from 300 (81.5%) to 337 (91.6%).
+
+---
+
+## Related Analyses & Catalogs
+
+- [Cross-Model Benchmark Overview](overview.md)
+- [Complete Benchmark Exhibits Catalog](../exhibits.md)
+- [Small Models + Skillware vs. Frontier LLMs Alone](frontiers_vs_small.md)
+- [Execution Latency, Throughput & Cryptographic Audit Spine](latency_and_auditability.md)
+- [Token Economics & Overhead Work Avoided](token_economics.md)
+- [Master Leaderboard](../leaderboard.md)

@@ -6,6 +6,36 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-10-27
+
+### Added
+
+- **Publication Exhibit Suite (46 Active High-Resolution Exhibits)**:
+  - Exported all 46 active publication-grade exhibits from `scratch/figuregen/clean htmls/` as 2x device-pixel-ratio PNGs into `docs/figures/`.
+  - Created `docs/figures/manifest.json` cataloging each exhibit's metadata, titles, clean authoritative captions, and file sizes.
+  - Documented 19 deferred exhibits reserved for specialized ablation extensions in `docs/exhibits.md`.
+  - Added `docs/exhibits.md` featuring the complete gallery and taxonomy across 6 publication themes.
+- **Latency, Concurrency & Cryptographic Audit Deep-Dive (`docs/results/latency_and_auditability.md`)**:
+  - Authored comprehensive deep-dive detailing the Four-Scale Continuum (>24,000x dynamic range), concurrency scaling up to 512 workers (sustaining 16.9 vs 5.0 tasks/min), tail latency compression (45.4% drop at P99), and AURA AuditSpine cryptographic verification latency (<0.50 ms, <0.01% runtime overhead).
+- **Public Leaderboard Standings (`docs/leaderboard.md`)**:
+  - Integrated representative 8-model standing matrix (`tab04_eight_model_leaderboard.png`) and equip-any-model uplift trajectories (`fig18_equip_any_model_uplift.png`).
+- **Comprehensive Documentation Grounding & Visual Embeds**:
+  - `README.md`: Embedded key figures (`fig25_capability_compression_heatmap.png`, `tab07_four_axis_summary.png`, `fig12_cost_capability_frontier.png`, `fig11_latency_anatomy.png`) with authoritative captions.
+  - `docs/results/overview.md`: Embedded `tab07_four_axis_summary.png`, `fig25_capability_compression_heatmap.png`, and `fig13_gain_by_task_family.png`.
+  - `docs/results/frontiers_vs_small.md`: Replaced visual placeholder with `fig05_parameter_paradox.png` and `fig18_equip_any_model_uplift.png`.
+  - `docs/results/token_economics.md`: Replaced visual placeholder with `fig04_cost_cascade.png`, `fig20_token_ledger_per_call.png`, and `fig47_completion_bloat_ratio.png`.
+  - `docs/results/behavioral_contracts.md`: Replaced visual placeholder with `fig06_context_excision.png`, `fig07_wallet_gate.png`, and `fig33_call_survival_flow.png`.
+  - `docs/methodology.md`: Embedded `fig21_measurement_harness.png`, `fig02_bundle_anatomy.png`, and `tab03_progressive_difficulty_tiers.png`.
+  - `docs/crucibles.md`: Embedded `tab01_ecosystem_taxonomy.png`, `tab02_three_stage_firewall.png`, and `fig28_kill_chain_coverage.png`.
+
+### Changed
+
+- **Capability Tier Standardization**:
+  - Standardized all 23 model cards (`docs/results/models/*.md`), overview tables, and leaderboard docs to use the 4 canonical locked capability tiers: `Frontier`, `Enterprise`, `Compact`, and `Edge`, eliminating ad-hoc parameter guesswork.
+- **Repository Documentation Sitemap**:
+  - Synchronized sitemaps across `README.md` and `docs/README.md` to link all new analyses, exhibits catalog, and leaderboard.
+
+
 ## [0.3.0] - 2026-10-18
 
 ### Added

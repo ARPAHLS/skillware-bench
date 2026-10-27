@@ -8,7 +8,7 @@ Evaluation scorecard and empirical metrics for `DeepSeek v4.1 Flash (1017)` unde
 | :--- | :--- |
 | **Model Name** | `deepseek/deepseek-v4.1-flash-1017` |
 | **Brand / Provider** | DeepSeek |
-| **Capability Tier** | Compact Workhorse |
+| **Capability Tier** | Compact |
 | **Architecture / Size** | 16B active (MoE) |
 | **Context Window** | 128k |
 | **Benchmark Run ID** | `tiered_ablation_20261018_115330` |

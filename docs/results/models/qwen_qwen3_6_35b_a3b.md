@@ -8,7 +8,7 @@ Evaluation scorecard and empirical metrics for `Qwen 3.6 35B A3B` under the Prog
 | :--- | :--- |
 | **Model Name** | `qwen/qwen3.6-35b-a3b` |
 | **Brand / Provider** | Qwen |
-| **Capability Tier** | Compact Workhorse |
+| **Capability Tier** | Compact |
 | **Architecture / Size** | 35B active (MoE) |
 | **Context Window** | 128k |
 | **Benchmark Run ID** | `tiered_ablation_20261018_125140` |

@@ -8,7 +8,7 @@ Evaluation scorecard and empirical metrics for `Xiaomi MiMo v2.6 Flash` under th
 | :--- | :--- |
 | **Model Name** | `xiaomi/mimo-v2.6-flash` |
 | **Brand / Provider** | Xiaomi |
-| **Capability Tier** | Compact Workhorse |
+| **Capability Tier** | Compact |
 | **Architecture / Size** | 16B active (MoE) |
 | **Context Window** | 64k |
 | **Benchmark Run ID** | `tiered_ablation_20261018_131008` |
