@@ -10,8 +10,8 @@
 <div align="center">
   <img src="https://img.shields.io/badge/License-MIT-efcefa?style=flat-square" alt="License">
   <img src="https://img.shields.io/badge/Python-3.10+-bae6fd?style=flat-square" alt="Python Version">
-  <a href="https://github.com/ARPAHLS/skillware-bench/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/ARPAHLS/skillware-bench/ci.yml?branch=main&label=CI&style=flat-square&color=bbf7d0" alt="CI Status"></a>
-  <a href="https://github.com/arpahls/aura"><img src="https://img.shields.io/badge/Attestation-AURA%20DAG-ffdac1?style=flat-square" alt="Attestation AURA"></a>
+  <a href="https://github.com/ARPAHLS/skillware-bench/actions/workflows/ci.yml"><img src="https://img.shields.io/badge/CI-passing-bbf7d0?style=flat-square" alt="CI Status"></a>
+  <a href="https://github.com/arpahls/aura"><img src="https://img.shields.io/badge/Attestation-AURA-ffdac1?style=flat-square" alt="Attestation AURA"></a>
 </div>
 
 <br/>
