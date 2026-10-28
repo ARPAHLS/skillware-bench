@@ -39,7 +39,7 @@ jobs:
 
     - name: Audit markdown links & image references
       run: |
-        python scratch/audit_md_links.py
+        python scripts/audit_md_links.py
 
     - name: Test offline benchmark execution & CLI commands
       run: |

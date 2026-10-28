@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "skillware-bench"
-version = "0.3.1"
+version = "0.3.2"
 description = "Transparent evaluation harness for AI agent constitutions, deterministic skill execution, and verifiable causal provenance."
 readme = "README.md"
 authors = [

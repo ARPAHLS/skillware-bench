@@ -18,7 +18,7 @@
 - [ ] `pytest tests/hygiene/ -v` passes (version consistency, zero emojis, SPDX headers, package exports)
 - [ ] `black --check .` passes (line length 100)
 - [ ] `flake8 . --count --statistics` passes with 0 warnings
-- [ ] `python scratch/audit_md_links.py` passes with 0 broken links and 0 broken images
+- [ ] `python scripts/audit_md_links.py` passes with 0 broken links and 0 broken images
 - [ ] `skillware-bench check-env`, `skillware-bench list`, and `skillware-bench run --mock` execute cleanly
 - [ ] Zero emojis anywhere in code, docstrings, commit messages, CLI output, or documentation markdown
 

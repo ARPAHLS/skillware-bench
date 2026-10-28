@@ -77,7 +77,7 @@ To prevent broken builds, test regressions, or follow-up hotfixes, consult this 
 | **Package Exports** (`skillware_bench/__init__.py`) | 1. `__all__` list in `skillware_bench/__init__.py`<br/>2. `expected_exports` list in `tests/hygiene/test_package_integrity.py` | `test_package_exports()` fails in CI if public symbols are added or removed without updating hygiene assertions. |
 | **Package Version Bump** | 1. `skillware_bench/__init__.py` (`__version__ = "X.Y.Z"`)<br/>2. `pyproject.toml` (`version = "X.Y.Z"`)<br/>3. `CITATION.cff` (`version: X.Y.Z` and `date-released: YYYY-MM-DD`)<br/>4. `CHANGELOG.md` (new version header) | `test_version_consistency()` fails if `__version__` and `pyproject.toml` differ. `test_citation_cff_metadata()` fails if CITATION.cff is desynchronized. |
 | **CLI Arguments / Commands** (`skillware_bench/cli.py`) | 1. Tests: `tests/bench/test_cli.py`<br/>2. Documentation: `README.md` and `docs/README.md`<br/>3. Shell completion / help text | `test_cli_*` fails if command signatures change. Broken documentation links or missing arguments confuse users. |
-| **Documentation & Markdown Files** (`docs/`, `*.md`) | 1. Link audit: `python scratch/audit_md_links.py`<br/>2. Zero emojis: No symbols, thumbs, or icon characters in prose<br/>3. Formatting: Standard markdown tables and GitHub-flavored markdown | CI link audit fails if relative links or image paths are broken. Zero-emoji test fails on unicode symbols. |
+| **Documentation & Markdown Files** (`docs/`, `*.md`) | 1. Link audit: `python scripts/audit_md_links.py`<br/>2. Zero emojis: No symbols, thumbs, or icon characters in prose<br/>3. Formatting: Standard markdown tables and GitHub-flavored markdown | CI link audit fails if relative links or image paths are broken. Zero-emoji test fails on unicode symbols. |
 
 ---
 
@@ -205,7 +205,7 @@ pytest tests/ -v
 pytest tests/hygiene/ -v
 
 # Step 5: Markdown Links and Image Embed Integrity Audit
-python scratch/audit_md_links.py
+python scripts/audit_md_links.py
 
 # Step 6: CLI Smoke Test (Environment, registry, and mock execution)
 skillware-bench check-env
