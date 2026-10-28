@@ -16,9 +16,14 @@ abstract: >-
   real-world simulation crucibles.
 version: "0.3.2"
 date-released: "2026-10-28"
+doi: "10.5281/zenodo.23725543"
 license: MIT
 repository-code: "https://github.com/arpahls/skillware-bench"
 url: "https://skillware.site"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.23725543"
+    description: "The concept DOI for the collection of all Skillware-Bench versions."
 authors:
   - family-names: Peilivanidis
     given-names: Vladimiros

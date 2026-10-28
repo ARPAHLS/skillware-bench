@@ -9,10 +9,11 @@
 
 <div align="center">
   <a href="https://github.com/arpahls/skillware"><img src="https://img.shields.io/badge/Skillware-0.6.0-D4E4F1?style=flat-square" alt="Skillware 0.6.0"></a>
+  <a href="https://github.com/arpahls/aura"><img src="https://img.shields.io/badge/AURA-0.3.6-ffdac1?style=flat-square" alt="AURA 0.3.6"></a>
+  <a href="https://doi.org/10.5281/zenodo.23725543"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.23725543.svg" alt="DOI"></a>
   <img src="https://img.shields.io/badge/License-MIT-efcefa?style=flat-square" alt="License">
   <img src="https://img.shields.io/badge/Python-3.10+-bae6fd?style=flat-square" alt="Python Version">
   <a href="https://github.com/ARPAHLS/skillware-bench/actions/workflows/ci.yml"><img src="https://img.shields.io/badge/CI-passing-bbf7d0?style=flat-square" alt="CI Status"></a>
-  <a href="https://github.com/arpahls/aura"><img src="https://img.shields.io/badge/Attestation-AURA-ffdac1?style=flat-square" alt="Attestation AURA"></a>
 </div>
 
 <br/>
@@ -24,8 +25,6 @@
   <a href="#key-empirical-findings">Key Findings</a> •
   <a href="#documentation-sitemap">Documentation</a> •
   <a href="#quick-start--reproduction">Quick Start</a> •
-  <a href="#governed-execution-via-skillware">Skillware</a> •
-  <a href="#cryptographic-receipts-via-aura">AURA</a> •
   <a href="#citing">Citing</a> •
   <a href="#license">License</a>
 </div>
@@ -165,7 +164,16 @@ python scripts/run_tiered_ablation_bench.py --model qwen/qwen3.6-35b-a3b
 
 <br/>
 
-[Skillware](https://github.com/arpahls/skillware) (`arpahls/skillware`) is the open runtime framework for modular, self-contained AI agent skills. It replaces unstructured, unconditioned code synthesis and prompt-injected manuals with typed OpenAPI/JSON schemas, deterministic JIT execution handlers, runtime capability boundaries, and strict constitutional safety gates.
+[Skillware](https://github.com/arpahls/skillware) (`arpahls/skillware`) is the open-source framework and registry for modular, actionable AI agent capabilities. Rather than prompting agents with fragile natural-language instructions, Skillware equips them with self-contained, executable Skill bundles—*decoupling capability from intelligence*.
+
+Every Skill bundle packages everything a host agent needs to use a capability in a domain:
+- **Contract**: Strict constitutional safety boundaries, dry-run guarantees, and typed I/O schemas (`manifest.yaml`).
+- **Effect**: Deterministic Python handlers so agents run verified work directly rather than synthesizing ad-hoc code across turns (`skill.py`).
+- **Directive**: System instructions and cognitive maps adapted to host LLM reasoning (`instructions.md`).
+- **Assurance**: Offline verification suites ensuring the effect honors the contract before registry admission (`test_skill.py`).
+- **Interface**: Universal tool schemas standardized across Gemini, Claude, OpenAI, Ollama, and OpenAI-compatible runtimes (`card.json`).
+
+In Skillware-Bench, equipping models with Skillware eliminates ad-hoc workspace script synthesis and debugging (464 loops eliminated across 736 conditions), yielding a **+10.1% aggregate pass lift**, **51.4% token reduction**, and **1.60x execution speedup**.
 
 ## Cryptographic Receipts via AURA
 
@@ -183,7 +191,21 @@ skillware-bench verify benchmarks/reports/google_gemma_4_31b_it.json
 
 ## Citing
 
-If you use Skillware-Bench in research or products, please cite it using [CITATION.cff](CITATION.cff) (GitHub **Cite this repository**). For reproducibility, also record the **Skillware-Bench version** you used (Git tag, for example `0.3.1`).
+If you use Skillware-Bench in research or products, please cite it using [CITATION.cff](CITATION.cff) (GitHub **Cite this repository**) or the permanent Zenodo Concept DOI [10.5281/zenodo.23725543](https://doi.org/10.5281/zenodo.23725543):
+
+```bibtex
+@software{peili2026skillwarebench,
+  author       = {Peilivanidis, Vladimiros and {ARPA Hellenic Logical Systems}},
+  title        = {{Skillware-Bench: The Empirical Benchmark & Evaluation Harness for Governed Agent Skills}},
+  year         = {2026},
+  publisher    = {Zenodo},
+  version      = {0.3.2},
+  doi          = {10.5281/zenodo.23725543},
+  url          = {https://doi.org/10.5281/zenodo.23725543}
+}
+```
+
+For reproducibility, also record the **Skillware-Bench version** you used (e.g. `v0.3.2`).
 
 ## License
 

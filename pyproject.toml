@@ -62,6 +62,7 @@ keywords = [
 Homepage = "https://github.com/arpahls/skillware-bench"
 Repository = "https://github.com/arpahls/skillware-bench"
 Documentation = "https://github.com/arpahls/skillware-bench/blob/main/README.md"
+DOI = "https://doi.org/10.5281/zenodo.23725543"
 Issues = "https://github.com/arpahls/skillware-bench/issues"
 Changelog = "https://github.com/arpahls/skillware-bench/blob/main/CHANGELOG.md"
 
