@@ -8,6 +8,7 @@
 <br/>
 
 <div align="center">
+  <a href="https://github.com/arpahls/skillware"><img src="https://img.shields.io/badge/Skillware-0.6.0-D4E4F1?style=flat-square" alt="Skillware 0.6.0"></a>
   <img src="https://img.shields.io/badge/License-MIT-efcefa?style=flat-square" alt="License">
   <img src="https://img.shields.io/badge/Python-3.10+-bae6fd?style=flat-square" alt="Python Version">
   <a href="https://github.com/ARPAHLS/skillware-bench/actions/workflows/ci.yml"><img src="https://img.shields.io/badge/CI-passing-bbf7d0?style=flat-square" alt="CI Status"></a>
@@ -23,6 +24,8 @@
   <a href="#key-empirical-findings">Key Findings</a> •
   <a href="#documentation-sitemap">Documentation</a> •
   <a href="#quick-start--reproduction">Quick Start</a> •
+  <a href="#governed-execution-via-skillware">Skillware</a> •
+  <a href="#cryptographic-receipts-via-aura">AURA</a> •
   <a href="#citing">Citing</a> •
   <a href="#license">License</a>
 </div>
@@ -156,7 +159,19 @@ python scripts/run_tiered_ablation_bench.py --model deepseek/deepseek-v4.1-flash
 python scripts/run_tiered_ablation_bench.py --model qwen/qwen3.6-35b-a3b
 ```
 
+## Governed Execution via Skillware
+
+<img src="https://raw.githubusercontent.com/ARPAHLS/skillware/main/assets/skillware_logo.png" height="50" alt="Skillware Logo" />
+
+<br/>
+
+[Skillware](https://github.com/arpahls/skillware) (`arpahls/skillware`) is the open runtime framework for modular, self-contained AI agent skills. It replaces unstructured, unconditioned code synthesis and prompt-injected manuals with typed OpenAPI/JSON schemas, deterministic JIT execution handlers, runtime capability boundaries, and strict constitutional safety gates.
+
 ## Cryptographic Receipts via AURA
+
+<img src="https://raw.githubusercontent.com/ARPAHLS/aura/main/docs/assets/aura_splash.png" height="50" alt="AURA Logo" />
+
+<br/>
 
 Every benchmark evaluation produces a verified cryptographic receipt anchored via the [AURA](https://github.com/arpahls/aura) attestation spine. Receipts contain a SHA-256 causal DAG hash over all executed turns, tool invocations, token metrics, and scoring outputs to ensure tamper-evident verification.
 
@@ -173,3 +188,16 @@ If you use Skillware-Bench in research or products, please cite it using [CITATI
 ## License
 
 MIT License. Copyright (c) 2026 ARPA Hellenic Logical Systems.
+
+---
+
+<div align="center">
+
+<br>
+<img src="https://raw.githubusercontent.com/ARPAHLS/.github/main/Group%202062.png" height="50" alt="ARPA Logo" />
+<br>
+<sub>Developed and Maintained by <b>ARPA HELLENIC LOGICAL SYSTEMS</b></sub>
+<br>
+<sub>Support: systems@arpacorp.net</sub>
+
+</div>

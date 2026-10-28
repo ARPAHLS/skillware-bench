@@ -37,10 +37,15 @@ jobs:
       run: |
         pytest tests/ -v
 
+    - name: Audit markdown links & image references
+      run: |
+        python scratch/audit_md_links.py
+
     - name: Test offline benchmark execution & CLI commands
       run: |
         skillware-bench list
         skillware-bench check-env
+        skillware-bench verify benchmarks/reports/google_gemma_4_31b_it.json
         skillware-bench run --mock --figures
         skillware-bench compare --suite gmail
         skillware-bench dashboard --output ./runs/ci_dashboard.html
@@ -73,3 +78,4 @@ jobs:
         /tmp/clean-bench-venv/bin/skillware-bench --version
         /tmp/clean-bench-venv/bin/skillware-bench list
         /tmp/clean-bench-venv/bin/skillware-bench run --mock
+        /tmp/clean-bench-venv/bin/skillware-bench verify benchmarks/reports/google_gemma_4_31b_it.json

@@ -6,6 +6,55 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## [Unreleased]
 
+### Added
+
+- **Zero-Cost CLI Report Verification (`skillware-bench verify`)**:
+  - Enhanced `skillware_bench/cli.py` and `skillware_bench/core/provenance.py` (`ProvenanceEngine.verify_report`) to support independent cryptographic verification of `.json` benchmark reports in addition to `.jsonl` AURA traces.
+  - Recomputes the canonical JSON payload SHA-256 digest in sub-second host time without invoking external APIs, spending tokens, or relying on network access.
+  - Added comprehensive verification unit tests in `tests/bench/test_provenance.py` validating authentic reports, catching corrupted payloads, and detecting tampered verdicts.
+- **Tracked Canonical 23-Model Execution Reports (`benchmarks/reports/`)**:
+  - Published and tracked all 23 canonical 16-layer benchmark execution reports directly in Git, recording complete experimental telemetry across 736 live conditions (turn counts, token consumption, execution latencies, disk/state diffs, verdicts, and anchored AURA SHA-256 receipts).
+  - Created `benchmarks/reports/README.md` featuring:
+    - Master Receipts & Attestation Index cataloging all 23 models, report files, run IDs, and SHA-256 digests.
+    - Deep-dive into AURA Harness provenance, the live causal AuditSpine, and sealed session deliverables.
+    - Explanation of the SHA-256 cryptographic avalanche effect illustrating why altering verdicts, token counts, or latencies invalidates receipts.
+    - CLI verification command instructions and terminal output examples.
+- **Full 23-Model Master Standings Table (`docs/leaderboard.md`)**:
+  - Expanded `docs/leaderboard.md` to include the complete 23-model standings table (ranking pass rates, token reduction percentages, speedups, and code debugging overhead eliminated) alongside the representative 8-model exhibit.
+- **Model Card Attestation Links**:
+  - Cross-referenced all 23 individual model cards (`docs/results/models/*.md`) with direct links to their canonical report JSON in `benchmarks/reports/` and reproducible `skillware-bench verify` invocation commands.
+- **Contributing Protocols for Autonomous Logical Systems (`CONTRIBUTING.md`)**:
+  - Authored explicit contribution guidelines tailored for both human researchers and autonomous logical systems / AI agents.
+  - Established Skillware (`arpahls/skillware`) as the foundational, non-negotiable evaluation axis.
+  - Strictly prohibited "markdown skills" (prompt-only pseudo-skills or unstructured markdown instructions) in favor of authentic, typed, schema-validated Skillware skills.
+  - Detailed five actionable contribution pathways to elevate future benchmark runs (simulation crucibles meeting the Five Invariants, sovereign model adapters, tiered ablation scaling, AURA attestation, and verified report submissions).
+- **Pastel Ecosystem Badging & README Polish (`README.md`)**:
+  - Added minimal, soft light pastel badges matching `arpahls/skillware`:
+    - Skillware 0.6.0 (`#D4E4F1`, pastel blue)
+    - License MIT (`#efcefa`, pastel lavender)
+    - Python 3.10+ (`#bae6fd`, pastel sky)
+    - CI passing (`#bbf7d0`, pastel mint)
+    - Attestation AURA (`#ffdac1`, pastel peach)
+  - Added quick-navigation jump links, CLI quickstart reproduction commands, and formal BibTeX citing block.
+- **GitHub Workflow & Contribution Template Hardening (`.github/`)**:
+  - Enhanced `.github/workflows/ci.yml` to automatically audit markdown links/images and run `skillware-bench verify` across all matrix Python versions (3.10-3.13) and clean virtualenv wheel smoke runs.
+  - Overhauled `.github/PULL_REQUEST_TEMPLATE.md` to enforce the Zero-Hotfix Preflight Checklist, Ripple Effects Matrix verification, authentic Skillware checks, and AURA cryptographic receipt validation.
+  - Aligned `.github/ISSUE_TEMPLATE/` (`crucible_proposal.md`, `model_adapter_request.md`) with the Five Crucible Invariants and capability tier standards; added dedicated `benchmark_report_submission.md` issue template for external empirical report contributions.
+
+### Changed
+
+- **Core Dependency Version Alignment (`pyproject.toml`)**:
+  - Updated minimum dependency constraints to `skillware>=0.6.0` and `aura-harness>=0.3.6` reflecting published PyPI releases.
+- **AURA Harness Provenance Grounding**:
+  - Grounded all attestation documentation across `benchmarks/reports/README.md`, `docs/methodology.md`, and `docs/results/latency_and_auditability.md` strictly in AURA Harness (`αύρα` — AVRA / AURA, PyPI: `aura-harness`) architecture: runtime coat around the agent body cavity, egress policy boundary, live causal AuditSpine (`AuraEvent`), sealed session exports, and SHA-256 receipts.
+- **Hygiene Test Configuration (`tests/hygiene/test_repo_hygiene.py`)**:
+  - Updated `test_zero_emojis_in_tracked_files` to exclude `benchmarks/reports/*.json` so empirical frontier model completions containing literal response symbols are preserved verbatim, while maintaining strict zero-emoji enforcement across all code, tests, scripts, and documentation markdown.
+
+### Removed
+
+- **Legacy & Obsolete Artifacts**:
+  - Purged obsolete legacy SVG figures and deprecated `export_figures` runner methods to maintain a clean, publication-grade repository tree.
+
 ## [0.3.1] - 2026-10-27
 
 ### Added
