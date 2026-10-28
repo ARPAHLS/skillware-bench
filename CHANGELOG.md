@@ -6,6 +6,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## [Unreleased]
 
+## [0.3.3] - 2026-10-28
+
+### Added
+
+- **Publication Figures in Root Documentation (`README.md`)**:
+  - Embedded **Figure 14** (*Run-to-Run Determinism & Variance Contraction* across 40 seeded replays under identical prompts).
+  - Embedded **Figure 18** (*Equip-Any-Model Pass Rate Uplift Trajectories* demonstrating sovereign model capability leap).
+  - Embedded **Figure 20** (*Token Ledger Breakdown per Tool Call* on Office Mail attachment extraction, detailing -70.6% token tax excision).
+  - Embedded **Figure 33** (*368-Layer Benchmark Call Survival Flow* showing 94.1% clean first-pass calls under Skillware vs 71.2% in Vanilla).
+- **Standardized Shields.io Zenodo Concept DOI Badge**:
+  - Replaced third-party dynamic badge with standard flat-square shields.io badge (`DOI-10.5281/zenodo.23725543-007ec6`) matching the repository's pastel design system.
+  - Linked permanent Zenodo Concept DOI (`https://doi.org/10.5281/zenodo.23725543`) across `README.md`, `CITATION.cff`, and `pyproject.toml`.
+- **Grounded Framework Specification**:
+  - Aligned Skillware section in `README.md` with the 5-layer skill bundle anatomy (`Contract`, `Effect`, `Directive`, `Assurance`, `Interface`) and the motto *Decoupling capability from intelligence*.
+
 ## [0.3.2] - 2026-10-28
 
 ### Added

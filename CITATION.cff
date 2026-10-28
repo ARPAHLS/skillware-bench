@@ -14,7 +14,7 @@ abstract: >-
   safety gates (preview-before-send, dry-runs, ambiguous consent), comparative
   with-vs-without skill efficiency (token bloat, latency, cost), and end-to-end
   real-world simulation crucibles.
-version: "0.3.2"
+version: "0.3.3"
 date-released: "2026-10-28"
 doi: "10.5281/zenodo.23725543"
 license: MIT

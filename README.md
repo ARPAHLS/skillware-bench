@@ -10,7 +10,7 @@
 <div align="center">
   <a href="https://github.com/arpahls/skillware"><img src="https://img.shields.io/badge/Skillware-0.6.0-D4E4F1?style=flat-square" alt="Skillware 0.6.0"></a>
   <a href="https://github.com/arpahls/aura"><img src="https://img.shields.io/badge/AURA-0.3.6-ffdac1?style=flat-square" alt="AURA 0.3.6"></a>
-  <a href="https://doi.org/10.5281/zenodo.23725543"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.23725543.svg" alt="DOI"></a>
+  <a href="https://doi.org/10.5281/zenodo.23725543"><img src="https://img.shields.io/badge/DOI-10.5281%2Fzenodo.23725543-007ec6?style=flat-square" alt="DOI"></a>
   <img src="https://img.shields.io/badge/License-MIT-efcefa?style=flat-square" alt="License">
   <img src="https://img.shields.io/badge/Python-3.10+-bae6fd?style=flat-square" alt="Python Version">
   <a href="https://github.com/ARPAHLS/skillware-bench/actions/workflows/ci.yml"><img src="https://img.shields.io/badge/CI-passing-bbf7d0?style=flat-square" alt="CI Status"></a>
@@ -50,7 +50,7 @@ Across the complete 23-model evaluation roster (spanning 11 sovereign and commer
 ### Figure 25 — Capability Compression Heatmap Across the 23-Model Fleet
 
 <div align="center">
-  <img src="docs/figures/fig25_capability_compression_heatmap.png" alt="Figure 25 — Capability Compression Heatmap" width="100%" />
+  <img src="https://raw.githubusercontent.com/ARPAHLS/skillware-bench/main/docs/figures/fig25_capability_compression_heatmap.png" alt="Figure 25 — Capability Compression Heatmap" width="100%" />
 </div>
 
 <br />
@@ -77,7 +77,7 @@ Across the complete 23-model evaluation roster (spanning 11 sovereign and commer
 ### Table 7 — Four-Axis Master Operational Summary
 
 <div align="center">
-  <img src="docs/figures/tab07_four_axis_summary.png" alt="Table 7 — Four-Axis Master Summary" width="100%" />
+  <img src="https://raw.githubusercontent.com/ARPAHLS/skillware-bench/main/docs/figures/tab07_four_axis_summary.png" alt="Table 7 — Four-Axis Master Summary" width="100%" />
 </div>
 
 <br />
@@ -88,25 +88,73 @@ Across the complete 23-model evaluation roster (spanning 11 sovereign and commer
 
 1. **Small Sovereign Models + Skillware Match or Outperform Frontier LLMs Alone**: Compact open-weight models (e.g. Qwen 3.6 35B, Gemma 4 31B, Nemotron 3.5 Lightning) equipped with deterministic skills consistently achieve higher pass rates (14-16/16) and lower latency than unassisted frontier APIs operating in Vanilla mode (e.g. Claude Sonnet 5, GPT-6 Luna, Grok 4.7). See [Frontiers vs Small Models Deep-Dive](docs/results/frontiers_vs_small.md).
 
+### Figure 12 — Cost-Capability Frontier
+
 <div align="center">
-  <img src="docs/figures/fig12_cost_capability_frontier.png" alt="Figure 12 — Cost-Capability Frontier" width="100%" />
+  <img src="https://raw.githubusercontent.com/ARPAHLS/skillware-bench/main/docs/figures/fig12_cost_capability_frontier.png" alt="Figure 12 — Cost-Capability Frontier" width="100%" />
 </div>
 
 <br />
 
 > **Figure 12.** The cost–capability frontier across eight representative models from the benchmark fleet. Each dashed trajectory connects a model from its Vanilla baseline (ochre) to its Skillware equipped operating point (emerald green). The Skillware frontier dominates the Vanilla fleet everywhere, shifting up (higher accuracy across 16 benchmark layers) and to the left (lower operational token cost per task).
 
-2. **Elimination of the Base64 MIME Attachment Failure Trap**: Across nearly all frontier models in Vanilla mode, extracting binary email attachments caused catastrophic failures, triggering 5 to 11 debug attempts and burning tens of thousands of tokens. Skillware resolved attachments in 2 to 3 turns without executing any workspace scripts. See [Behavioral Contracts Analysis](docs/results/behavioral_contracts.md).
+### Figure 18 — Equip-Any-Model Pass Rate Uplift Trajectories
 
 <div align="center">
-  <img src="docs/figures/fig11_latency_anatomy.png" alt="Figure 11 — Latency Anatomy" width="100%" />
+  <img src="https://raw.githubusercontent.com/ARPAHLS/skillware-bench/main/docs/figures/fig18_equip_any_model_uplift.png" alt="Figure 18 — Equip-Any-Model Pass Rate Uplift" width="100%" />
+</div>
+
+<br />
+
+> **Figure 18.** Pass rate trajectory under Skillware equipment across 14 representative models. Left axis ranks models by Vanilla unassisted pass rate (from Gemini 3.8 Flash at 100.0% down to Llama 4 Maverick at 37.5%). Right axis ranks models by net absolute pass rate lift under Skillware (from Maverick at +56.2% down to Gemini 3.8 Flash and Claude Sonnet 5 at +0.0%). Sovereign and compact workhorses achieve the steepest improvements when decoupled from raw code generation, with Meta Llama 4 Maverick jumping from 37.5% to 93.8% to achieve parity with frontier models.
+
+2. **Elimination of the Base64 MIME Attachment Failure Trap**: Across nearly all frontier models in Vanilla mode, extracting binary email attachments caused catastrophic failures, triggering 5 to 11 debug attempts and burning tens of thousands of tokens. Skillware resolved attachments in 2 to 3 turns without executing any workspace scripts. See [Behavioral Contracts Analysis](docs/results/behavioral_contracts.md).
+
+### Figure 11 — Latency Anatomy (Office Mail Tier 2)
+
+<div align="center">
+  <img src="https://raw.githubusercontent.com/ARPAHLS/skillware-bench/main/docs/figures/fig11_latency_anatomy.png" alt="Figure 11 — Latency Anatomy" width="100%" />
 </div>
 
 <br />
 
 > **Figure 11.** Latency anatomy of a complex reference workflow (Office Mail Tier 2). JIT context excision shrinks prefill latency from 4.1 s to 0.7 s, compact model routing shortens decode from 6.2 s to 3.4 s, and deterministic host validation eliminates speculative error loops: end-to-end median latency falls from 14.2 s to 6.3 s (−55.6%). Time to first token (TTFT) collapses from 1.9 s to 0.4 s.
 
-3. **100% Code Debugging Overhead Eliminated**: Vanilla models spent 464 iterations debugging raw Python scripts across the benchmark. Skillware completely eliminated this burden, reducing debugging iterations to zero. See [Token Economics Deep-Dive](docs/results/token_economics.md).
+3. **100% Code Debugging Overhead Eliminated & Token Compression**: Vanilla models spent 464 iterations debugging raw Python scripts across the benchmark. Skillware completely eliminated this burden, reducing debugging iterations to zero. See [Token Economics Deep-Dive](docs/results/token_economics.md).
+
+### Figure 20 — Token Ledger Breakdown per Tool Call (Office Mail)
+
+<div align="center">
+  <img src="https://raw.githubusercontent.com/ARPAHLS/skillware-bench/main/docs/figures/fig20_token_ledger_per_call.png" alt="Figure 20 — Token Ledger per Call on Attachment Extraction" width="100%" />
+</div>
+
+<br />
+
+> **Figure 20.** Token ledger decomposition per successful tool call during Office Mail attachment extraction. Unassisted Vanilla execution incurs a severe token tax (5,520 tokens per call), driven by verbose schema and documentation prefill (1,840 tokens), monolithic tool preambles (620 tokens), subprocess retry overhead (940 tokens), and traceback repair loops (780 tokens). Equipping models with Skillware preserves baseline task reasoning (1,340 tokens) while excising redundant documentation down to compact typed schemas (220 tokens, −88%) and eliminating code repair loops entirely (0 tokens, −100%), yielding a 70.6% reduction in per-call token expenditure (1,620 tokens total).
+
+4. **Upfront Preflight Validation Prevents Cascading Execution Regressions**: Unassisted code synthesis frequently fails at the interface boundary: 11.8% of emitted tool calls fail preflight schema validation, triggering 231 error-recovery cycles and 57 terminal aborts. In contrast, Skillware preflight gates enforce typing upfront (99.6% valid), resolving edge cases via fast typed reflexes (52 repaired) to deliver a 94.1% clean first-pass rate with only 7 terminal aborts. Across the full 368 benchmark tasks, this lifts completed conditions from 300/368 (81.5%) to 337/368 (91.6%). See [Behavioral Contracts Analysis](docs/results/behavioral_contracts.md).
+
+### Figure 33 — 368-Layer Benchmark Call Survival Flow
+
+<div align="center">
+  <img src="https://raw.githubusercontent.com/ARPAHLS/skillware-bench/main/docs/figures/fig33_call_survival_flow.png" alt="Figure 33 — 368-Layer Call Survival Flow" width="100%" />
+</div>
+
+<br />
+
+> **Figure 33.** Tool invocation survival flow normalized across 1,000 emitted calls per arm (reconciling with the 368 benchmark conditions in Fig. 23). In unassisted vanilla execution, 11.8% of emitted calls fail preflight schema validation (118 invalid calls), and while 231 calls recover through replanning loops, 57 calls abort completely. In contrast, Skillware preflight gates enforce typing upfront (99.6% valid), resolving edge cases via fast typed reflexes (52 repaired) to deliver 941 clean first-pass calls (94.1% clean first pass vs 71.2% vanilla) with only 7 terminal aborts.
+
+5. **Run-to-Run Determinism & Enterprise Variance Contraction**: Non-deterministic code generation produces erratic behavioral dispersion across seeded replays under identical prompts. Skillware contracts run-to-run dispersion by 5.1x tighter, establishing the execution predictability required for enterprise regression testing and CI/CD release gating. See [Execution Latency & Auditability](docs/results/latency_and_auditability.md).
+
+### Figure 14 — Run-to-Run Determinism & Variance Contraction
+
+<div align="center">
+  <img src="https://raw.githubusercontent.com/ARPAHLS/skillware-bench/main/docs/figures/fig14_run_to_run_determinism.png" alt="Figure 14 — Run-to-Run Determinism & Variance Contraction" width="100%" />
+</div>
+
+<br />
+
+> **Figure 14.** Run-to-run determinism and variance contraction across 40 seeded replays under identical seeds (8B compact model). Unassisted Vanilla execution scatters across an erratic score distribution (mean 61.0, σ = 4.1) driven by non-deterministic code synthesis paths. Skillware contracts run-to-run dispersion by 5.1× tighter (mean 88.2, σ = 0.8), establishing the execution predictability required for enterprise regression testing and CI/CD release gating.
 
 ## Documentation Sitemap
 
@@ -199,13 +247,13 @@ If you use Skillware-Bench in research or products, please cite it using [CITATI
   title        = {{Skillware-Bench: The Empirical Benchmark & Evaluation Harness for Governed Agent Skills}},
   year         = {2026},
   publisher    = {Zenodo},
-  version      = {0.3.2},
+  version      = {0.3.3},
   doi          = {10.5281/zenodo.23725543},
   url          = {https://doi.org/10.5281/zenodo.23725543}
 }
 ```
 
-For reproducibility, also record the **Skillware-Bench version** you used (e.g. `v0.3.2`).
+For reproducibility, also record the **Skillware-Bench version** you used (e.g. `v0.3.3`).
 
 ## License
 
