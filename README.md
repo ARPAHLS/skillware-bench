@@ -10,8 +10,8 @@
 <div align="center">
   <a href="https://github.com/arpahls/skillware"><img src="https://img.shields.io/badge/Skillware-0.6.0-D4E4F1?style=flat-square" alt="Skillware 0.6.0"></a>
   <a href="https://github.com/arpahls/aura"><img src="https://img.shields.io/badge/AURA-0.3.6-ffdac1?style=flat-square" alt="AURA 0.3.6"></a>
-  <a href="https://doi.org/10.5281/zenodo.23725543"><img src="https://img.shields.io/badge/DOI-10.5281%2Fzenodo.23725543-007ec6?style=flat-square" alt="DOI"></a>
-  <img src="https://img.shields.io/badge/License-MIT-efcefa?style=flat-square" alt="License">
+  <a href="https://doi.org/10.5281/zenodo.23725543"><img src="https://img.shields.io/badge/DOI-10.5281%2Fzenodo.23725543-DBD3DC?style=flat-square" alt="DOI"></a>
+  <img src="https://img.shields.io/badge/License-MIT-F0D9CC?style=flat-square" alt="License">
   <img src="https://img.shields.io/badge/Python-3.10+-bae6fd?style=flat-square" alt="Python Version">
   <a href="https://github.com/ARPAHLS/skillware-bench/actions/workflows/ci.yml"><img src="https://img.shields.io/badge/CI-passing-bbf7d0?style=flat-square" alt="CI Status"></a>
 </div>
