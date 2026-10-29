@@ -40,7 +40,7 @@ repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if repo_root not in sys.path:
     sys.path.insert(0, repo_root)
 skillware_dir = os.path.join(repo_root, "skillware")
-if skillware_dir not in sys.path:
+if os.path.isdir(skillware_dir) and skillware_dir not in sys.path:
     sys.path.insert(0, skillware_dir)
 
 # Force unbuffered UTF-8 output on Windows PowerShell
@@ -55,6 +55,7 @@ load_dotenv()
 
 from skillware_bench.core.adapters.openrouter_adapter import OpenRouterAdapter  # noqa: E402
 from skillware_bench.infra.hermetic_mock_server import HermeticMockServer  # noqa: E402
+from skillware_bench.infra.skill_routing import bind_skill_to_mock  # noqa: E402
 from skillware.core.loader import SkillLoader  # noqa: E402
 from skillware import SkillContext  # noqa: E402
 
@@ -898,6 +899,7 @@ def run_skillware_tier(
 
     # Set environment variables for the skill handler
     os.environ["COMPANIES_HOUSE_BASE_URL"] = base_url
+    os.environ["COMPANIES_HOUSE_DOCUMENT_API_BASE"] = base_url
     os.environ["COMPANIES_HOUSE_API_KEY"] = "mock-key-123"
 
     # Load skill bundle and context
@@ -908,6 +910,9 @@ def run_skillware_tier(
     skill_cls = SkillLoader.get_skill_class(skill_bundle)
     if scenario_key == "companies_house":
         skill_instance = skill_cls({"COMPANIES_HOUSE_API_KEY": "mock-key-123"})
+        # Route skill HTTP to the hermetic mock server, independent of the
+        # installed skillware wheel (some versions freeze _BASE_URL at import).
+        bind_skill_to_mock(skill_bundle, skill_instance, base_url)
     elif scenario_key == "wallet_screening":
         skill_instance = skill_cls({"ETHERSCAN_API_KEY": "mock-key"})
     else:
@@ -943,7 +948,7 @@ def run_skillware_tier(
             action = tool_name.split("/")[-1]
 
         if scenario_key == "companies_house":
-            # Direct execution via Skillware skill class
+            # Direct execution via Skillware skill class (HTTP routed to the mock server)
             params = dict(args)
             if "parameters" in params and isinstance(params["parameters"], dict):
                 params.update(params.pop("parameters"))
@@ -1297,8 +1302,10 @@ def main():
     console.print(
         f"\n[bold green]Report & Audit Trail Saved:[/bold green] [white]{report_path}[/white]"
     )
+    console.print(f"[bold cyan]AURA Cryptographic Hash:[/bold cyan] [yellow]{audit_hash}[/yellow]")
     console.print(
-        f"[bold cyan]AURA Cryptographic Hash:[/bold cyan] [yellow]{audit_hash}[/yellow]\n"
+        "[dim]Note: this is a SHA-256 integrity seal over report.json. For turn-by-turn "
+        "AURA session traces and Ed25519 receipts, use 'skillware-bench run --live'.[/dim]\n"
     )
 
 

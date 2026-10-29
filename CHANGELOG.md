@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## [Unreleased]
 
+### Fixed
+
+- **Skillware arm failed all Companies House tiers on clean installs (`scripts/run_tiered_ablation_bench.py`)**:
+  - The PyPI `skillware` 0.6.0 `finance/uk_companies_house_handler` freezes `_BASE_URL` at import time and ignores `COMPANIES_HOUSE_BASE_URL`, so the skill called the live API with the mock key and returned HTTP 401. Local development masked this because a gitignored `skillware/` checkout shadowed the wheel.
+  - Added `skillware_bench/infra/skill_routing.py` (`bind_skill_to_mock`), which rebinds frozen URL constants on the loaded skill module and the instance `_request` HTTP layer to the hermetic mock server, independent of the installed `skillware` version.
+  - The script now only prepends the local `skillware/` checkout to `sys.path` when it exists.
+  - Clarified at the end of the run that the ablation report carries a SHA-256 integrity seal, and that turn-by-turn AURA traces with Ed25519 receipts come from `skillware-bench run --live`.
+  - Added regression tests in `tests/bench/test_skill_routing.py`.
+  - Reported by Martin Rizzo Lozano.
+
 ## [0.3.3] - 2026-10-28
 
 ### Added
