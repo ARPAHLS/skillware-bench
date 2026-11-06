@@ -13,10 +13,6 @@
   <a href="https://github.com/arpahls/skillware"><img src="https://img.shields.io/badge/Skillware-0.6.0-D4E4F1?style=flat-square" alt="Skillware 0.6.0"></a>
   <a href="https://github.com/arpahls/aura"><img src="https://img.shields.io/badge/AURA-0.3.6-ffdac1?style=flat-square" alt="AURA 0.3.6"></a>
   <a href="https://github.com/ARPAHLS/skillware-bench/actions/workflows/ci.yml"><img src="https://img.shields.io/badge/CI-passing-bbf7d0?style=flat-square" alt="CI Status"></a>
-  <br/>
-  <a href="https://doi.org/10.48550/arXiv.2611.07652"><img src="https://img.shields.io/badge/DOI%20P-10.48550%2FarXiv.2611.07652-F4ECC8?style=flat-square" alt="DOI 10.48550/arXiv.2611.07652"></a>
-  <a href="https://doi.org/10.5281/zenodo.21552745"><img src="https://img.shields.io/badge/DOI%20S-10.5281%2Fzenodo.21552745-DBD3DC?style=flat-square" alt="DOI 10.5281/zenodo.21552745"></a>
-  <a href="https://doi.org/10.5281/zenodo.23725543"><img src="https://img.shields.io/badge/DOI%20B-10.5281%2Fzenodo.23725543-D4E4F1?style=flat-square" alt="DOI 10.5281/zenodo.23725543"></a>
 </div>
 
 <br/>
@@ -256,7 +252,13 @@ If you use Skillware-Bench in research or products, please cite it using [CITATI
 }
 ```
 
-For reproducibility, also record the **Skillware-Bench version** you used (e.g. `v0.3.3`). For citing the paper, use the arXiv DOI in badges (DOI P).
+For reproducibility, also record the **Skillware-Bench version** you used (e.g. `v0.3.3`). For citing the paper, use the arXiv DOI badge (**DOI P**); for citing the software library or benchmark harness, use Zenodo **DOI S** or **DOI B** respectively:
+
+<p align="center">
+  <a href="https://doi.org/10.48550/arXiv.2611.07652"><img src="https://img.shields.io/badge/DOI%20P-10.48550%2FarXiv.2611.07652-F4ECC8?style=flat-square" alt="DOI 10.48550/arXiv.2611.07652"></a>
+  <a href="https://doi.org/10.5281/zenodo.21552745"><img src="https://img.shields.io/badge/DOI%20S-10.5281%2Fzenodo.21552745-DBD3DC?style=flat-square" alt="DOI 10.5281/zenodo.21552745"></a>
+  <a href="https://doi.org/10.5281/zenodo.23725543"><img src="https://img.shields.io/badge/DOI%20B-10.5281%2Fzenodo.23725543-D4E4F1?style=flat-square" alt="DOI 10.5281/zenodo.23725543"></a>
+</p>
 
 ## License
 
